@@ -6,7 +6,8 @@ public class Main {
         DBParams.SGBDPageSize = 4096;
         DBParams.DMFileCount = 4;
 
-        DBParams.createFile();
+        DiskManager.createFile();
     }
+
 }
 

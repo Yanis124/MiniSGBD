@@ -1,8 +1,4 @@
 package IDE_PROJET_DJUROVIC_ALASHOUR_ARBANE_HAMMACI.CODE.src;
-import java.nio.ByteBuffer;
-import java.io.File;
-import java.io.IOException;
-
 
 public class DBParams{
     public static String DBPath;
@@ -10,30 +6,5 @@ public class DBParams{
     public static int DMFileCount;
     public static int NumFichier;
 
-    
 
-    public static void createFile(){
-        NumFichier = 0;
-        String filePatheName;
-        while (true){
-            filePatheName = DBPath + "/F" + NumFichier + ".data";
-            File file = new File(filePatheName);
-            if (!file.exists()){
-                try{
-                    if (file.createNewFile()){
-                        System.out.println("Le fichier a été créé" + filePatheName);
-                    }else{
-                        System.out.println("Erreur lors de la création du fichier !");
-                    }
-                }
-                catch(IOException e){
-                    e.printStackTrace();
-                }
-                break;
-            }else{
-                NumFichier++;
-            }
-
-        }
-    }
 }

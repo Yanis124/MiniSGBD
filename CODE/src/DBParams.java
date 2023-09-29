@@ -1,5 +1,5 @@
-package IDE_PROJET_DJUROVIC_ALASHOUR_ARBANE_HAMMACI.CODE.src;
-import java.nio.ByteBuffer;
+
+
 import java.io.File;
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ public class DBParams{
 
     
 
-    public static void createFile(){
+    public static int createFile(){
         NumFichier = 0;
         String filePatheName;
         while (true){
@@ -35,5 +35,6 @@ public class DBParams{
             }
 
         }
+        return NumFichier;
     }
 }

@@ -1,7 +1,10 @@
 
 
+
 import java.io.File;
 import java.io.IOException;
+
+
 
 
 public class DBParams{
@@ -9,6 +12,7 @@ public class DBParams{
     public static int SGBDPageSize;
     public static int DMFileCount;
     public static int NumFichier;
+
 
     
 
@@ -37,4 +41,7 @@ public class DBParams{
         }
         return NumFichier;
     }
+
+
+
 }

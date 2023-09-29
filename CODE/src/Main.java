@@ -6,6 +6,7 @@ public class Main {
         DBParams.SGBDPageSize = 4096;
         DBParams.DMFileCount = 4;  //max number of file in db
 
+
         DiskManager diskManager=new DiskManager();
         ArrayList <Integer> list =new ArrayList<Integer>();
         list.add(1);  //allocate 1 page   
@@ -24,6 +25,10 @@ public class Main {
 
   
         }
+
+        
+
     }
+
 }
 

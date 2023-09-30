@@ -9,10 +9,10 @@ public class Main {
 
         DiskManager diskManager=new DiskManager();
         ArrayList <Integer> list =new ArrayList<Integer>();
-        list.add(1);  //allocate 1 page   
-        list.add(4);  //allocate 4 pages  //it should create 1 file
-        //list.add(7); //allocate 7 pages   // it should cretae 2 files    
-        //list.add(16);  //allocate 16 pages //it should create 4 files
+        //list.add(1);  //allocate 1 page   
+        //list.add(4);  //allocate 4 pages  
+        //list.add(7); //allocate 7 pages       
+        list.add(50);  //allocate 50 pages 
 
         //make sur when testing that the number of page allocated doesn't exceed 4*DMFFileCount we should handle this 
 

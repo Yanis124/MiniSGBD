@@ -7,7 +7,6 @@ public class DiskManager {
     
     
     private Map<Integer, ArrayList<PageID>> filePageId = new HashMap<>();  // {file:[page]}
-    private PageID nextAllocatedPage=new PageID(0,0);   
     private PageID currentAllocatedPage=new PageID(0,0);
     private ArrayList <PageID> desalocatedPage=new ArrayList<PageID>(); // for desallocated page
     
@@ -35,11 +34,7 @@ public class DiskManager {
             desalocatedPage.remove(desalocatedPage.size()-1);
             return Page;
         }
-
-        int currentFileId=nextAllocatedPage.getFileIdx();
-        int currentPageId=nextAllocatedPage.getPageIdx();
-        
-         
+ 
         PageID currentSmallestPage=getSmallestPage();
         int currentSmallestFileId=currentSmallestPage.getFileIdx();
         int currentSmallestPageId=currentSmallestPage.getPageIdx();
@@ -50,17 +45,8 @@ public class DiskManager {
         filePages.add(currentAllocatedPage);
         filePageId.put(currentSmallestFileId, filePages);
         
-
-        PageID nextSmallestPage=getSmallestPage();
-        int nextSmallestFileId=nextSmallestPage.getFileIdx();
-        int nextSmallestPageId=nextSmallestPage.getPageIdx();
-        
-        nextAllocatedPage.setFileIdx(nextSmallestFileId);
-        nextAllocatedPage.setPageIdx(nextSmallestPageId);
- 
-        System.out.println("current :   "+currentFileId+"/"+ currentPageId+"\t");
-        System.out.println("next :   "+nextAllocatedPage.getFileIdx()+"/"+ nextAllocatedPage.getPageIdx()+"\t");
-       
+        System.out.println("current :   "+currentAllocatedPage.getFileIdx()+"/"+ currentAllocatedPage.getPageIdx()+"\t");
+    
         return currentAllocatedPage;
     }
 

@@ -28,7 +28,7 @@ public class DiskManager {
 
     public PageID AllocPage(){
 
-        if(desalocatedPage.size()!=0){     //if a page was desalocated
+        if(!desalocatedPage.isEmpty()){     //if a page was desalocated
             PageID Page=desalocatedPage.get(desalocatedPage.size()-1);
             desalocatedPage.remove(desalocatedPage.size()-1);
             return Page;

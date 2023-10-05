@@ -1,33 +1,33 @@
-//import java.util.ArrayList;
+import java.util.ArrayList;
+import java.nio.*;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         DBParams.DBPath = "../../DB";
         DBParams.SGBDPageSize = 4096;
-        DBParams.DMFileCount = 4;  //max number of file in db
+        DBParams.DMFileCount = 4; // max number of file in db
 
+        DiskManager diskManager = new DiskManager();
+        // ArrayList<Integer> list = new ArrayList<Integer>();
+        // diskManager.AllocPage();
+        // diskManager.AllocPage();
+        // diskManager.AllocPage();
+        // diskManager.AllocPage();
+        diskManager.AllocPage();
+        diskManager.AllocPage();
+        diskManager.AllocPage();
+        diskManager.AllocPage();
+        PageID page = diskManager.AllocPage();
 
-        DiskManager diskManager=new DiskManager();
-        //ArrayList <Integer> list =new ArrayList<Integer>();
-        int nbPages = 5;
-        //list.add(1);  //allocate 1 page   
-        //list.add(4);  //allocate 4 pages  
-        //list.add(7); //allocate 7 pages       
-        //list.add(5);  //allocate 50 pages 
+        String dataToAppend = "This data will be appended to the file " + page.getFileIdx() + " page : "
+                + page.getPageIdx();
+        byte[] dataBytes = dataToAppend.getBytes(); // convert string to a byte code
+        ByteBuffer buffWrite = ByteBuffer.wrap(dataBytes);
+        diskManager.WritePage(page, buffWrite);
 
-        //make sur when testing that the number of page allocated doesn't exceed 4*DMFFileCount we should handle this 
-
-        //add the number of page you want to allocate so you can test it
-
-        for(int i=0;i<nbPages;i++){
-            for(int j=0;j<DBParams.DMFileCount;j++){
-                diskManager.AllocPage();
-            }            
-
-  
-        }
+        ByteBuffer buffRead = ByteBuffer.allocate(DBParams.SGBDPageSize);
+        diskManager.ReadPage(page, buffRead);
 
     }
 
 }
-

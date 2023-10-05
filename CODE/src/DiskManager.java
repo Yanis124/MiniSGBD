@@ -15,7 +15,7 @@ public class DiskManager {
     private PageID currentAllocatedPage = new PageID(0, 0);
     private ArrayList<PageID> desalocatedPage = new ArrayList<PageID>(); // for desallocated page
 
-    DiskManager() {
+    public DiskManager() {
         for (int i = 0; i < DBParams.DMFileCount; i++) { // get the available files in the db
             String filePatheName = DBParams.DBPath + "/F" + i + ".data"; // assume that the db should always have
                                                                          // DMFileCount
@@ -95,19 +95,12 @@ public class DiskManager {
                     file.seek(seekPosition);
                     // Write the data from the ByteBuffer to the file at the specified page
                     fileChannel.write(buff);
-
-                    while (buff.hasRemaining()) {
-                        byte currentByte = buff.get();
-                        char currentChar = (char) currentByte;
-                        System.out.println(currentChar);
-
-                    }
-
                     file.close();
 
                     System.out.println("the message has been written");
                 } catch (IOException e) {
                     System.err.println(e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -137,7 +130,7 @@ public class DiskManager {
 
                 try {
                     String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
-                    RandomAccessFile file = new RandomAccessFile(filePath, "rw");
+                    RandomAccessFile file = new RandomAccessFile(filePath, "r");
                     FileChannel fileChannel = file.getChannel();
                     fileChannel.position(seekPosition);
                     int size = 0;
@@ -158,6 +151,9 @@ public class DiskManager {
                         System.out.print("\n");
                         file.close();
                         return size;
+                    }
+                    else {
+                        file.close();
                     }
 
                 } catch (IOException e) {

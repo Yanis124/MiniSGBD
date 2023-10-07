@@ -5,17 +5,17 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.file.Paths;
-import java.nio.file.*;
 import java.io.RandomAccessFile;
 
 public class DiskManager {
+
+    private static DiskManager diskManager = new DiskManager();
 
     public Map<Integer, ArrayList<PageID>> filePageId = new HashMap<>(); // {file:[page]}
     private PageID currentAllocatedPage = new PageID(0, 0);
     private ArrayList<PageID> desalocatedPage = new ArrayList<PageID>(); // for desallocated page
 
-    DiskManager() {
+    private DiskManager() {
         for (int i = 0; i < DBParams.DMFileCount; i++) { // get the available files in the db
             String filePatheName = DBParams.DBPath + "/F" + i + ".data"; // assume that the db should always have
                                                                          // DMFileCount
@@ -26,6 +26,10 @@ public class DiskManager {
             }
             filePageId.put(i, new ArrayList<PageID>());
         }
+    }
+
+    public static DiskManager getDiskManager() {
+        return diskManager;
     }
 
     public PageID AllocPage() {
@@ -90,18 +94,11 @@ public class DiskManager {
                     RandomAccessFile file = new RandomAccessFile(filePath, "rw");
                     FileChannel fileChannel = file.getChannel();
 
-                    int pageSize = getPageSize(buff);
+                    int pageSize = getPageSize(filePath,pageIdx);
                     int seekPosition = pageIdx * DBParams.SGBDPageSize + pageSize;
                     file.seek(seekPosition);
                     // Write the data from the ByteBuffer to the file at the specified page
                     fileChannel.write(buff);
-
-                    while (buff.hasRemaining()) {
-                        byte currentByte = buff.get();
-                        char currentChar = (char) currentByte;
-                        System.out.println(currentChar);
-
-                    }
 
                     file.close();
 
@@ -114,60 +111,67 @@ public class DiskManager {
 
     }
 
-    private int getPageSize(ByteBuffer buff) {
+    private int getPageSize(String filePath,int pageIdx) {    
 
         ByteBuffer buffRead = ByteBuffer.allocate(DBParams.SGBDPageSize);
-        int pageSize = ReadPage(currentAllocatedPage, buffRead); // get the size of the page
-        System.out.println("size of the page " + pageSize);
+        int seekPosition=pageIdx*DBParams.SGBDPageSize;
+        try {
+            RandomAccessFile file = new RandomAccessFile(filePath, "rw");
+            FileChannel fileChannel = file.getChannel();
+            fileChannel.position(seekPosition);
 
-        return pageSize;
+            int size = 0;
+            int bytesRead = fileChannel.read(buffRead);
+            if (bytesRead != -1) {
+                buffRead.flip(); // Prepare the buffer for reading
+                while (buffRead.hasRemaining()) { // iterate over the caracters of the page
+
+                    byte currentByte = buffRead.get();
+                    if (currentByte != '\0') {
+                        size++;
+                    }
+                }
+            file.close();
+            System.out.println("size : "+size);
+            return size;
+            }
+        file.close();
+
+        } catch (IOException e) {
+            System.err.println("can't access to the file");
+        }
+
+        return 0;
     }
 
-    public int ReadPage(PageID pageId, ByteBuffer buff) {
+    public ByteBuffer ReadPage(PageID pageId, ByteBuffer buff) {
         int fileIdx = pageId.getFileIdx();
         int pageIdx = pageId.getPageIdx();
 
-        if (filePageId.containsKey(fileIdx) && pageIdx >= 0) {
-            ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // on va chercher la tableau correspondant
-                                                                             // // à la clé fileIdx
-            int numPages = currentFilePagesTab.size();
+        // if (filePageId.containsKey(fileIdx) && pageIdx >= 0) {
+        //     ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // on va chercher la tableau correspondant
+        //                                                                      // // à la clé fileIdx
+        //     int numPages = currentFilePagesTab.size();
 
-            if (pageIdx < numPages) {
-                int seekPosition = pageIdx * DBParams.SGBDPageSize;
+            //if (pageIdx < numPages) {
 
-                try {
-                    String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
-                    RandomAccessFile file = new RandomAccessFile(filePath, "rw");
-                    FileChannel fileChannel = file.getChannel();
-                    fileChannel.position(seekPosition);
-                    int size = 0;
+        //dans BufferManager on sera amené a lire une page sans l'allouer donc pour l'instant je met en commentaire les conditions que la page est bien allouée
+        
+        int seekPosition = pageIdx * DBParams.SGBDPageSize;
+        try {
+            String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
+            RandomAccessFile file = new RandomAccessFile(filePath, "rw");
+            FileChannel fileChannel = file.getChannel();
+            fileChannel.position(seekPosition);
 
-                    int bytesRead = fileChannel.read(buff);
+            int bytesRead = fileChannel.read(buff);
 
-                    if (bytesRead != -1) {
-                        buff.flip(); // Prepare the buffer for reading
-                        while (buff.hasRemaining()) { // iterate over the caracters of the page
-
-                            byte currentByte = buff.get();
-                            if (currentByte != '\0') {
-                                char currentChar = (char) currentByte;
-                                System.out.print(currentChar);
-                                size++;
-                            }
-                        }
-                        System.out.print("\n");
-                        file.close();
-                        return size;
-                    }
-
-                } catch (IOException e) {
-                    System.err.println("can't access to the file");
-                }
-
-            }
         }
-        return 0;
 
+        catch (IOException e) {
+                System.err.println("can't access to the file");
+        }
+        return buff;
     }
 
     public void DeallocPage(PageID pageId) {
@@ -197,6 +201,18 @@ public class DiskManager {
             }
         } else {
             System.out.println("Ce message dit qu'il faut gérer une exception à cet endroit !");
+        }
+    }
+
+    public void readContentOfBuffer(ByteBuffer bf){  //for test purpose
+        bf.flip(); 
+        while (bf.hasRemaining()) { 
+
+            byte currentByte = bf.get();
+            if (currentByte != '\0') {
+                char currentChar = (char) currentByte;
+                System.out.print(currentChar);
+            }
         }
     }
 

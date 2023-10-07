@@ -15,7 +15,7 @@ public class DiskManager {
     private PageID currentAllocatedPage = new PageID(0, 0);
     private ArrayList<PageID> desalocatedPage = new ArrayList<PageID>(); // for desallocated page
 
-    DiskManager() {
+    private DiskManager() {
         for (int i = 0; i < DBParams.DMFileCount; i++) { // get the available files in the db
             String filePatheName = DBParams.DBPath + "/F" + i + ".data"; // assume that the db should always have
                                                                          // DMFileCount
@@ -100,19 +100,11 @@ public class DiskManager {
                     // Write the data from the ByteBuffer to the file at the specified page
                     fileChannel.write(buff);
 
-                    while (buff.hasRemaining()) {
-                        byte currentByte = buff.get();
-                        char currentChar = (char) currentByte;
-                        System.out.println(currentChar);
-
-                    }
-
                     file.close();
 
                     System.out.println("the message has been written");
                 } catch (IOException e) {
                     System.err.println(e);
-                    e.printStackTrace();
                 }
             }
         }
@@ -156,41 +148,31 @@ public class DiskManager {
         int fileIdx = pageId.getFileIdx();
         int pageIdx = pageId.getPageIdx();
 
-        if (filePageId.containsKey(fileIdx) && pageIdx >= 0) {
-            ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // on va chercher la tableau correspondant
-                                                                             // // à la clé fileIdx
-            int numPages = currentFilePagesTab.size();
+        // if (filePageId.containsKey(fileIdx) && pageIdx >= 0) {
+        // ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // on va
+        // chercher la tableau correspondant
+        // // // à la clé fileIdx
+        // int numPages = currentFilePagesTab.size();
 
-            if (pageIdx < numPages) {
-                int seekPosition = pageIdx * DBParams.SGBDPageSize;
+        // if (pageIdx < numPages) {
 
-                try {
-                    String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
-                    RandomAccessFile file = new RandomAccessFile(filePath, "rw");
-                    FileChannel fileChannel = file.getChannel();
-                    fileChannel.position(seekPosition);
-                    int size = 0;
+        // dans BufferManager on sera amené a lire une page sans l'allouer donc pour
+        // l'instant je met en commentaire les conditions que la page est bien allouée
 
-            int bytesRead = fileChannel.read(buff);
+        int seekPosition = pageIdx * DBParams.SGBDPageSize;
+        try {
+            String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
+            RandomAccessFile file = new RandomAccessFile(filePath, "rw");
+            FileChannel fileChannel = file.getChannel();
+            fileChannel.position(seekPosition);
+            file.close();
 
-                    if (bytesRead != -1) {
-                        buff.flip(); // Prepare the buffer for reading
-                        while (buff.hasRemaining()) { // iterate over the caracters of the page
+            fileChannel.read(buff);
 
-                            byte currentByte = buff.get();
-                            if (currentByte != '\0') {
-                                char currentChar = (char) currentByte;
-                                System.out.print(currentChar);
-                                size++;
-                            }
-                        }
-                        System.out.print("\n");
-                        file.close();
-                        return size;
-                    }
+        }
 
         catch (IOException e) {
-                System.err.println("can't access to the file");
+            System.err.println("can't access to the file");
         }
         return buff;
     }
@@ -225,7 +207,7 @@ public class DiskManager {
         }
     }
 
-    public void readContentOfBuffer(ByteBuffer bf) { // for test purpose
+    public void readContentOfBuffer(ByteBuffer bf) { // for test
         bf.flip();
         while (bf.hasRemaining()) {
 

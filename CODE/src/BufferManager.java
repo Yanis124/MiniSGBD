@@ -6,7 +6,6 @@ public class BufferManager {
 
     private BufferManager() {
         listFrames = new Frame[DBParams.FrameCount];
-
     }
 
     public static BufferManager getBufferManager() {

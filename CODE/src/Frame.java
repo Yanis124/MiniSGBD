@@ -2,21 +2,21 @@ import java.nio.ByteBuffer;
 
 public class Frame {
 
-    private ByteBuffer Bb;
+    private ByteBuffer byteBuff;
     private PageID pageId;
     private int pinCount = 0;
     private boolean flagDirty;
 
     public Frame(PageID pageId, int pinCount, boolean flagDirty) {
-        this.Bb = ByteBuffer.allocate(DBParams.SGBDPageSize);
+        this.byteBuff = ByteBuffer.allocate(DBParams.SGBDPageSize);
         this.pageId = pageId;
         this.pinCount = 1;
         this.flagDirty = flagDirty;
 
     }
 
-    public void setByteBuffer(ByteBuffer Bb) {
-        this.Bb = Bb;
+    public void setByteBuffer(ByteBuffer byteBuff) {
+        this.byteBuff = byteBuff;
     }
 
     public void setPage(PageID page) {
@@ -32,7 +32,7 @@ public class Frame {
     }
 
     public ByteBuffer getByteBuffer() {
-        return this.Bb;
+        return this.byteBuff;
     }
 
     public PageID getPage() {

@@ -81,10 +81,9 @@ public class DiskManager {
         int fileIdx = pageId.getFileIdx();
         int pageIdx = pageId.getPageIdx();
 
-        if (filePageId.containsKey(fileIdx) && pageIdx >= 0) { // pageIdx >= 0, pour l'instant c'est pour éviter
-                                                               // l'erreur
-            ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // on va chercher la tableau correspondant
-                                                                             // à la clé fileIdx
+        if (filePageId.containsKey(fileIdx) && pageIdx >= 0) { // pageIdx >= 0, for now, it's a way to avoid errors
+            ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // we'll search the array that corresponds
+                                                                             // to the key fileIdx
             int numPages = currentFilePagesTab.size();
 
             if (pageIdx < numPages) {
@@ -182,20 +181,20 @@ public class DiskManager {
         int fileIdx = pageId.getFileIdx();
         int pageIdx = pageId.getPageIdx();
 
-        if (filePageId.containsKey(fileIdx)) { // pour vérifier que le fichier correspondant à la page existe dans la
-                                               // map
-            ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // un tableau temporaire qui va mettre à
-                                                                             // jour à la fin la map
+        if (filePageId.containsKey(fileIdx)) { // "To check if the file corresponding to the page exists 
+                                               // in the map
+            ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // "A temporary array that will
+                                                                             // update the map at the end
 
-            if (pageIdx >= 0 && pageIdx < currentFilePagesTab.size()) { // vérifier que la page existe dans le fichier
-                                                                        // 'mieux avec try catch)
+            if (pageIdx >= 0 && pageIdx < currentFilePagesTab.size()) { // verify that the page exists in the file
+                                                                        // 'better with the try catch)
 
-                desalocatedPage.add(pageId); // ajout de la page qu'on va désallouer au tableau des pages à désallouer
+                desalocatedPage.add(pageId); // adding the page that we'll desalocate to the array of desallocated pages
 
                 currentFilePagesTab.remove(pageIdx);
 
-                filePageId.put(fileIdx, currentFilePagesTab); // mettre à jour la map avec le nouveau tableau sans la
-                                                              // page qui a été désallouée
+                filePageId.put(fileIdx, currentFilePagesTab); // update the map with the new array but without
+                                                              // the desallocated page
 
                 System.out.println("Voici la page désallouée : Fichier n°" + fileIdx + ", Page n°" + pageIdx);
 
@@ -221,7 +220,7 @@ public class DiskManager {
 
     public int GetCurrentCountAllocPages() {
         int currentAllocatedPages = 0;
-        for (ArrayList<PageID> pages : filePageId.values()) { // pour chaque tableau des map.values
+        for (ArrayList<PageID> pages : filePageId.values()) { // for each array in map.values
             currentAllocatedPages += pages.size();
         }
         return currentAllocatedPages;

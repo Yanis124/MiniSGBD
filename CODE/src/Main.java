@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         DBParams.DBPath = "../../DB";
         DBParams.SGBDPageSize = 4096;
-        DBParams.DMFileCount = 4; // max number of file in db
+        DBParams.DMFileCount = 4; // max number of file in DB
         DBParams.FrameCount = 2;
 
         DiskManager diskManager = DiskManager.getDiskManager();

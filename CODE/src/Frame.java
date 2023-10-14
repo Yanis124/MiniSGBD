@@ -4,14 +4,14 @@ public class Frame {
 
     private ByteBuffer byteBuff;
     private PageID pageId;
-    private int pinCount = 0;
+    private int pinCount ;
     private boolean flagDirty;
 
-    public Frame(PageID pageId, int pinCount, boolean flagDirty) {
+    public Frame() {
         this.byteBuff = ByteBuffer.allocate(DBParams.SGBDPageSize);
-        this.pageId = pageId;
-        this.pinCount = 1;
-        this.flagDirty = flagDirty;
+        this.pageId = new PageID();
+        this.pinCount = 0;
+        this.flagDirty = false;
 
     }
 
@@ -35,7 +35,7 @@ public class Frame {
         return this.byteBuff;
     }
 
-    public PageID getPage() {
+    public PageID getPageId() {
         return this.pageId;
     }
 
@@ -47,8 +47,22 @@ public class Frame {
         return this.flagDirty;
     }
 
-    public void addSetCount() {
+    public void addPinCount() {
         this.pinCount++;
+    }
+
+    public boolean compareFrames(PageID page){ 
+        if(this.pageId.getFileIdx()==page.getFileIdx() && this.pageId.getPageIdx()==page.getPageIdx()){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean frameIsEmpty(){
+        if(this.pageId.getFileIdx()==-1 && this.pageId.getPageIdx()==-1){
+            return true;
+        }
+        return false;
     }
 
 }

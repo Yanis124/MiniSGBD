@@ -143,36 +143,29 @@ public class DiskManager {
         return 0;
     }
 
-    public ByteBuffer ReadPage(PageID pageId, ByteBuffer buff) {
+    public static ByteBuffer ReadPage(PageID pageId, ByteBuffer buff) {
         int fileIdx = pageId.getFileIdx();
         int pageIdx = pageId.getPageIdx();
-
-        // if (filePageId.containsKey(fileIdx) && pageIdx >= 0) {
-        // ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // on va
-        // chercher la tableau correspondant
-        // // // à la clé fileIdx
-        // int numPages = currentFilePagesTab.size();
-
-        // if (pageIdx < numPages) {
-
-        // dans BufferManager on sera amené a lire une page sans l'allouer donc pour
-        // l'instant je met en commentaire les conditions que la page est bien allouée
+        
 
         int seekPosition = pageIdx * DBParams.SGBDPageSize;
+        String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
         try {
-            String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
+            
             RandomAccessFile file = new RandomAccessFile(filePath, "rw");
             FileChannel fileChannel = file.getChannel();
             fileChannel.position(seekPosition);
-            file.close();
+            
 
             fileChannel.read(buff);
+            file.close();
 
         }
 
         catch (IOException e) {
             System.err.println("can't access to the file");
         }
+        
         return buff;
     }
 
@@ -206,7 +199,7 @@ public class DiskManager {
         }
     }
 
-    public void readContentOfBuffer(ByteBuffer bf) { // for test
+    public static  void readContentOfBuffer(ByteBuffer bf) { // for test
         bf.flip();
         while (bf.hasRemaining()) {
 
@@ -214,8 +207,10 @@ public class DiskManager {
             if (currentByte != '\0') {
                 char currentChar = (char) currentByte;
                 System.out.print(currentChar);
+                
             }
         }
+        System.out.println("\n");
     }
 
     public int GetCurrentCountAllocPages() {

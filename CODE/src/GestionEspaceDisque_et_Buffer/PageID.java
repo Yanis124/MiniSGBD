@@ -1,3 +1,4 @@
+package GestionEspaceDisque_et_Buffer;
 public class PageID {
 
    private int FileIdx;

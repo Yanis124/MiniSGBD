@@ -1,6 +1,8 @@
+package CoucheAcces_Fichier;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TableInfo { // a set of usefull information about a relation
+public class TableInfo implements Serializable{ // a set of usefull information about a relation
     private String nameRelation;
     private int numberCols;
     private ArrayList<ColInfo> tableCols; // name and type of columns are regrouped in a separated class

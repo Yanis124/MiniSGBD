@@ -1,11 +1,8 @@
-enum ColumnType { // for the different types of columns
-    INT,
-    FLOAT,
-    STRING,
-    VARSTRING
-}
+package CoucheAcces_Fichier;
 
-public class ColInfo { // we've separated each column's info as advised in the TP
+import java.io.Serializable;
+
+public class ColInfo implements Serializable{ // we've separated each column's info as advised in the TP
     private String nameCol;
     private ColumnType typeCol;
     private int lengthString;

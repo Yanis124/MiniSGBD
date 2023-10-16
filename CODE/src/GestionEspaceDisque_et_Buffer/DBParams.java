@@ -11,6 +11,7 @@ public class DBParams{
     public static int DMFileCount;
     public static int NumFichier;
     public static int FrameCount;
+    
 
 
     

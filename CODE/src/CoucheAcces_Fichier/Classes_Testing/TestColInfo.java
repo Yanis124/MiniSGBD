@@ -2,6 +2,7 @@ package CoucheAcces_Fichier.Classes_Testing;
 
 import CoucheAcces_Fichier.*;
 
+
 public class TestColInfo {
     public static void main(String[] args) {
         ColInfo colInfo1 = new ColInfo("ColumnName1", ColumnType.INT, 0);
@@ -26,3 +27,4 @@ public class TestColInfo {
 
     }
 }
+

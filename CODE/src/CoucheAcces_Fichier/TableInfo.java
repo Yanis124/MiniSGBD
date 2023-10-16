@@ -1,4 +1,5 @@
 package CoucheAcces_Fichier;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -24,6 +25,15 @@ public class TableInfo implements Serializable{ // a set of usefull information 
 
     public ArrayList<ColInfo> getTableCols() {
         return tableCols;
+    }
+
+    public String toString(){
+        String TableInfo="|"+nameRelation+"|";
+        for(ColInfo col:tableCols){
+            TableInfo+=col.toString();
+        }
+        TableInfo+="| number of colomn : "+numberCols+"|";
+        return TableInfo;
     }
 
 

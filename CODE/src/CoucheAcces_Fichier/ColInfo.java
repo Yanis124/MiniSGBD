@@ -25,4 +25,8 @@ public class ColInfo implements Serializable{ // we've separated each column's i
     public int getLengthString() {
         return lengthString;
     }
+
+    public String toString(){
+        return "name : "+nameCol+" type : "+typeCol+ " lengthString : "+lengthString+" ";
+    }
 }

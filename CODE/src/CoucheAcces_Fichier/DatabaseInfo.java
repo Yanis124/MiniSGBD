@@ -11,9 +11,11 @@ import java.util.ArrayList;
 
 import GestionEspaceDisque_et_Buffer.DBParams;
 
+
 public class DatabaseInfo implements Serializable {
     // this class should have only and only a unique instance that will be initiallized in the later TPs
     private static DatabaseInfo instance;
+    private String databaseInfoFile="DBInfo.save";
     private ArrayList<TableInfo> informationTable;
     private int counterRelations;
 
@@ -33,11 +35,11 @@ public class DatabaseInfo implements Serializable {
     }
 
     public void Init() {
-        Load("DBInfo.save");
+        Load();
     } // initialize an instance
 
     public void Finish() {
-        Save("DBInfo.save");
+        Save();
     } // for cleaning
 
     public void AddTableInfo(TableInfo tabInfo) {
@@ -60,10 +62,10 @@ public class DatabaseInfo implements Serializable {
         return counterRelations;
     }
 
-    public void Save(String fileName) {
+    public void Save() {
         try {
             // Complete path to the directory DB (depend on how you run the code)
-            String filePath = DBParams.DBPath + File.separator + fileName; // Combine the directory with fileName
+            String filePath = DBParams.DBPath + File.separator + databaseInfoFile; // Combine the directory with fileName
 
             FileOutputStream fileOut = new FileOutputStream(filePath);
             ObjectOutputStream oos = new ObjectOutputStream(fileOut);
@@ -78,9 +80,9 @@ public class DatabaseInfo implements Serializable {
     }
 
     // Method to load DBinfo informations starting from a file
-    public void Load(String fileName) {
+    public void Load() {
         try {
-            String filePath = DBParams.DBPath + File.separator + fileName; 
+            String filePath = DBParams.DBPath + File.separator +databaseInfoFile ; 
             FileInputStream fileIn = new FileInputStream(filePath);
             ObjectInputStream ois = new ObjectInputStream(fileIn);
             DatabaseInfo dbInfo = (DatabaseInfo) ois.readObject();
@@ -89,9 +91,20 @@ public class DatabaseInfo implements Serializable {
             // Update the actual instance with new loaded information
             instance = dbInfo;
             System.out.println("Data has been loaded to unique instance of DBinfo (updated)");
+            
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    //check if the data of the database has been written in DBInfo.sava file
+    public String toString(){
+        String informationDatabase="";
+        for(TableInfo table: informationTable ){
+            informationDatabase+=table.toString();
+            informationDatabase+="\n";
+        }
+        return informationDatabase;
     }
 
 }

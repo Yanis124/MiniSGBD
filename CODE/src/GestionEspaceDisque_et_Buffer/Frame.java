@@ -66,4 +66,9 @@ public class Frame {
         return false;
     }
 
+    public void cleanFrame() {
+        pageId = new PageID();
+        pinCount = 0;
+        flagDirty = false;
+    }
 }

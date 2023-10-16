@@ -1,34 +1,38 @@
 package GestionEspaceDisque_et_Buffer;
 public class PageID {
 
-   private int FileIdx;
-   private int PageIdx;
+   private int fileIdx;
+   private int pageIdx;
 
-   PageID(int FileIdx, int PageIdx) {
-      this.FileIdx = FileIdx;
-      this.PageIdx = PageIdx;
+   public PageID(int fileIdx, int pageIdx) {
+      this.fileIdx = fileIdx;
+      this.pageIdx = pageIdx;
 
    }
 
-   PageID() {
-      this.FileIdx = -1;
-      this.PageIdx = -1;
+   public PageID() {
+      this.fileIdx = -1;
+      this.pageIdx = -1;
    }
 
    public void setFileIdx(int FileIdx) {
-      this.FileIdx = FileIdx;
+      this.fileIdx = FileIdx;
    }
 
    public void setPageIdx(int PageIdx) {
-      this.PageIdx = PageIdx;
+      this.pageIdx = PageIdx;
    }
 
    public int getFileIdx() {
-      return this.FileIdx;
+      return this.fileIdx;
    }
 
    public int getPageIdx() {
-      return this.PageIdx;
+      return this.pageIdx;
+   }
+
+   public String toString(){
+      return "("+fileIdx+","+pageIdx+")"+",";
    }
 
 }

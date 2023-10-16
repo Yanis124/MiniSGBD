@@ -1,4 +1,5 @@
 package GestionEspaceDisque_et_Buffer;
+
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -13,13 +14,11 @@ public class DiskManager {
     private static DiskManager diskManager = new DiskManager();
 
     public Map<Integer, ArrayList<PageID>> filePageId = new HashMap<>(); // {file:[page]}
-    private PageID currentAllocatedPage = new PageID(0, 0);
     private ArrayList<PageID> desalocatedPage = new ArrayList<PageID>(); // for desallocated page
 
     private DiskManager() {
-        for (int i = 0; i < DBParams.DMFileCount; i++) { // get the available files in the db
-            String filePatheName = DBParams.DBPath + "/F" + i + ".data"; // assume that the db should always have
-                                                                         // DMFileCount
+        for (int i = 0; i < 4; i++) { // get the available files in the db
+            String filePatheName = DBParams.DBPath + "/F" + i + ".data"; // assume that the db should always have DMFileCount
 
             File file = new File(filePatheName);
             if (!file.exists()) {
@@ -37,14 +36,16 @@ public class DiskManager {
 
         int currentSmallestFileId;
         int currentSmallestPageId;
+        PageID currentAllocatedPage=new PageID();
 
-        if (!desalocatedPage.isEmpty()) { // if a page was desalocated
+        if (!desalocatedPage.isEmpty()) { // if a page was desalocated we use it
             currentAllocatedPage = desalocatedPage.get(desalocatedPage.size() - 1);
             desalocatedPage.remove(desalocatedPage.size() - 1);
             currentSmallestFileId = currentAllocatedPage.getFileIdx();
             currentSmallestPageId = currentAllocatedPage.getPageIdx();
 
-        } else {
+        } 
+        else {   //if there isn't a disalocated page we use a page from a file with the least allocated page
 
             PageID currentSmallestPage = getSmallestPage();
             currentSmallestFileId = currentSmallestPage.getFileIdx();
@@ -52,15 +53,23 @@ public class DiskManager {
         }
         currentAllocatedPage.setFileIdx(currentSmallestFileId);
         currentAllocatedPage.setPageIdx(currentSmallestPageId);
-        ArrayList<PageID> filePages = filePageId.getOrDefault(currentSmallestFileId, new ArrayList<>());
-
-        filePages.add(currentAllocatedPage);
-        filePageId.replace(currentSmallestFileId, filePages);
-
-        System.out.println("current file:   " + currentAllocatedPage.getFileIdx() + "/ page "
-                + currentAllocatedPage.getPageIdx() + "\t");
-
+        updateFilePageId(currentAllocatedPage); //update the map filePageId by adding currentAllocatedPage to the list associated to its page
+        System.out.println("allocated page : " +currentAllocatedPage.toString());
         return currentAllocatedPage;
+    }
+
+    private void updateFilePageId(PageID currentAllocatedPage){  //update the map filePageId
+        ArrayList<PageID> filePages=new ArrayList<PageID>();
+        ArrayList<PageID> filePages1 = filePageId.getOrDefault(currentAllocatedPage.getFileIdx(), new ArrayList<>());
+        for(int i=0;i<filePages1.size();i++){
+            PageID page=new PageID();
+            PageID page1=filePages1.get(i);
+            page.setFileIdx(page1.getFileIdx());
+            page.setPageIdx(page1.getPageIdx());
+            filePages.add(page);
+        }
+        filePages.add(currentAllocatedPage);
+        filePageId.put(currentAllocatedPage.getFileIdx(), filePages);
     }
 
     private PageID getSmallestPage() { // get the last page of the file with the smallest allocated page
@@ -75,6 +84,34 @@ public class DiskManager {
             }
         }
         return new PageID(fileIdxWithSmallestSize, smallestFileSize);
+    }
+
+    public void DeallocPage(PageID pageId) {
+
+        int fileIdx = pageId.getFileIdx();
+        int pageIdx = pageId.getPageIdx();
+        if (filePageId.containsKey(fileIdx)) { // "To check if the file corresponding to the page exists
+                                               // in the map
+            ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // "A temporary array that will
+                                                                             // update the map at the end
+            if (pageIdx >= 0 && pageIdx < currentFilePagesTab.size()) { // verify that the page exists in the file
+                                                                        // 'better with the try catch)
+
+                desalocatedPage.add(pageId); // adding the page that we'll desalocate to the array of desallocated pages
+
+                currentFilePagesTab.remove(pageIdx);
+
+                filePageId.put(fileIdx, currentFilePagesTab); // update the map with the new array but without
+                                                              // the desallocated page
+
+                System.out.println("desalocated page : " +pageId.toString());
+
+            } else {
+                System.out.println("this page was not allocated");
+            }
+        } else {
+            System.out.println("this page doesn't belong to any file of the database");
+        }
     }
 
     public void WritePage(PageID pageId, ByteBuffer buff) {
@@ -132,7 +169,6 @@ public class DiskManager {
                     }
                 }
                 file.close();
-                System.out.println("size : " + size);
                 return size;
             }
             file.close();
@@ -147,17 +183,14 @@ public class DiskManager {
     public static ByteBuffer ReadPage(PageID pageId, ByteBuffer buff) {
         int fileIdx = pageId.getFileIdx();
         int pageIdx = pageId.getPageIdx();
-        
 
         int seekPosition = pageIdx * DBParams.SGBDPageSize;
         String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
         try {
-            
+
             RandomAccessFile file = new RandomAccessFile(filePath, "rw");
             FileChannel fileChannel = file.getChannel();
             fileChannel.position(seekPosition);
-            
-
             fileChannel.read(buff);
             file.close();
 
@@ -166,60 +199,51 @@ public class DiskManager {
         catch (IOException e) {
             System.err.println("can't access to the file");
         }
-        
+
         return buff;
     }
 
-    public void DeallocPage(PageID pageId) {
 
-        int fileIdx = pageId.getFileIdx();
-        int pageIdx = pageId.getPageIdx();
-
-        if (filePageId.containsKey(fileIdx)) { // "To check if the file corresponding to the page exists 
-                                               // in the map
-            ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // "A temporary array that will
-                                                                             // update the map at the end
-
-            if (pageIdx >= 0 && pageIdx < currentFilePagesTab.size()) { // verify that the page exists in the file
-                                                                        // 'better with the try catch)
-
-                desalocatedPage.add(pageId); // adding the page that we'll desalocate to the array of desallocated pages
-
-                currentFilePagesTab.remove(pageIdx);
-
-                filePageId.put(fileIdx, currentFilePagesTab); // update the map with the new array but without
-                                                              // the desallocated page
-
-                System.out.println("Voici la page désallouée : Fichier n°" + fileIdx + ", Page n°" + pageIdx);
-
-            } else {
-                System.out.println("Ce message dit qu'il faut gérer une exception à cet endroit !");
-            }
-        } else {
-            System.out.println("Ce message dit qu'il faut gérer une exception à cet endroit !");
-        }
-    }
-
-    public static  void readContentOfBuffer(ByteBuffer bf) { // for test
+    //read the content of a byteBuffer
+    public static StringBuilder readContentOfBuffer(ByteBuffer bf) { 
         bf.flip();
+        StringBuilder message = new StringBuilder();
+        byte currentByte;
         while (bf.hasRemaining()) {
-
-            byte currentByte = bf.get();
+            currentByte= bf.get();
             if (currentByte != '\0') {
                 char currentChar = (char) currentByte;
-                System.out.print(currentChar);
-                
+                message.append(currentChar);
+
             }
         }
-        System.out.println("\n");
+        return message;
     }
 
+    
     public int GetCurrentCountAllocPages() {
         int currentAllocatedPages = 0;
         for (ArrayList<PageID> pages : filePageId.values()) { // for each array in map.values
             currentAllocatedPages += pages.size();
         }
         return currentAllocatedPages;
+    }
+
+    //get a view of variables
+    public String toString(){
+        String filePageIdInfo="filePageId : \n";
+        for(int fileIdx : filePageId.keySet()){
+            filePageIdInfo+=" file : "+fileIdx+"-->"+"[";
+            for(PageID page: filePageId.get(fileIdx)){
+                filePageIdInfo+=page.toString();
+            }
+            filePageIdInfo+="] \n";
+        }
+        filePageIdInfo+=" disalocated Pages : "+"\n [";
+        for(PageID page:desalocatedPage){
+            filePageIdInfo+=page.toString();
+        }
+        return filePageIdInfo+"]";
     }
 
 }

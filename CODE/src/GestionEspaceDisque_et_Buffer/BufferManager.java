@@ -7,6 +7,8 @@ public class BufferManager {
     private static BufferManager bufferManager = new BufferManager();
     private ArrayList<Frame> listFrames=new ArrayList<Frame>();
 
+    private ArrayList<Frame> EmptyFrames = new ArrayList<Frame>();
+
     private BufferManager() {
         for(int i=0;i<DBParams.FrameCount;i++){
             listFrames.add(new Frame());
@@ -32,7 +34,17 @@ public class BufferManager {
         }
 
         //if not we will check if there is an empty frame
-        for(Frame frame:listFrames){  
+        /*
+        if(!EmptyFrames.isEmpty()){
+            EmptyFrames.getLast().setPage(pageId);
+            EmptyFrames.getLast().addPinCount();
+            EmptyFrames.getLast().setByteBuffer(DiskManager.ReadPage(pageId, Bf));
+            Bf = EmptyFrames.getLast().getByteBuffer();
+            EmptyFrames.removeLast();
+            return Bf;
+        }
+        */
+        for(Frame frame:listFrames){
             if(frame.frameIsEmpty()){
                 frame.setPage(pageId);
                 frame.addPinCount();
@@ -65,11 +77,34 @@ public class BufferManager {
     }
 
     public void freePage(PageID pageId,boolean flagDirty){
+        for(Frame frame : listFrames){                          //We search the frame of the pageId
+            if(frame.compareFrames(pageId)) {                   //If we find
 
+                frame.setPinCount(frame.getPinCount()-1);       //Decrement PinCount
+                frame.setFlagDirty(flagDirty);                  //Set flagDirty
+
+                if(frame.getPinCount() == 0){                   //If no one want the page
+                    frame.cleanFrame();                        //Set an Empty PageId
+                    EmptyFrames.add(frame);
+                }
+
+
+                return;                                         //Finish the function
+            }
+        }
     }
 
     public void flushAll(){
 
+        DiskManager diskManager = DiskManager.getDiskManager();                     //Get diskManager
+
+        for(Frame frame : listFrames){                                              //All the frame
+            if(frame.getFlagDirty()){                                               //If we have the write
+                diskManager.WritePage(frame.getPageId(), frame.getByteBuffer());
+            }
+            frame.cleanFrame();                                                     //Clean the frame;
+            if(!EmptyFrames.contains(frame))  EmptyFrames.add(frame);
+        }
     }
 
     
@@ -81,7 +116,6 @@ public class BufferManager {
             DiskManager.readContentOfBuffer(listFrames.get(i).getByteBuffer());
         }
     }
-
     
 
 }

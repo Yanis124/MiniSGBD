@@ -4,12 +4,18 @@ import java.nio.ByteBuffer;
 
 public class PageID {
 
-   private int FileIdx;
-   private int PageIdx;
+   private int fileIdx;
+   private int pageIdx;
 
+<<<<<<< HEAD
    public PageID(int FileIdx, int PageIdx) {
       this.FileIdx = FileIdx;
       this.PageIdx = PageIdx;
+=======
+   public PageID(int fileIdx, int pageIdx) {
+      this.fileIdx = fileIdx;
+      this.pageIdx = pageIdx;
+>>>>>>> 9ccc4e6e2c0078c36202f4e4918512808cddefd5
 
    }
    public static PageID readFromBuffer(ByteBuffer byteBuffer, int pos){
@@ -17,6 +23,7 @@ public class PageID {
       return new PageID(byteBuffer.getInt(), byteBuffer.getInt());
    }
 
+<<<<<<< HEAD
    public static void writeFromBuffer(ByteBuffer byteBuffer, int pos,PageID pageId){
 
       byteBuffer.position(pos);
@@ -28,22 +35,31 @@ public class PageID {
    public PageID() {
       this.FileIdx = -1;
       this.PageIdx = -1;
+=======
+   public PageID() {
+      this.fileIdx = -1;
+      this.pageIdx = -1;
+>>>>>>> 9ccc4e6e2c0078c36202f4e4918512808cddefd5
    }
 
    public void setFileIdx(int FileIdx) {
-      this.FileIdx = FileIdx;
+      this.fileIdx = FileIdx;
    }
 
    public void setPageIdx(int PageIdx) {
-      this.PageIdx = PageIdx;
+      this.pageIdx = PageIdx;
    }
 
    public int getFileIdx() {
-      return this.FileIdx;
+      return this.fileIdx;
    }
 
    public int getPageIdx() {
-      return this.PageIdx;
+      return this.pageIdx;
+   }
+
+   public String toString(){
+      return "("+fileIdx+","+pageIdx+")"+",";
    }
 
    public boolean factice(){

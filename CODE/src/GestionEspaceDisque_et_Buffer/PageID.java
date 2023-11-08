@@ -31,8 +31,18 @@ public class PageID {
       return this.pageIdx;
    }
 
+   public boolean isValid(){  //check if the page is a valid page
+      if(this.fileIdx<0 || this.pageIdx<0 ){
+         return false;
+      }
+      return true;
+   }
+
+   @Override
    public String toString(){
       return "("+fileIdx+","+pageIdx+")"+",";
    }
+
+   
 
 }

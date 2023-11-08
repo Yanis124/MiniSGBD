@@ -9,7 +9,7 @@ public class Frame {
     private boolean flagDirty;
 
     public Frame() {
-        this.byteBuff = ByteBuffer.allocate(DBParams.SGBDPageSize);
+        this.byteBuff =null;
         this.pageId = new PageID();
         this.pinCount = 0;
         this.flagDirty = false;

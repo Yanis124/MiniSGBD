@@ -32,6 +32,7 @@ public class TestRecord {
         System.out.println("Bytes Written: " + bytesWritten);
 
         
+        
 
         Record newRecord = new Record(tableInfo);
         int bytesRead = newRecord.readFromBuffer(buffer, 0);

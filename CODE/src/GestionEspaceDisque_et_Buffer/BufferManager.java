@@ -112,8 +112,8 @@ public class BufferManager {
     public void displaySatetOfFrames(){      //just to check if everything work as expected
         for(int i=0;i<DBParams.FrameCount;i++){
             System.out.println("frame : "+i+" page : "+listFrames.get(i).getPageId().getFileIdx()+" "+listFrames.get(i).getPageId().getPageIdx()+" pinCount : "+listFrames.get(i).getPinCount());
-            System.out.print(" content of the frame : " );
-            DiskManager.readContentOfBuffer(listFrames.get(i).getByteBuffer());
+            System.out.println(" content of the frame : " );
+            System.out.println(DiskManager.readContentOfBuffer(listFrames.get(i).getByteBuffer()));
         }
     }
     

@@ -114,10 +114,12 @@ public class DiskManager {
         }
     }
 
+    // write the content of the buffer at the indicated pageId
     public void WritePage(PageID pageId, ByteBuffer buff) {
 
         int fileIdx = pageId.getFileIdx();
         int pageIdx = pageId.getPageIdx();
+        
 
         if (filePageId.containsKey(fileIdx) && pageIdx >= 0) { // pageIdx >= 0, for now, it's a way to avoid errors
             ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // we'll search the array that corresponds
@@ -132,6 +134,7 @@ public class DiskManager {
                     FileChannel fileChannel = file.getChannel();
 
                     int pageSize = getPageSize(filePath, pageIdx);
+                    
                     int seekPosition = pageIdx * DBParams.SGBDPageSize + pageSize;
                     file.seek(seekPosition);
                     // Write the data from the ByteBuffer to the file at the specified page
@@ -148,6 +151,7 @@ public class DiskManager {
 
     }
 
+    //get the size of page
     private int getPageSize(String filePath, int pageIdx) {
 
         ByteBuffer buffRead = ByteBuffer.allocate(DBParams.SGBDPageSize);
@@ -180,6 +184,7 @@ public class DiskManager {
         return 0;
     }
 
+    //get the content of a page to a byteBuffer
     public static ByteBuffer ReadPage(PageID pageId, ByteBuffer buff) {
         int fileIdx = pageId.getFileIdx();
         int pageIdx = pageId.getPageIdx();
@@ -211,6 +216,7 @@ public class DiskManager {
         byte currentByte;
         while (bf.hasRemaining()) {
             currentByte= bf.get();
+            
             if (currentByte != '\0') {
                 char currentChar = (char) currentByte;
                 message.append(currentChar);

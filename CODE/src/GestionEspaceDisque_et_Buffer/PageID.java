@@ -54,6 +54,13 @@ public class PageID {
       return true;
    }
 
+   public boolean equals(PageID pageId){   //check if two pages are equal
+      if(this.fileIdx==pageId.getFileIdx() && this.pageIdx==pageId.getPageIdx()){
+         return true;
+      }
+      return false;
+   }
+
    @Override
    public String toString(){
       return "("+fileIdx+","+pageIdx+")"+",";

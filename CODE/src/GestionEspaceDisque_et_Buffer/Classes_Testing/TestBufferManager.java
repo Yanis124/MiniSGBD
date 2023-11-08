@@ -4,6 +4,7 @@ import GestionEspaceDisque_et_Buffer.DiskManager;
 import GestionEspaceDisque_et_Buffer.PageID;
 import GestionEspaceDisque_et_Buffer.BufferManager;
 import GestionEspaceDisque_et_Buffer.DBParams;
+import GestionEspaceDisque_et_Buffer.Frame;
 import java.nio.ByteBuffer;
 
 public class TestBufferManager {
@@ -16,37 +17,37 @@ public class TestBufferManager {
         DiskManager diskManager=DiskManager.getDiskManager();
         BufferManager bufferManager=BufferManager.getBufferManager();
 
-        String dataToAppend = "this data should be appended to the file 1 page 1";
-        byte[] dataBytes = dataToAppend.getBytes(); // convert string to a byte code
- 
-
+        
         PageID page1=diskManager.AllocPage();
-        ByteBuffer byteBuffer=bufferManager.getPage(page1);
-        //ByteBuffer byteBuffer = ByteBuffer.wrap(dataBytes);  //ajouter le contenu de dataToAppend a byteBuffer
-        System.out.println(diskManager.readContentOfBuffer(byteBuffer));
-        //diskManager.WritePage(page1, byteBuffer);
-
-        // String dataToAppend2 = "this data should be appended to the file 1 page 1";
-        // byte[] dataBytes2 = dataToAppend2.getBytes(); // convert string to a byte code
-        // ByteBuffer buffWrite2 = ByteBuffer.wrap(dataBytes2);
+        bufferManager.getPage(page1);  //assign the page 0/0 to frame0  [(0,0)|(-1,-1)]
         
         PageID page2=diskManager.AllocPage();
-        byteBuffer=bufferManager.getPage(page2);
-        System.out.println(diskManager.readContentOfBuffer(byteBuffer));
-        //byteBuffer=ByteBuffer.wrap(dataBytes);
-        //diskManager.WritePage(page2, byteBuffer);
+        bufferManager.getPage(page2);  // assign the page 1/0 to frame1 [(0,0)|(1,0)]
 
-        PageID page3=diskManager.AllocPage();
+        PageID page3=diskManager.AllocPage();   //the page 0/0 of the frame0 should be replaced by page 2/0   [(2,0)|(1,0)] 
         bufferManager.getPage(page3);
-        System.out.println(diskManager.readContentOfBuffer(byteBuffer));
+        bufferManager.getPage(page3);         //pinCount of page(2,0) should be 2     [(2,0)|(1,0)]
 
-        bufferManager.displaySatetOfFrames();
+        PageID page4=diskManager.AllocPage();
+        bufferManager.getPage(page4);   //assign the page (3,0) to the frame1   [(2,0)|(3,0)]
 
+        bufferManager.freePage(page3, false);  //pinCount of page(2,0) should pass to 1
+        bufferManager.freePage(page3, true);  //pinCount of page(2,0) should pass to 0 and the flagDirty to true
 
+        Frame frame=bufferManager.getFrame(page3);     //get the frame0 whose page is (2,0)
+        ByteBuffer buffWrite=frame.getByteBuffer();
 
+        String dataToAppend = "this data should be appended to the file 2 page 0";
+        byte[] dataBytes = dataToAppend.getBytes(); // convert string to a byte code
+        buffWrite = ByteBuffer.wrap(dataBytes);    //  simulate that the content of page (2,0) was modified
 
+        frame.setByteBuffer(buffWrite);  // change the content of frame
 
+        bufferManager.flushAll();   // the content of frame0 should be written in page (2,0)  [(-1,-1)|(-1,-1)]
+    
+        bufferManager.displaySatetOfFrames();   //display the state of the frame
 
+        //you have to comment some part of the code to see each test case
 
     }
 }

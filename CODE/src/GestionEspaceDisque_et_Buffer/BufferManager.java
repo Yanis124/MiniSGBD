@@ -7,8 +7,6 @@ public class BufferManager {
     private static BufferManager bufferManager = new BufferManager();
     private ArrayList<Frame> listFrames=new ArrayList<Frame>();
 
-    private ArrayList<Frame> EmptyFrames = new ArrayList<Frame>();
-
     private BufferManager() {
         for(int i=0;i<DBParams.FrameCount;i++){
             listFrames.add(new Frame());
@@ -19,6 +17,7 @@ public class BufferManager {
         return bufferManager;
     }
 
+    
     public ByteBuffer getPage(PageID pageId) {
         ByteBuffer Bf=ByteBuffer.allocate(DBParams.SGBDPageSize);
         
@@ -26,10 +25,8 @@ public class BufferManager {
         for(Frame frame:listFrames){   //increment the pincount of the frame if the frame containe the page
             if(frame.compareFrames(pageId)){
                 frame.addPinCount();
-                frame.setByteBuffer(DiskManager.ReadPage(pageId, Bf));
+                frame.setByteBuffer(DiskManager.ReadPage(pageId, Bf));  //get the content of the page
                 return Bf;
-                
-                
             }
         }
 
@@ -44,7 +41,7 @@ public class BufferManager {
             return Bf;
         }
         */
-        for(Frame frame:listFrames){
+        for(Frame frame:listFrames){    //add the page to an empty frame
             if(frame.frameIsEmpty()){
                 frame.setPage(pageId);
                 frame.addPinCount();
@@ -66,54 +63,67 @@ public class BufferManager {
         return Bf;
     }
 
-    private Frame getFrameWithSmallestPinCount(){  //return the page with the smallest pincount
+    // get the page with the smallest pinCount
+    private Frame getFrameWithSmallestPinCount(){  
         Frame minFrame=listFrames.get(0);
         for(Frame frame:listFrames){
             if(frame.getPinCount()<minFrame.getPinCount()){
                 minFrame=frame;
             }
         }
+        if(minFrame.getFlagDirty()){   //if the frame was modified and we should free it its content should be written ???
+            DiskManager diskManager=DiskManager.getDiskManager();
+            diskManager.WritePage(minFrame.getPageId(),minFrame.getByteBuffer() );
+        }
+
         return minFrame;
     }
 
+    //decrement the pin count of the frame and set a flagDirty
     public void freePage(PageID pageId,boolean flagDirty){
         for(Frame frame : listFrames){                          //We search the frame of the pageId
             if(frame.compareFrames(pageId)) {                   //If we find
 
                 frame.setPinCount(frame.getPinCount()-1);       //Decrement PinCount
                 frame.setFlagDirty(flagDirty);                  //Set flagDirty
-
-                if(frame.getPinCount() == 0){                   //If no one want the page
-                    frame.cleanFrame();                        //Set an Empty PageId
-                    EmptyFrames.add(frame);
-                }
-
-
+                
                 return;                                         //Finish the function
             }
         }
     }
 
+    //reset all the frames and write the content ot thr frames whose flagdirty is true
     public void flushAll(){
 
-        DiskManager diskManager = DiskManager.getDiskManager();                     //Get diskManager
-
+        DiskManager diskManager = DiskManager.getDiskManager();                    //Get diskManager
+                                                                                 
         for(Frame frame : listFrames){                                              //All the frame
-            if(frame.getFlagDirty()){                                               //If we have the write
-                diskManager.WritePage(frame.getPageId(), frame.getByteBuffer());
+            if(frame.getFlagDirty()){      
+                diskManager.WritePage(frame.getPageId(), frame.getByteBuffer());    //write the buffer
             }
             frame.cleanFrame();                                                     //Clean the frame;
-            if(!EmptyFrames.contains(frame))  EmptyFrames.add(frame);
+           
         }
     }
 
-    
+    //get the frame associated with  the given pageId
+    public Frame getFrame(PageID pageId){
+        for(Frame frame : listFrames){
+            if(frame.getPageId().equals(pageId)){
+                return frame;
+            }
+        }
+        return null;
+    }
 
+    //display the content of the frame
     public void displaySatetOfFrames(){      //just to check if everything work as expected
         for(int i=0;i<DBParams.FrameCount;i++){
-            System.out.println("frame : "+i+" page : "+listFrames.get(i).getPageId().getFileIdx()+" "+listFrames.get(i).getPageId().getPageIdx()+" pinCount : "+listFrames.get(i).getPinCount());
-            System.out.println(" content of the frame : " );
-            System.out.println(DiskManager.readContentOfBuffer(listFrames.get(i).getByteBuffer()));
+            if(listFrames.get(i).getPageId().isValid()){
+                System.out.println("frame : "+i+" page : "+listFrames.get(i).getPageId().getFileIdx()+" "+listFrames.get(i).getPageId().getPageIdx()+" pinCount : "+listFrames.get(i).getPinCount());
+                System.out.print(" content of the frame : " );
+                System.out.println(DiskManager.readContentOfBuffer(listFrames.get(i).getByteBuffer()));
+            }
         }
     }
     

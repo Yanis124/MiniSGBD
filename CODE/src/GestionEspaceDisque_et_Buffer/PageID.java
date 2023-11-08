@@ -1,16 +1,32 @@
 package GestionEspaceDisque_et_Buffer;
+
+import java.nio.ByteBuffer;
+
 public class PageID {
 
    private int fileIdx;
    private int pageIdx;
+
 
    public PageID(int fileIdx, int pageIdx) {
       this.fileIdx = fileIdx;
       this.pageIdx = pageIdx;
 
    }
+   public static PageID readFromBuffer(ByteBuffer byteBuffer, int pos){
+      byteBuffer.position(pos);
+      return new PageID(byteBuffer.getInt(), byteBuffer.getInt());
+   }
 
-   public PageID() {
+   public static void writeFromBuffer(ByteBuffer byteBuffer, int pos,PageID pageId){
+
+      byteBuffer.position(pos);
+
+      byteBuffer.putInt(pageId.getFileIdx());
+      byteBuffer.putInt(pageId.getPageIdx());
+
+   }
+   public PageID(){
       this.fileIdx = -1;
       this.pageIdx = -1;
    }
@@ -42,7 +58,5 @@ public class PageID {
    public String toString(){
       return "("+fileIdx+","+pageIdx+")"+",";
    }
-
-   
 
 }

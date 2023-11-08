@@ -1,5 +1,7 @@
 package CoucheAcces_Fichier;
 
+import GestionEspaceDisque_et_Buffer.PageID;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -8,11 +10,14 @@ public class TableInfo implements Serializable{ // a set of usefull information 
     private int numberCols;
     private ArrayList<ColInfo> tableCols; // name and type of columns are regrouped in a separated class
 
+    private PageID headerPageId;
+
     //constructeur
-    public TableInfo(String nameRelation, int numberCols, ArrayList<ColInfo> tableCols) {
+    public TableInfo(String nameRelation, int numberCols, ArrayList<ColInfo> tableCols, PageID headerPageId) {
         this.nameRelation = nameRelation;
         this.numberCols = numberCols;
         this.tableCols = tableCols;
+        this.headerPageId = headerPageId;
     }
 
     public String getNameRelation() {
@@ -25,6 +30,10 @@ public class TableInfo implements Serializable{ // a set of usefull information 
 
     public ArrayList<ColInfo> getTableCols() {
         return tableCols;
+    }
+
+    public PageID GetheaderPageId(){
+        return headerPageId;
     }
 
     public String toString(){

@@ -1,6 +1,7 @@
 package GestionEspaceDisque_et_Buffer;
 import java.util.ArrayList;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class BufferManager {
 
@@ -19,7 +20,7 @@ public class BufferManager {
 
     
     public ByteBuffer getPage(PageID pageId) {
-        ByteBuffer Bf=ByteBuffer.allocate(DBParams.SGBDPageSize);
+        ByteBuffer Bf=ByteBuffer.allocate(DBParams.SGBDPageSize).order(ByteOrder.BIG_ENDIAN);
         
         //if the page already exist in a frame
         for(Frame frame:listFrames){   //increment the pincount of the frame if the frame containe the page

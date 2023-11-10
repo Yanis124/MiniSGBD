@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.channels.FileChannel;
 import java.io.RandomAccessFile;
 
@@ -186,23 +187,30 @@ public class DiskManager {
 
     //get the content of a page to a byteBuffer
     public static ByteBuffer ReadPage(PageID pageId, ByteBuffer buff) {
-        int fileIdx = pageId.getFileIdx();
-        int pageIdx = pageId.getPageIdx();
+        if(pageId.isValid()){
+           buff.position(0);
+            
+            int fileIdx = pageId.getFileIdx();
+            int pageIdx = pageId.getPageIdx();
 
-        int seekPosition = pageIdx * DBParams.SGBDPageSize;
-        String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
-        try {
+            
 
-            RandomAccessFile file = new RandomAccessFile(filePath, "rw");
-            FileChannel fileChannel = file.getChannel();
-            fileChannel.position(seekPosition);
-            fileChannel.read(buff);
-            file.close();
+            int seekPosition = pageIdx * DBParams.SGBDPageSize;
+            String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
+            try {
+                  buff.order(ByteOrder.BIG_ENDIAN);
 
-        }
+                RandomAccessFile file = new RandomAccessFile(filePath, "rw");
+                FileChannel fileChannel = file.getChannel();
+                fileChannel.position(seekPosition);
+                fileChannel.read(buff);
+                file.close();
 
-        catch (IOException e) {
-            System.err.println("can't access to the file");
+            }
+
+            catch (IOException e) {
+                System.err.println("can't access to the file");
+            }
         }
 
         return buff;
@@ -211,7 +219,7 @@ public class DiskManager {
 
     //read the content of a byteBuffer
     public static StringBuilder readContentOfBuffer(ByteBuffer bf) { 
-        bf.flip();
+        bf.position(0);                      
         StringBuilder message = new StringBuilder();
         byte currentByte;
         while (bf.hasRemaining()) {
@@ -223,8 +231,25 @@ public class DiskManager {
 
             }
         }
+        bf.position(0);
         return message;
     }
+
+    public int getByteBufferSize(ByteBuffer bf){
+        bf.position(0);                      
+        int size=0;
+        byte currentByte;
+        while (bf.hasRemaining()) {
+            currentByte= bf.get();
+            
+            if (currentByte != '\0') {
+                size++;
+            }
+        }
+        return size;
+    }
+
+    
 
     
     public int GetCurrentCountAllocPages() {

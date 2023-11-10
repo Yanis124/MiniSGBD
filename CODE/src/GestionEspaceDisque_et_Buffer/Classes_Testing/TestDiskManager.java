@@ -52,7 +52,7 @@ public class TestDiskManager {
         System.out.println(bold+"reading a message"+reset);
         ByteBuffer buffRead = ByteBuffer.allocate(4096);
         buffRead=diskManager.ReadPage(page, buffRead);
-        System.out.println(diskManager.readContentOfBuffer(buffRead));
+        System.out.println("was red "+diskManager.readContentOfBuffer(buffRead));
     
     //every time you execute this class dataToAppend will be written to the file 1 page 1 so you it normal to get a different result for every execution  
     }

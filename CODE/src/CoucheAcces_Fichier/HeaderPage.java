@@ -1,7 +1,5 @@
 package CoucheAcces_Fichier;
-import GestionEspaceDisque_et_Buffer.BufferManager;
-import GestionEspaceDisque_et_Buffer.DiskManager;
-import GestionEspaceDisque_et_Buffer.PageID;
+import GestionEspaceDisque_et_Buffer.*;
 
 import java.nio.ByteBuffer;
 
@@ -13,22 +11,20 @@ public class HeaderPage {
 
     public HeaderPage(PageID pageId){
 
+        this.pageId = pageId;
+
         BufferManager bufferManager = BufferManager.getBufferManager();                         //Get Buffer and Disk manager
         DiskManager diskManager = DiskManager.getDiskManager();
 
         byteBuffer = bufferManager.getPage(pageId);
 
-        PageID pageId1 = new PageID();
-        PageID pageId2 = new PageID();
+        PageID freePageId = new PageID();  //the page with free space
+        PageID fullPageId = new PageID();   //the full page
 
-        String str = "" + pageId1.getFileIdx()  + pageId1.getPageIdx()                          //Write in to the buffer
-                + pageId2.getFileIdx() + pageId2.getPageIdx();
-        byte[] byteStr= str.getBytes();
-        byteBuffer = ByteBuffer.wrap(byteStr);
-
-        diskManager.WritePage(pageId, byteBuffer);
-        this.pageId = pageId;
-
+        byteBuffer.putInt(freePageId.getFileIdx());   //write the pageId of both page in a byteBuffer
+        byteBuffer.putInt(freePageId.getPageIdx());
+        byteBuffer.putInt(fullPageId.getFileIdx());
+        byteBuffer.putInt(fullPageId.getPageIdx());
     }
 
     /*
@@ -39,44 +35,61 @@ public class HeaderPage {
 
 
      */
+    // set the pageId of the freePage
     public void setFreePage(PageID pageId){
-
         int pos = 0;
+        byteBuffer.position(pos);
+        int freeFileIdx=pageId.getFileIdx();
+        int freePageIdx=pageId.getPageIdx();
 
-
-
+        byteBuffer.putInt(freeFileIdx);
+        byteBuffer.putInt(freePageIdx);
     }
 
+    // set the pageId of the fullPage
     public void setFullPage(PageID pageId){
         int pos = 8;
+        byteBuffer.position(pos);
+        int fullFileIdx=pageId.getFileIdx();
+        int fullPageIdx=pageId.getPageIdx();
 
+        byteBuffer.putInt(fullFileIdx);
+        byteBuffer.putInt(fullPageIdx);
     }
 
+    // get the pageId of the freePage
     public PageID getFreePage(){
 
         int pos = 0;
-
+        byteBuffer.position(pos);
+        return new PageID(byteBuffer.getInt(),byteBuffer.getInt());
     }
 
+    //get the PageId of the fullPage
     public PageID getFullPage(){
         int pos = 8;
-
+        byteBuffer.position(pos);
+        return new PageID(byteBuffer.getInt(),byteBuffer.getInt());
     }
 
-    public void finalize(PageID pageId){
-
-        if(this.pageId.compareTo(pageId)) {
-            BufferManager bufferManager = BufferManager.getBufferManager();                         //Get Buffer and Disk manager
-            bufferManager.freePage(pageId, true);
-        }
-        else
-            System.out.println("Pas le meme page ID");
+    //get the pageId of the headerPage
+    public PageID getPageID(){
+        return pageId;
     }
 
+    //set the pageId of the headerPage
+    public void getPageID(PageID pageId){
+         this.pageId=pageId;
+    }
 
-    //public PageID getFullPage(){
+//     public void finalize(PageID pageId){
 
+//         if(this.pageId.compareTo(pageId)) {
+//             BufferManager bufferManager = BufferManager.getBufferManager();                         //Get Buffer and Disk manager
+//             bufferManager.freePage(pageId, true);
+//         }
+//         else
+//             System.out.println("Pas le meme page ID");
+//     }
 
-
-    //}
 }

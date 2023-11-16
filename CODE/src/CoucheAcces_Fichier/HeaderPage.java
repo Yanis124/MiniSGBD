@@ -14,7 +14,7 @@ public class HeaderPage {
         this.pageId = pageId;
 
         BufferManager bufferManager = BufferManager.getBufferManager();                         //Get Buffer and Disk manager
-        DiskManager diskManager = DiskManager.getDiskManager();
+        //DiskManager diskManager = DiskManager.getDiskManager();
 
         byteBuffer = bufferManager.getPage(pageId);
 
@@ -82,14 +82,16 @@ public class HeaderPage {
          this.pageId=pageId;
     }
 
-//     public void finalize(PageID pageId){
+    //free the headerPage
+    public void finalize(PageID pageId){
 
-//         if(this.pageId.compareTo(pageId)) {
-//             BufferManager bufferManager = BufferManager.getBufferManager();                         //Get Buffer and Disk manager
-//             bufferManager.freePage(pageId, true);
-//         }
-//         else
-//             System.out.println("Pas le meme page ID");
-//     }
+        if(this.pageId.equals(pageId)) {
+
+            BufferManager bufferManager = BufferManager.getBufferManager();                     
+            bufferManager.freePage(pageId, true);
+        }
+        else
+            System.out.println("Pas le meme page ID");
+    }
 
 }

@@ -75,6 +75,52 @@ public class Record {
         }
     }
 
+    public int sizeRecord(){
+         int totalSize = 0;
+            for (int i = 0; i < tabInfo.getNumberCols(); i++) {
+                String value = recValues.get(i);
+
+                switch (tabInfo.getTableCols().get(i).getTypeCol()) {
+                    case INT:
+                        int intValue = Integer.parseInt(value);
+                        //buff.putInt(intValue);
+                        totalSize += 4;
+                        break;
+                    case FLOAT:
+                        // Store the FLOAT value as binary (no conversion, we've made it this way to avoid on certain problems)
+                        float floatValue = Float.parseFloat(value);
+                        //buff.putFloat(floatValue);
+                        totalSize += 4;
+                        break;
+                    case STRING:
+                        // Write a fixed-length STRING
+                        String stringValue = value;
+                        int stringLength = tabInfo.getTableCols().get(i).getLengthString();
+                        // byte[] stringBytes = new byte[stringLength];
+                        // byte[] valueBytes = stringValue.getBytes();
+
+                        // // Copy the needed part of the value string into the STRING column
+                        // System.arraycopy(valueBytes, 0, stringBytes, 0, Math.min(valueBytes.length, stringLength));
+                        
+                        // buff.put(stringBytes);
+                        totalSize += stringLength;
+                        break;
+                    case VARSTRING:
+                        // Store the VARSTRING value as binary with its length
+                        int varStringLength = value.length();
+                        //buff.putInt(varStringLength);
+                        //byte[] varStringBytes = value.getBytes();
+                        //buff.put(varStringBytes);
+                        totalSize += 4 + varStringLength;
+                        break;
+                    default:
+                        System.out.println("Column type not supported");
+                        break;
+                }
+            }
+            return totalSize;
+    }
+
     public int readFromBuffer(ByteBuffer buff, int pos) {
         try {
             recValues.clear();

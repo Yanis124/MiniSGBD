@@ -19,6 +19,16 @@ public class DataPages {
 
         byteBuffer.putInt(pageIdNext.getFileIdx());
         byteBuffer.putInt(pageIdNext.getPageIdx());
+
+        int positionFreeSpace=8;   //add available space to the DataPage
+        byteBuffer.position(DBParams.SGBDPageSize-4);
+        byteBuffer.putInt(positionFreeSpace);
+
+        int nombreSlot=0;         //add the number of slot
+        byteBuffer.position(DBParams.SGBDPageSize-8);
+        byteBuffer.putInt(nombreSlot);
+
+
     }
 
     //get the pageId of the dataPage
@@ -27,9 +37,73 @@ public class DataPages {
     }
 
     //set the pageId of the dataPage
-    public void getPageID(PageID pageId){
+    public void setPageID(PageID pageId){
          this.pageId=pageId;
     }
+
+    //return the position of the first empty byte
+    public int getPosFreeSpace(){
+        int pos=DBParams.SGBDPageSize-4;
+        byteBuffer.position(pos);
+        return byteBuffer.getInt();
+    }
+
+    public void setPosFreeSpace(int freeSpace){
+        int pos=DBParams.SGBDPageSize-4;
+        byteBuffer.position(pos);
+        byteBuffer.putInt(freeSpace);
+    }
+
+    //get the number of slot in the dataPage
+    public int getNumberSlot(){
+
+        int pos=DBParams.SGBDPageSize-8;
+        byteBuffer.position(pos);
+        return byteBuffer.getInt();
+    }
+
+    public void setNumberSlot(int numberSlot){
+        int pos=DBParams.SGBDPageSize-8;
+        byteBuffer.position(pos);
+        byteBuffer.putInt(numberSlot);
+    }
+
+    //return the available space in the dataPage
+    public int getAvailableSpace(){
+        int availableSpace;
+        int posFreeSpace=getPosFreeSpace();
+        int numberSlot=getNumberSlot();
+        availableSpace=DBParams.SGBDPageSize-(posFreeSpace+(numberSlot*8)+8);
+
+        return availableSpace;
+    }
+
+    //set the next page
+    public void setNextPage(PageID pageId){
+        int pos=0;
+        byteBuffer.position(pos);
+        byteBuffer.putInt(pageId.getFileIdx());
+        byteBuffer.putInt(pageId.getPageIdx());
+    }
+
+    public PageID getNextPage(){
+        int pos=0;
+        byteBuffer.position(pos);
+        return new PageID(byteBuffer.getInt(),byteBuffer.getInt());
+    }
+
+    // free the dataPage
+    public void finalize(PageID pageId) {
+
+        if (this.pageId.equals(pageId)) {
+
+            BufferManager bufferManager = BufferManager.getBufferManager();
+            bufferManager.freePage(pageId, true);
+        } else
+            System.out.println("Pas le meme page ID");
+    }
+
+
 
 
    

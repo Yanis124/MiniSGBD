@@ -32,9 +32,10 @@ public class TableInfo implements Serializable{ // a set of usefull information 
         return tableCols;
     }
 
-    public PageID GetheaderPageId(){
+    public PageID getHeaderPageId(){
         return headerPageId;
     }
+
 
     public String toString(){
         String TableInfo="|"+nameRelation+"|";
@@ -44,6 +45,8 @@ public class TableInfo implements Serializable{ // a set of usefull information 
         TableInfo+="| number of colomn : "+numberCols+"|";
         return TableInfo;
     }
+
+
 
 
 }

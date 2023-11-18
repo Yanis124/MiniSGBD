@@ -20,6 +20,11 @@ public class BufferManager {
 
     
     public ByteBuffer getPage(PageID pageId) {
+
+        if(!pageId.isValid()){ //if the page is (-1,-1) we shouldn't read its content
+            return null;
+        }
+
         ByteBuffer Bf=ByteBuffer.allocate(DBParams.SGBDPageSize).order(ByteOrder.BIG_ENDIAN);
         
         //if the page already exist in a frame

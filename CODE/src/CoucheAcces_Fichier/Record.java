@@ -82,19 +82,19 @@ public class Record {
 
                 switch (tabInfo.getTableCols().get(i).getTypeCol()) {
                     case INT:
-                        int intValue = Integer.parseInt(value);
+                        
                         //buff.putInt(intValue);
                         totalSize += 4;
                         break;
                     case FLOAT:
                         // Store the FLOAT value as binary (no conversion, we've made it this way to avoid on certain problems)
-                        float floatValue = Float.parseFloat(value);
+                        
                         //buff.putFloat(floatValue);
                         totalSize += 4;
                         break;
                     case STRING:
                         // Write a fixed-length STRING
-                        String stringValue = value;
+                        
                         int stringLength = tabInfo.getTableCols().get(i).getLengthString();
                         // byte[] stringBytes = new byte[stringLength];
                         // byte[] valueBytes = stringValue.getBytes();

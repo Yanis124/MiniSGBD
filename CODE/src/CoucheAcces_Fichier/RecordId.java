@@ -12,4 +12,17 @@ public class RecordId {
         this.slotIdx = slotIdx;
     }
 
+    public RecordId(){
+        this.pageId=new PageID();
+        this.slotIdx=-1;
+    }
+
+    //check if a recordId is valid
+    public boolean isValid(){
+        if(this.pageId.isValid()){
+            return true;
+        }
+        return false;
+    }
+
 }

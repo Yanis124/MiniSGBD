@@ -27,6 +27,12 @@ public class HeaderPage {
         byteBuffer.putInt(fullPageId.getPageIdx());
     }
 
+    //create a headerPage with the content of the byteBuffer
+    public HeaderPage(ByteBuffer byteBuffer,PageID pageId){
+        this.byteBuffer=byteBuffer;
+        this.pageId=pageId;
+    }
+
     /*
             Le HeaderPage a dans son buffer les 2 pagesID des têtes de 2 autres directory page
             Format XXXX
@@ -78,20 +84,28 @@ public class HeaderPage {
     }
 
     //set the pageId of the headerPage
-    public void getPageID(PageID pageId){
+    public void setPageID(PageID pageId){
          this.pageId=pageId;
     }
 
-    //free the headerPage
-    public void finalize(PageID pageId){
+    //return the content of a created HeaderPage
+    public static ByteBuffer getHeaderPage(PageID pageId){
 
-        if(this.pageId.equals(pageId)) {
-
-            BufferManager bufferManager = BufferManager.getBufferManager();                     
-            bufferManager.freePage(pageId, true);
-        }
-        else
-            System.out.println("Pas le meme page ID");
+        BufferManager bufferManager=BufferManager.getBufferManager();
+        
+        return bufferManager.getPage(pageId); 
     }
+
+    // //free the headerPage and write its content 
+    // public void finalize(PageID pageId){
+
+    //     if(this.pageId.equals(pageId)) {
+
+    //         BufferManager bufferManager = BufferManager.getBufferManager();                     
+    //         bufferManager.freePage(pageId, true);
+    //     }
+    //     else
+    //         System.out.println("Pas le meme page ID");
+    // }
 
 }

@@ -139,6 +139,7 @@ public class DiskManager {
                     int seekPosition = pageIdx * DBParams.SGBDPageSize + pageSize;
                     file.seek(seekPosition);
                     // Write the data from the ByteBuffer to the file at the specified page
+                    buff.flip(); //prepare the buffer for writting
                     fileChannel.write(buff);
 
                     file.close();
@@ -198,8 +199,7 @@ public class DiskManager {
             int seekPosition = pageIdx * DBParams.SGBDPageSize;
             String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
             try {
-                  buff.order(ByteOrder.BIG_ENDIAN);
-
+                  
                 RandomAccessFile file = new RandomAccessFile(filePath, "rw");
                 FileChannel fileChannel = file.getChannel();
                 fileChannel.position(seekPosition);
@@ -226,6 +226,7 @@ public class DiskManager {
             currentByte= bf.get();
             
             if (currentByte != '\0') {
+                
                 char currentChar = (char) currentByte;
                 message.append(currentChar);
 

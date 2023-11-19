@@ -5,6 +5,7 @@ import GestionEspaceDisque_et_Buffer.DBParams;
 import GestionEspaceDisque_et_Buffer.DiskManager;
 import GestionEspaceDisque_et_Buffer.PageID;
 
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
 public class FileManager {
@@ -51,6 +52,7 @@ public class FileManager {
         headerPage.setFreePage(pageId);  //set the  newFreeDataPages as the currentFreeDataPages
 
         bufferManager.freePage(pageId,true); //write the new created page 
+        bufferManager.freePage(tableInfo.getHeaderPageId(), true);  //headerPage was modifie so we should set the flag to true
         
         return pageId;
     }
@@ -114,8 +116,11 @@ public class FileManager {
     //create the headerPage with the content of pageId
     private HeaderPage getHeaderPageOfTableInfo(TableInfo tableInfo){
 
+        BufferManager bufferManager=BufferManager.getBufferManager();
+
         PageID pageIdHeaderPage=tableInfo.getHeaderPageId();  //get the pageId of headerPage
-        ByteBuffer byteBufferHeaderPage=HeaderPage.getHeaderPage(pageIdHeaderPage); //get the content of the PageIdHeaderPage
+        ByteBuffer byteBufferHeaderPage=bufferManager.getByteBufferPage(pageIdHeaderPage); //get the content of the PageIdHeaderPage
+        
         HeaderPage headerPage=new HeaderPage(byteBufferHeaderPage,pageIdHeaderPage); //create a headerPage with the content of the byteBuffer
         
         return headerPage;
@@ -124,12 +129,15 @@ public class FileManager {
     //create a dataPage based on the content of its page
     private DataPages getDataPages(PageID pageId){
 
-        ByteBuffer byteBuffer=DataPages.getDataPage(pageId);  //get the content of the dataPage
+        BufferManager bufferManager=BufferManager.getBufferManager();
+
+        ByteBuffer byteBuffer=bufferManager.getByteBufferPage(pageId);  //get the content of the dataPage
         DataPages dataPages=new DataPages(byteBuffer,pageId);  //create the dataPage with the content of the byteBuffer
 
         return dataPages;
 
     }
+
 
 
 }

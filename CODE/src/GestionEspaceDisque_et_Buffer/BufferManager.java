@@ -25,7 +25,7 @@ public class BufferManager {
             return null;
         }
 
-        ByteBuffer Bf=ByteBuffer.allocate(DBParams.SGBDPageSize).order(ByteOrder.BIG_ENDIAN);
+        ByteBuffer Bf=ByteBuffer.allocate(DBParams.SGBDPageSize);
         
         //if the page already exist in a frame
         for(Frame frame:listFrames){   //increment the pincount of the frame if the frame containe the page
@@ -120,6 +120,17 @@ public class BufferManager {
             }
         }
         return null;
+    }
+
+    //get the byteBuffer of a page 
+    public ByteBuffer getByteBufferPage(PageID pageId){
+        for(Frame frame: listFrames){
+            if(frame.getPageId().equals(pageId)){   //if the page existe in the listFrame
+                return frame.getByteBuffer();
+            }
+        }
+        
+        return getPage(pageId); //otherwise we need to write the content of the page straight from the file
     }
 
     //display the content of the frame

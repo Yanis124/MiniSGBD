@@ -25,6 +25,7 @@ public class HeaderPage {
         byteBuffer.putInt(freePageId.getPageIdx());
         byteBuffer.putInt(fullPageId.getFileIdx());
         byteBuffer.putInt(fullPageId.getPageIdx());
+
     }
 
     //create a headerPage with the content of the byteBuffer
@@ -88,12 +89,23 @@ public class HeaderPage {
          this.pageId=pageId;
     }
 
-    //return the content of a created HeaderPage
+    //return the content of a created HeaderPage that has been written in a file
     public static ByteBuffer getHeaderPage(PageID pageId){
 
         BufferManager bufferManager=BufferManager.getBufferManager();
         
-        return bufferManager.getPage(pageId); 
+        ByteBuffer byteBuffer=bufferManager.getPage(pageId);
+        byteBuffer.position(0);
+        System.out.println("gehiuheriugrheui"+byteBuffer.getInt());
+        return byteBuffer;
+    }
+
+    public String toString(){
+
+        String content="free page : "+this.getFreePage().toString()+"\n";
+        content+="full page : "+this.getFullPage().toString()+"\n";
+
+        return content;
     }
 
     // //free the headerPage and write its content 

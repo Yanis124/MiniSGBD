@@ -18,6 +18,7 @@ public class DataPages {
         PageID pageIdNext = new PageID();   //create an empty page as the next page(-1,-1)
 
         //add the next page
+        byteBuffer.position(0);
         byteBuffer.putInt(pageIdNext.getFileIdx());
         byteBuffer.putInt(pageIdNext.getPageIdx());
 

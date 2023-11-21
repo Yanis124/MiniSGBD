@@ -4,7 +4,6 @@ import GestionEspaceDisque_et_Buffer.*;
 import CoucheAcces_Fichier.*;
 import CoucheAcces_Fichier.Record;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 public class TestFileManager {
@@ -13,7 +12,7 @@ public class TestFileManager {
         DBParams.DBPath = "../../DB";
         DBParams.DMFileCount = 4;
         DBParams.SGBDPageSize = 4096;
-        DBParams.FrameCount = 10;
+        DBParams.FrameCount = 2;
         DBParams.PageFull = 50;
 
         FileManager fileManager = FileManager.getFileManager();
@@ -40,14 +39,16 @@ public class TestFileManager {
         
 
         //PageID headerPageId=fileManager.createNewHeaderPage(); //create a headerPage
-        PageID headerPageId=new PageID(0,0);diskManager.AllocPage();diskManager.AllocPage();
+        PageID headerPageId=new PageID(0,0); diskManager.AllocPage(); 
         TableInfo tableInfo = new TableInfo("Table1", 4, tableCols, headerPageId); // Create the tableInfo
 
         Record record = new Record(tableInfo); // create the record
         record.setRecValues(recValues);
         
-        //fileManager.InsertRecordIntoTable(record);  //insert a record
-        
+        fileManager.InsertRecordIntoTable(record);  //insert a record
+        bufferManager.flushAll(); //write the record into the disk
+
+
         ArrayList<Record>listRecord=fileManager.getAllRecords(tableInfo);//get list of record
 
         System.out.println(listRecord.size());
@@ -56,7 +57,9 @@ public class TestFileManager {
             System.out.println("\n");
         }
 
-        bufferManager.flushAll();
+        
+
+        
         
 
         

@@ -94,7 +94,10 @@ public class BufferManager {
             if (frame.compareFrames(pageId)) { // If we find
 
                 frame.setPinCount(frame.getPinCount() - 1); // Decrement PinCount
-                frame.setFlagDirty(flagDirty); // Set flagDirty
+                
+                if(frame.getFlagDirty()!=true){ //if the flag is true it should remain true
+                    frame.setFlagDirty(flagDirty); // Set flagDirty
+                }
 
                 return; // Finish the function
             }

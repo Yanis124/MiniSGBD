@@ -123,6 +123,7 @@ public class DiskManager {
         int fileIdx = pageId.getFileIdx();
         int pageIdx = pageId.getPageIdx();
 
+        
         if (filePageId.containsKey(fileIdx) && pageIdx >= 0) { // pageIdx >= 0, for now, it's a way to avoid errors
             ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // we'll search the array that corresponds
                                                                              // to the key fileIdx

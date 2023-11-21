@@ -58,8 +58,8 @@ public class FileManager {
                                      // free space is gone
 
         bufferManager.freePage(pageId, true); // write the new created page
-        bufferManager.freePage(tableInfo.getHeaderPageId(), true); // headerPage was modifie so we should set the flag
-                                                                   // to true
+        bufferManager.freePage(tableInfo.getHeaderPageId(), true); // headerPage was modifie so we should set the flag// to true
+        
         return pageId;
     }
 
@@ -69,26 +69,26 @@ public class FileManager {
         BufferManager bufferManager = BufferManager.getBufferManager();
 
         HeaderPage headerPage = getHeaderPageOfTableInfo(tableInfo); // get the headerPage of tableInfo
-        DataPages freePageId = getDataPages(headerPage.getFreePage()); // get the first freePage of a tableInfo
+        DataPages freePage = getDataPages(headerPage.getFreePage()); // get the first freePage of a tableInfo
+        bufferManager.freePage(headerPage.getPageID(), false);
 
-        if (freePageId.getPageID().isValid()) {
-            while (freePageId.getAvailableSpace() <= sizeRecord) { // while the freePage
+        if (freePage.getPageID().isValid()) {
+            while (freePage.getAvailableSpace() <= sizeRecord) { // while the freePage
                                                                    // doesn't have
                                                                    // enough space we
                                                                    // check the next
 
-                freePageId = getDataPages(freePageId.getNextPage()); // get the next freePage
+                freePage = getDataPages(freePage.getNextPage()); // get the next freePage
             }
 
-            if (freePageId.getPageID().isValid()) { // if there is a dataPage that has enought space we return it
-                return freePageId.getPageID();
+            if (freePage.getPageID().isValid()) { // if there is a dataPage that has enought space we return it
+                bufferManager.freePage(freePage.getPageID(), false);
+                return freePage.getPageID();
             }
         }
 
-        bufferManager.freePage(headerPage.getPageID(), false);
-        bufferManager.freePage(freePageId.getPageID(), false);
-
-        return new PageID(); // otherwise we return null
+        return new PageID(-1,-1); // otherwise we return null
+        
     }
 
     // add a record to the dataPage
@@ -98,15 +98,6 @@ public class FileManager {
 
         int sizeRecord = record.sizeRecord(); // get the size of a record
         DataPages dataPages = getDataPages(pageIdDataPage); // get the dataPage
-
-        if (sizeRecord + 8 > dataPages.getAvailableSpace()) { // +8 because every time we add a record that take n space
-                                                              // we should also add a slot that take 8 bytes so the
-                                                              // total space that our page should has is n+8
-            System.out.println("not enough space"); // must be written in another page
-            return null;
-        }
-
-        // if there is enough space we wtite it in this page
 
         int posFreeSpace = dataPages.getPosFreeSpace(); // get the position where we should write the record
 
@@ -126,14 +117,10 @@ public class FileManager {
         dataPages.setNumberSlot(numberSlot + 1);
 
         bufferManager.freePage(pageIdDataPage, true); // we edit the page so we should write it
-
         // check if the page is full
         if (dataPages.getAvailableSpace() <= DBParams.PageFull) {
-
             updateToFullPage(pageIdDataPage, record.getTableInfo());
         }
-
-        
 
         return new RecordId(pageIdDataPage, numberSlot);
     }
@@ -193,14 +180,34 @@ public class FileManager {
     // insert a record into a relation
     public RecordId InsertRecordIntoTable(Record record) {
 
+        DiskManager diskManager=DiskManager.getDiskManager();
+
         TableInfo tableInfo = record.getTableInfo(); // get the relation of a record
         PageID freePageId = getFreePageId(tableInfo, record.sizeRecord()); // get a dataPage that has enough space
         
+        ArrayList<PageID> listPages=getDataPages(record.getTableInfo());
+        
+        if(freePageId.isValid()){  //we should allocate all page until the freePage
+            if(listPages.size()>0){
+                int numberAlloc=DBParams.DMFileCount*freePageId.getPageIdx()+freePageId.getFileIdx();
+                for(int i=0;i<numberAlloc;i++){
+                    diskManager.AllocPage();
+                }
+            }
+        }
 
-        if (!freePageId.isValid()) { // if all Datapages are full we add another dataPage
+        if(!freePageId.isValid()){ //alocate all page
+            if(listPages.size()>0){
+                PageID lastPageId=listPages.get(0);
+                int numberAlloc=DBParams.DMFileCount*lastPageId.getPageIdx()+lastPageId.getFileIdx();
+                for(int i=0;i<numberAlloc;i++){
+                    diskManager.AllocPage();
+                }
+            }
             freePageId = addDataPage(tableInfo);
         }
-        System.out.println("free page id : "+freePageId);
+
+        
 
         return writeRecordToDataPage(record, freePageId);
     }
@@ -216,7 +223,7 @@ public class FileManager {
         for(int i=0;i<listPages.size();i++){
             ArrayList<Record> listRecordsPage=getRecordsInDataPage(tabInfo, listPages.get(i)); //get the record of a page
             
-            
+           
             for(Record record:listRecordsPage){
                 listRecords.add(record);
             }
@@ -293,5 +300,7 @@ public class FileManager {
 
         return dataPages;
     }
+
+
 
 }

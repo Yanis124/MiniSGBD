@@ -25,4 +25,8 @@ public class RecordId {
         return false;
     }
 
+    public String toString(){
+        return pageId.toString()+" | "+slotIdx;
+    }
+
 }

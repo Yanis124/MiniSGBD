@@ -9,6 +9,7 @@ public class DBParams {
     public static int DMFileCount;
     public static int NumFichier;
     public static int FrameCount;
+    public static int PageFull;
 
     public static int createFile() {
         NumFichier = 0;

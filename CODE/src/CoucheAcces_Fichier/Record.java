@@ -166,4 +166,16 @@ public class Record {
             return -1; // Or another error value as needed
         }
     }
+
+    //get the tabInfo of a record
+    public TableInfo getTableInfo(){
+        return this.tabInfo;
+    }
+
+    //display the content of a record
+    public void displayRecord(){
+        for(int i=0;i<recValues.size();i++){
+            System.out.print(recValues.get(i));
+        }
+    }
 }

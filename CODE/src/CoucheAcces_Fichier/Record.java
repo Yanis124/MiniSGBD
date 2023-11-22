@@ -78,6 +78,7 @@ public class Record {
     public int sizeRecord(){
          int totalSize = 0;
             for (int i = 0; i < tabInfo.getNumberCols(); i++) {
+                
                 String value = recValues.get(i);
 
                 switch (tabInfo.getTableCols().get(i).getTypeCol()) {

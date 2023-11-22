@@ -23,6 +23,9 @@ public class BufferManager {
         if (!pageId.isValid()) { // if the page is (-1,-1) we shouldn't read its content
             return null;
         }
+        
+        
+        
 
         ByteBuffer Bf = ByteBuffer.allocate(DBParams.SGBDPageSize);
         DiskManager diskManager = DiskManager.getDiskManager();
@@ -77,9 +80,11 @@ public class BufferManager {
                 minFrame = frame;
             }
         }
+        System.out.println("minFrame : "+minFrame.getPageId()+" "+minFrame.getFlagDirty());
         if (minFrame.getFlagDirty()) { // if the frame was modified and we should free its content should be written
             DiskManager diskManager = DiskManager.getDiskManager();
             diskManager.WritePage(minFrame.getPageId(), minFrame.getByteBuffer());
+            
             // System.out.println("for page : "+minFrame.getPageId().toString()+"we kik
             // it");
 

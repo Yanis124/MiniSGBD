@@ -135,7 +135,8 @@ public class DataPages {
     public String toString() {
         String content = "";
         if (byteBuffer != null) {
-            content = "next page : " + this.getNextPage() + "\n";
+            content+="page : "+pageId+"\n";
+            content += "next page : " + this.getNextPage() + "\n";
             content += "position free space : " + this.getPosFreeSpace() + "\n";
             content += "number slot : " + this.getNumberSlot() + "\n";
             content += "available space : " + this.getAvailableSpace() + "\n";
@@ -145,14 +146,10 @@ public class DataPages {
     }
 
     // // free the dataPage
-    // public void finalize(PageID pageId) {
+    public void finalize() {
 
-    // if (this.pageId.equals(pageId)) {
-
-    // BufferManager bufferManager = BufferManager.getBufferManager();
-    // bufferManager.freePage(pageId, true);
-    // } else
-    // System.out.println("Pas le meme page ID");
-    // }
+        BufferManager bufferManager = BufferManager.getBufferManager();
+        bufferManager.freePage(this.pageId, true);
+    }
 
 }

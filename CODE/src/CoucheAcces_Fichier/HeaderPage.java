@@ -105,16 +105,10 @@ public class HeaderPage {
         return content;
     }
 
-    // //free the headerPage and write its content
-    // public void finalize(PageID pageId){
+    //free the headerPage and write its content
+    public void finalize(){
 
-    // if(this.pageId.equals(pageId)) {
-
-    // BufferManager bufferManager = BufferManager.getBufferManager();
-    // bufferManager.freePage(pageId, true);
-    // }
-    // else
-    // System.out.println("Pas le meme page ID");
-    // }
-
+        BufferManager bufferManager = BufferManager.getBufferManager();
+        bufferManager.freePage(this.pageId, true);
+    }
 }

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.channels.FileChannel;
 import java.io.RandomAccessFile;
 
@@ -16,6 +15,7 @@ public class DiskManager {
 
     public Map<Integer, ArrayList<PageID>> filePageId = new HashMap<>(); // {file:[page]}
     private ArrayList<PageID> desalocatedPage = new ArrayList<PageID>(); // for desallocated page
+    private PageID currentAllocatedPageId;
 
     private DiskManager() {
         for (int i = 0; i < 4; i++) { // get the available files in the db
@@ -58,6 +58,7 @@ public class DiskManager {
         updateFilePageId(currentAllocatedPage); // update the map filePageId by adding currentAllocatedPage to the list
                                                 // associated to its page
         System.out.println("allocated page : " + currentAllocatedPage.toString());
+        this.currentAllocatedPageId=currentAllocatedPage;
         return currentAllocatedPage;
     }
 
@@ -124,12 +125,12 @@ public class DiskManager {
         int pageIdx = pageId.getPageIdx();
 
         
-        if (filePageId.containsKey(fileIdx) && pageIdx >= 0) { // pageIdx >= 0, for now, it's a way to avoid errors
+        //if (filePageId.containsKey(fileIdx) && pageIdx >= 0) { // pageIdx >= 0, for now, it's a way to avoid errors
             ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // we'll search the array that corresponds
                                                                              // to the key fileIdx
             int numPages = currentFilePagesTab.size();
 
-            if (pageIdx < numPages) {
+            //if (pageIdx < numPages) {
                 try {
 
                     String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
@@ -146,13 +147,15 @@ public class DiskManager {
                     fileChannel.write(buff);
 
                     file.close();
+                    
+                    buff.clear();
 
                     System.out.println("the message has been written to the page : " + pageId.toString());
                 } catch (IOException e) {
                     System.err.println(e);
                 }
-            }
-        }
+            //}
+        //}
 
     }
 
@@ -256,6 +259,22 @@ public class DiskManager {
             currentAllocatedPages += pages.size();
         }
         return currentAllocatedPages;
+    }
+
+    public PageID getCurrentAllocatedPage(){
+        return this.currentAllocatedPageId;
+    }
+
+    //desallocate all pages
+    public void disalocatAllPages(){
+        for(int file:filePageId.keySet()){
+            ArrayList <PageID>listPages=filePageId.get(file);
+            
+            for(int i=0;i<listPages.size();i++){
+                PageID page=listPages.get(i);
+                DeallocPage(page);
+            }
+        }
     }
 
     // get a view of variables

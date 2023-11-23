@@ -69,14 +69,14 @@ public class DataPages {
     // return the position of the first empty byte
     public int getPosFreeSpace() {
 
-        int pos = 50;// DBParams.SGBDPageSize-4;
+        int pos =DBParams.SGBDPageSize-4;
         byteBuffer.position(pos);
         return byteBuffer.getInt();
     }
 
     // set the position of free space
     public void setPosFreeSpace(int freeSpace) {
-        int pos = 50;// DBParams.SGBDPageSize-4;
+        int pos =DBParams.SGBDPageSize-4;
         byteBuffer.position(pos);
         byteBuffer.putInt(freeSpace);
 

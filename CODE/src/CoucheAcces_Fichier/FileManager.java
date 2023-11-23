@@ -5,7 +5,6 @@ import GestionEspaceDisque_et_Buffer.DBParams;
 import GestionEspaceDisque_et_Buffer.DiskManager;
 import GestionEspaceDisque_et_Buffer.PageID;
 
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
@@ -25,8 +24,7 @@ public class FileManager {
     public PageID createNewHeaderPage() {
 
         DiskManager diskManager = DiskManager.getDiskManager();
-        BufferManager bufferManager = BufferManager.getBufferManager();
-
+        
         PageID pageId = diskManager.AllocPage(); // allocate a page
 
         HeaderPage headerPage = new HeaderPage(pageId); // create a headerPage with the allocated page
@@ -41,8 +39,6 @@ public class FileManager {
 
         DiskManager diskManager = DiskManager.getDiskManager();
         PageID pageId = diskManager.AllocPage(); // allocate a page
-
-        BufferManager bufferManager = BufferManager.getBufferManager();
 
         DataPages dataPages = new DataPages(pageId); // create the new dataPage
 
@@ -99,6 +95,7 @@ public class FileManager {
         int posFreeSpace = dataPages.getPosFreeSpace(); // get the position where we should write the record
 
         ByteBuffer byteBuffer = dataPages.getByteBuffer(); // get the content of the dataPage
+        System.out.println("inside function "+dataPages.toString());
 
         record.writeToBuffer(byteBuffer, posFreeSpace); // writte the record to the byteBuffer of the dataPage
 
@@ -113,11 +110,15 @@ public class FileManager {
         dataPages.setPosFreeSpace(posFreeSpace + sizeRecord);
         dataPages.setNumberSlot(numberSlot + 1);
 
+        System.out.println("inside function "+dataPages.toString());
+
         dataPages.finalize(); 
         // check if the page is full
         if (dataPages.getAvailableSpace() <= DBParams.PageFull) {
             updateToFullPage(pageIdDataPage, record.getTableInfo());
         }
+
+        dataPages.finalize();
 
         return new RecordId(pageIdDataPage, numberSlot);
     }
@@ -159,6 +160,7 @@ public class FileManager {
             listDataPagesId.add(freeDataPageId);
             DataPages freeDataPage = getDataPages(freeDataPageId);
             freeDataPageId = freeDataPage.getNextPage();
+            freeDataPage.toString();
             freeDataPage.finalize();
         }
 
@@ -166,6 +168,7 @@ public class FileManager {
             listDataPagesId.add(fullPageId);
             DataPages fullDataPage = getDataPages(fullPageId);
             fullPageId = fullDataPage.getNextPage();
+            fullDataPage.toString();
             fullDataPage.finalize();
         }
         
@@ -207,7 +210,9 @@ public class FileManager {
             freePageId = addDataPage(tableInfo);
         }
 
-        return writeRecordToDataPage(record, freePageId);
+        RecordId recordId= writeRecordToDataPage(record, freePageId);
+        //displayPages(tableInfo);
+        return recordId;
     }
 
 
@@ -300,13 +305,15 @@ public class FileManager {
     }
 
     //afficher les pages d'une relation
-    public void displayPages(TableInfo tableInfo){
+    public String displayPages(TableInfo tableInfo){
+        String content="";
         ArrayList<PageID> listPages=getDataPages(tableInfo);
-        System.out.println("size : "+listPages.size());
+        content+="number record : "+listPages.size()+"\n";
         for(PageID page:listPages){
             DataPages dataPages=getDataPages(page);
-            System.out.println(dataPages.toString());
+            content+=dataPages.toString()+"\n";
         }
+        return content;
     }
 
 

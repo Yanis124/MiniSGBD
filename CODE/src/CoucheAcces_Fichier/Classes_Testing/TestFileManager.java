@@ -13,7 +13,7 @@ public class TestFileManager {
         DBParams.DMFileCount = 4;
         DBParams.SGBDPageSize = 4096;
         DBParams.FrameCount = 20;
-        DBParams.PageFull = 40;
+        DBParams.PageFull = 4000;
 
         FileManager fileManager = FileManager.getFileManager();
         BufferManager bufferManager = BufferManager.getBufferManager();
@@ -33,8 +33,8 @@ public class TestFileManager {
         recValues.add("HelloTest"); // STRING
         recValues.add("Licence2Wirdo"); // VARSTRING
 
-        //PageID headerPageId=fileManager.createNewHeaderPage(); //create a headerPage
-        PageID headerPageId=new PageID(0,0); diskManager.AllocPage(); 
+        PageID headerPageId=fileManager.createNewHeaderPage(); //create a headerPage
+        //PageID headerPageId=new PageID(0,0); diskManager.AllocPage(); 
         TableInfo tableInfo = new TableInfo("Table1", 4, tableCols, headerPageId); // Create the tableInfo
 
         Record record = new Record(tableInfo); // create the record
@@ -42,8 +42,17 @@ public class TestFileManager {
         
         //insert 3 records
         fileManager.InsertRecordIntoTable(record);
+        //fileManager.displayPages(tableInfo);
+        //bufferManager.flushAll();
         fileManager.InsertRecordIntoTable(record);
+        //fileManager.displayPages(tableInfo);
+        //bufferManager.flushAll();
         fileManager.InsertRecordIntoTable(record);
+        //fileManager.displayPages(tableInfo);
+
+        fileManager.InsertRecordIntoTable(record);
+        //fileManager.displayPages(tableInfo);
+
         bufferManager.flushAll(); //write the record into the disk
 
 

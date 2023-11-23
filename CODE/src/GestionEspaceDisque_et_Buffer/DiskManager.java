@@ -9,6 +9,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.io.RandomAccessFile;
 
+import CoucheAcces_Fichier.*;
+
 public class DiskManager {
 
     private static DiskManager diskManager = new DiskManager();
@@ -125,12 +127,12 @@ public class DiskManager {
         int pageIdx = pageId.getPageIdx();
 
         
-        //if (filePageId.containsKey(fileIdx) && pageIdx >= 0) { // pageIdx >= 0, for now, it's a way to avoid errors
+        if (filePageId.containsKey(fileIdx) && pageIdx >= 0) { // pageIdx >= 0, for now, it's a way to avoid errors
             ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // we'll search the array that corresponds
                                                                              // to the key fileIdx
             int numPages = currentFilePagesTab.size();
 
-            //if (pageIdx < numPages) {
+            if (pageIdx < numPages) {
                 try {
 
                     String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
@@ -143,19 +145,20 @@ public class DiskManager {
 
                     file.seek(seekPosition);
                     // Write the data from the ByteBuffer to the file at the specified page
-                    buff.flip(); // prepare the buffer for writting
+                    //buff.flip(); // prepare the buffer for writting
+                    buff.position(0);
+                    
                     fileChannel.write(buff);
 
                     file.close();
                     
                     buff.clear();
-
                     System.out.println("the message has been written to the page : " + pageId.toString());
                 } catch (IOException e) {
                     System.err.println(e);
                 }
-            //}
-        //}
+            }
+        }
 
     }
 

@@ -2,6 +2,7 @@ package CoucheAcces_Fichier.Classes_Testing;
 
 import CoucheAcces_Fichier.*;
 import java.util.ArrayList;
+import GestionEspaceDisque_et_Buffer.PageID;
 
 public class TestTableInfo {
 
@@ -13,7 +14,9 @@ public class TestTableInfo {
         tableCols.add(new ColInfo("Column3", ColumnType.STRING, 15)); 
         tableCols.add(new ColInfo("Column4", ColumnType.VARSTRING, 50)); 
 
-        TableInfo tableInfo = new TableInfo("Table1", 4, tableCols);
+        PageID headerPageId = new PageID(/* initialisez le PageID avec les informations nécessaires */);
+
+        TableInfo tableInfo = new TableInfo("Table1", 4, tableCols, headerPageId);
 
         System.out.println("Table Name: " + tableInfo.getNameRelation());
         System.out.println("Number of Columns: " + tableInfo.getNumberCols());
@@ -26,4 +29,3 @@ public class TestTableInfo {
         }
     }
 }
-

@@ -9,8 +9,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.io.RandomAccessFile;
 
-import CoucheAcces_Fichier.*;
-
 public class DiskManager {
 
     private static DiskManager diskManager = new DiskManager();
@@ -163,7 +161,7 @@ public class DiskManager {
     }
 
     // get the size of page
-    private int getPageSize(String filePath, int pageIdx) {
+    public int getPageSize(String filePath, int pageIdx) { // this method was in private but we never used it locally
 
         ByteBuffer buffRead = ByteBuffer.allocate(DBParams.SGBDPageSize);
         int seekPosition = pageIdx * DBParams.SGBDPageSize;
@@ -296,5 +294,24 @@ public class DiskManager {
         }
         return filePageIdInfo + "]";
     }
+
+    // supprimer tous les fichiers du dossier DB
+    public void resetDB() {
+        for (int i = 0; i < DBParams.DMFileCount; i++) {
+            String filePath = DBParams.DBPath + File.separator + "F" + i + ".data";
+            File file = new File(filePath);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+    }
+
+    // « remettre tout à 0 » dans le DiskManager.
+    public void resetDiskManager(){
+        filePageId = new HashMap<>(); // {file:[page]}
+        desalocatedPage = new ArrayList<PageID>(); // for desallocated page
+        currentAllocatedPageId=null;
+    }
+    
 
 }

@@ -17,7 +17,7 @@ public class TestFileManager {
 
         FileManager fileManager = FileManager.getFileManager();
         BufferManager bufferManager = BufferManager.getBufferManager();
-        DiskManager diskManager = DiskManager.getDiskManager();
+        //DiskManager diskManager = DiskManager.getDiskManager();   Yanis l'a mit mais on l'utilise pas
 
         
         ArrayList<ColInfo> tableCols = new ArrayList<>();

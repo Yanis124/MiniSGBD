@@ -7,7 +7,7 @@ public class ColInfo implements Serializable{ // we've separated each column's i
     private ColumnType typeCol;
     private int lengthString;
 
-    public ColInfo (String nameCol, ColumnType typeCol, int lengthString) {
+    public ColInfo(String nameCol, ColumnType typeCol, int lengthString) {
         this.nameCol = nameCol;
         this.typeCol = typeCol;
         this.lengthString = lengthString;

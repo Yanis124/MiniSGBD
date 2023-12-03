@@ -21,7 +21,7 @@ public class FileManager {
     }
 
     // create a new headerPage
-    public PageID createNewHeaderPage() {
+    public PageID createNewHeaderPage() { 
 
         DiskManager diskManager = DiskManager.getDiskManager();
         
@@ -316,6 +316,11 @@ public class FileManager {
         return content;
     }
 
+    //supprimer tous les fichiers du dossier DB
+    public void resetFileDB(){
+        DiskManager diskManager=DiskManager.getDiskManager();
+        diskManager.resetDB();
+    }
 
 
 }

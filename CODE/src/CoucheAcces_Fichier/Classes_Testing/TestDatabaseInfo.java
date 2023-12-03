@@ -16,9 +16,11 @@ public class TestDatabaseInfo {
         tableCols.add(new ColInfo("Column1", ColumnType.INT, 0)); // Calling the constructor to instantiate the class with the specified arguments
         tableCols.add(new ColInfo("Column2", ColumnType.FLOAT, 0)); 
 
+        PageID headerPageId = new PageID(0, 0);
+
         // Same thing, we are calling the constructor to instantiate the class
-        TableInfo tableInfo1 = new TableInfo("Table1", 2, tableCols);
-        TableInfo tableInfo2 = new TableInfo("Table2", 2, tableCols);
+        TableInfo tableInfo1 = new TableInfo("Table1", 1, tableCols , headerPageId);
+        TableInfo tableInfo2 = new TableInfo("Table2", 2, tableCols , headerPageId);
 
         databaseInfo.AddTableInfo(tableInfo1);
         databaseInfo.AddTableInfo(tableInfo2);

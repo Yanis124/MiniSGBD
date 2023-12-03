@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class DBParams {
-    public static String DBPath ;
+    public static String DBPath;
     public static int SGBDPageSize;
     public static int DMFileCount;
     public static int NumFichier;
@@ -15,7 +15,9 @@ public class DBParams {
         NumFichier = 0;
         String filePatheName;
         while (true) {
-            filePatheName = DBPath + "/F" + NumFichier + ".data";
+             
+            filePatheName = DBPath + File.separator + "F" + NumFichier + ".data";
+            
             File file = new File(filePatheName);
             if (!file.exists()) {
                 try {

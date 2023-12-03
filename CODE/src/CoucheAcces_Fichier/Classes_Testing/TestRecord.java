@@ -1,10 +1,10 @@
 package CoucheAcces_Fichier.Classes_Testing;
 
-//We had a problem when we imported "CoucheAcces_Fichier.*;", so we had to do for each separatelly
 import CoucheAcces_Fichier.Record;
 import CoucheAcces_Fichier.ColInfo;
 import CoucheAcces_Fichier.ColumnType;
 import CoucheAcces_Fichier.TableInfo;
+import GestionEspaceDisque_et_Buffer.PageID;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
@@ -16,7 +16,9 @@ public class TestRecord {
         tableCols.add(new ColInfo("Column3", ColumnType.STRING, 19)); // Spécifiez une longueur de chaîne de 10 pour STRING
         tableCols.add(new ColInfo("Column4", ColumnType.VARSTRING, 50)); // Spécifiez une longueur de chaîne de 20 pour VARSTRING
 
-        TableInfo tableInfo = new TableInfo("Table1", 4, tableCols);
+        PageID headerPageId = new PageID(/* initialisez le PageID avec les informations nécessaires */);
+
+        TableInfo tableInfo = new TableInfo("Table1", 4, tableCols, headerPageId);
 
         Record record = new Record(tableInfo);
 
@@ -31,9 +33,6 @@ public class TestRecord {
         int bytesWritten = record.writeToBuffer(buffer, 0);
         System.out.println("Bytes Written: " + bytesWritten);
 
-        
-        
-
         Record newRecord = new Record(tableInfo);
         int bytesRead = newRecord.readFromBuffer(buffer, 0);
         System.out.println("Bytes Read: " + bytesRead);
@@ -44,4 +43,3 @@ public class TestRecord {
         }
     }
 }
-

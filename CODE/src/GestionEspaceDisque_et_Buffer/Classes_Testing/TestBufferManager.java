@@ -5,11 +5,13 @@ import GestionEspaceDisque_et_Buffer.PageID;
 import GestionEspaceDisque_et_Buffer.BufferManager;
 import GestionEspaceDisque_et_Buffer.DBParams;
 import GestionEspaceDisque_et_Buffer.Frame;
+
+import java.io.File;
 import java.nio.ByteBuffer;
 
 public class TestBufferManager {
     public static void main(String[] args){
-        DBParams.DBPath="../../DB";
+        DBParams.DBPath = ".." + File.separator + ".." + File.separator + "DB";
         DBParams.DMFileCount=4;
         DBParams.SGBDPageSize=4096;
         DBParams.FrameCount=2;

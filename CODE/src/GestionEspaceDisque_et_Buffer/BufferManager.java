@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 
 public class BufferManager {
 
-    private static BufferManager bufferManager = new BufferManager();
+    private static BufferManager bufferManager = new BufferManager(); 
     private ArrayList<Frame> listFrames = new ArrayList<Frame>();
 
     private BufferManager() {
@@ -28,13 +28,13 @@ public class BufferManager {
         
 
         ByteBuffer Bf = ByteBuffer.allocate(DBParams.SGBDPageSize);
-        DiskManager diskManager = DiskManager.getDiskManager();
+        //DiskManager diskManager = DiskManager.getDiskManager();
 
         // if the page already exist in a frame
-        for (Frame frame : listFrames) { // increment the pincount of the frame if the frame containe the page
+        for (Frame frame : listFrames) { // increment the pincount of the frame if the frame contains the page
             if (frame.compareFrames(pageId)) {
                 frame.addPinCount();
-                frame.setByteBuffer(diskManager.ReadPage(pageId, Bf)); // get the content of the page
+                frame.setByteBuffer(DiskManager.ReadPage(pageId, Bf)); // get the content of the page
                 return Bf;
             }
         }
@@ -54,7 +54,7 @@ public class BufferManager {
             if (frame.frameIsEmpty()) {
                 frame.setPage(pageId);
                 frame.addPinCount();
-                frame.setByteBuffer(diskManager.ReadPage(pageId, Bf));
+                frame.setByteBuffer(DiskManager.ReadPage(pageId, Bf));
                 Bf = frame.getByteBuffer();
                 return Bf;
 
@@ -65,7 +65,7 @@ public class BufferManager {
         Frame minFrame = getFrameWithSmallestPinCount();
         minFrame.setPage(pageId);
         minFrame.setPinCount(1);
-        minFrame.setByteBuffer(diskManager.ReadPage(pageId, Bf));
+        minFrame.setByteBuffer(DiskManager.ReadPage(pageId, Bf));
         Bf = minFrame.getByteBuffer();
 
         // we need to check if the dirty flag of the page that we will replace is 1
@@ -73,25 +73,29 @@ public class BufferManager {
     }
 
     // get the page with the smallest pinCount
-    private Frame getFrameWithSmallestPinCount() {
+    public Frame getFrameWithSmallestPinCount() { // on le met en public mais a voir avec Yanis
+        if (listFrames.isEmpty()) {
+            // La liste est vide, renvoyez une valeur par défaut ou effectuez une autre action appropriée.
+            // Par exemple, vous pouvez renvoyer null ou générer une exception appropriée.
+            return null;
+        }
+    
         Frame minFrame = listFrames.get(0);
         for (Frame frame : listFrames) {
             if (frame.getPinCount() < minFrame.getPinCount()) {
                 minFrame = frame;
             }
         }
-        System.out.println("minFrame : "+minFrame.getPageId()+" "+minFrame.getFlagDirty());
-        if (minFrame.getFlagDirty()) { // if the frame was modified and we should free its content should be written
+        System.out.println("minFrame : " + minFrame.getPageId() + " " + minFrame.getFlagDirty());
+        if (minFrame.getFlagDirty()) {
             DiskManager diskManager = DiskManager.getDiskManager();
             diskManager.WritePage(minFrame.getPageId(), minFrame.getByteBuffer());
-            
-            // System.out.println("for page : "+minFrame.getPageId().toString()+"we kik
-            // it");
-
         }
-
+    
+        // Retournez le frame avec le pin count le plus bas
         return minFrame;
     }
+    
 
     // decrement the pin count of the frame and set a flagDirty
     public void freePage(PageID pageId, boolean flagDirty) {

@@ -14,7 +14,7 @@ import GestionEspaceDisque_et_Buffer.DBParams;
 
 public class DatabaseInfo implements Serializable {
     // this class should have only and only a unique instance that will be initiallized in the later TPs
-    private static DatabaseInfo instance;
+    private static DatabaseInfo instance; 
     private String databaseInfoFile="DBInfo.save";
     private ArrayList<TableInfo> informationTable;
     private int counterRelations;
@@ -82,7 +82,7 @@ public class DatabaseInfo implements Serializable {
     // Method to load DBinfo informations starting from a file
     public void Load() {
         try {
-            String filePath = DBParams.DBPath + File.separator +databaseInfoFile ; 
+            String filePath = DBParams.DBPath + File.separator + databaseInfoFile ; 
             FileInputStream fileIn = new FileInputStream(filePath);
             ObjectInputStream ois = new ObjectInputStream(fileIn);
             DatabaseInfo dbInfo = (DatabaseInfo) ois.readObject();
@@ -105,6 +105,12 @@ public class DatabaseInfo implements Serializable {
             informationDatabase+="\n";
         }
         return informationDatabase;
+    }
+
+    /*« remettre tout à 0 » dans DataBaseinfo.*/
+    public void resetDataBaseinfo(){
+        informationTable = new ArrayList<>();
+        counterRelations = 0;
     }
 
 }

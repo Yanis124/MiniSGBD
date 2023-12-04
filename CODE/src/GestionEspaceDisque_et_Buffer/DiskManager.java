@@ -296,7 +296,7 @@ public class DiskManager {
     }
 
     // supprimer tous les fichiers du dossier DB
-    public void resetDB() {
+    public void deleteAllDBFiles() {
         for (int i = 0; i < DBParams.DMFileCount; i++) {
             String filePath = DBParams.DBPath + File.separator + "F" + i + ".data";
             File file = new File(filePath);

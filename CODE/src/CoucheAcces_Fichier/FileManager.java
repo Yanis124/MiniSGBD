@@ -319,7 +319,7 @@ public class FileManager {
     //supprimer tous les fichiers du dossier DB
     public void resetFileDB(){
         DiskManager diskManager=DiskManager.getDiskManager();
-        diskManager.resetDB();
+        diskManager.deleteAllDBFiles();
     }
 
 

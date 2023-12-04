@@ -36,7 +36,6 @@ public class TableInfo implements Serializable{ // a set of usefull information 
         return headerPageId;
     }
 
-
     public String toString(){
         String TableInfo="|"+nameRelation+"|";
         for(ColInfo col:tableCols){

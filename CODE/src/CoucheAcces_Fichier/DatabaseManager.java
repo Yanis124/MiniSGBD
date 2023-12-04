@@ -1,7 +1,6 @@
 package CoucheAcces_Fichier;
 import GestionEspaceDisque_et_Buffer.BufferManager;
-
-
+import GestionEspaceDisque_et_Buffer.DiskManager;
 
 public class DatabaseManager {
     
@@ -16,26 +15,39 @@ public class DatabaseManager {
 
     }
     
-
-    /*Rajoutez, dans votre application, la gestion de la commande RESETDB.
-    Cette commande doit « faire un ménage général », plus particulièrement :
-    • supprimer tous les fichiers du dossier DB
-    • « remettre tout à 0 » dans le BufferManager et la DatabaseInfo, ainsi que potentiellement 
-    dans le DiskManager.
-    Pour cela, il faut vider les listes, remettre tous les compteurs et les flags à 0, etc.
-    Vous pouvez faire ces « remises à 0 » dans des méthodes spécifiques, à créer sur chaque 
-    classe concernée.
-    */
+    
     public void ProcessCommand(String command){
         if(command.equals("RESETDB")){
+            
             // delete all the files in the DB folder
             FileManager.getFileManager().resetFileDB();
-            // set all the flags to 0
-            BufferManager.getBufferManager().flushAll();
-            DatabaseInfo.getInstance().Finish();
-            DatabaseInfo.getInstance().Init();
-        }
 
+            // flush all the frames in the buffer
+            BufferManager.getBufferManager().flushAll();
+            
+            // reset the database info
+            DatabaseInfo.getInstance().resetDataBaseInfo();
+
+            // reset the disk manager
+            DiskManager.getDiskManager().resetDiskManager();
+        }
+        else if(command.startsWith("INSERT INTO")){
+            String[] commandSplit = command.split(" ");
+            String relationName = commandSplit[2];
+            System.out.println("Pour vérifier le nom de la relation");
+            System.out.println(relationName);
+            String values = commandSplit[4];
+            String[] valuesSplit = values.split(",");
+            
+            TableInfo tableInfo = DatabaseInfo.getInstance().GetTableInfo(relationName);
+            System.out.println("Pour vérifier le tableInfo");
+            System.out.println(tableInfo);
+            Record record = new Record(tableInfo);
+            for(int i = 0; i < valuesSplit.length; i++){
+                record.getRecValues().add(valuesSplit[i]);
+            }
+            FileManager.getFileManager().InsertRecordIntoTable(record);
+        }
     }
 
     

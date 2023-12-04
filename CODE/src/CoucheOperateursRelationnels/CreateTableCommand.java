@@ -68,6 +68,11 @@ public class CreateTableCommand {
 
             ColInfo colInfo = new ColInfo(colName, colType, lengthString);
             colsInfo.add(colInfo);
+
+            // add the table to the databaseInfo
+            DatabaseInfo databaseInfo = DatabaseInfo.getInstance();
+            //PageID pageID = databaseInfo.getHeaderPageID(tableName);
+            databaseInfo.AddTableInfo(new TableInfo(tableName, nbCol, colsInfo, null));
         }
     }
 

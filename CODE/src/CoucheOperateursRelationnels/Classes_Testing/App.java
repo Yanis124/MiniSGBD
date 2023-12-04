@@ -52,7 +52,16 @@ public class App {
         DatabaseManager databaseManager = new DatabaseManager();
         databaseManager.ProcessCommand("RESETDB");
         
+        // create a table with CREATE TABLE Profs (Nom:STRING(10),Matiere:STRING(10))
+        String createTableCommand3 = "CREATE TABLE Profs (Nom:STRING(10),Matiere:STRING(10))";
+        CreateTableCommand createTable3 = new CreateTableCommand(createTableCommand3);
 
+        createTable3.printTableInfo();
+
+        // test the INSERT command with INSERT INTO Profs VALUES (Ileana,BDDA)
+        databaseManager.ProcessCommand("INSERT INTO Profs VALUES (Ileana,BDDA)");
+
+        
     }
 }
 

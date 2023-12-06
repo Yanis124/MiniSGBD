@@ -38,14 +38,17 @@ public class DatabaseManager {
             System.out.println(relationName);
             String values = commandSplit[4];
             String[] valuesSplit = values.split(",");
+
             
             TableInfo tableInfo = DatabaseInfo.getInstance().GetTableInfo(relationName);
             System.out.println("Pour vérifier le tableInfo");
             System.out.println(tableInfo);
+            System.out.println("moi qui a fait ca  : : : : : :"+tableInfo.getHeaderPageId().toString()); //probleme dans le headerPage de la page
             Record record = new Record(tableInfo);
             for(int i = 0; i < valuesSplit.length; i++){
                 record.getRecValues().add(valuesSplit[i]);
             }
+            
             FileManager.getFileManager().InsertRecordIntoTable(record);
         }
     }

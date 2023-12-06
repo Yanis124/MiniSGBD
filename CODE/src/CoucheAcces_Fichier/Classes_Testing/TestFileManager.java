@@ -17,25 +17,25 @@ public class TestFileManager {
 
         FileManager fileManager = FileManager.getFileManager();
         BufferManager bufferManager = BufferManager.getBufferManager();
-        //DiskManager diskManager = DiskManager.getDiskManager();   Yanis l'a mit mais on l'utilise pas
+        //DiskManager diskManager = DiskManager.getDiskManager();   Yanis l'a mit mais on l'utilise pas (vous avez raison)
 
         
         ArrayList<ColInfo> tableCols = new ArrayList<>();
-        //tableCols.add(new ColInfo("Column1", ColumnType.INT, 0));
-        //tableCols.add(new ColInfo("Column2", ColumnType.FLOAT, 0));
-        //tableCols.add(new ColInfo("Column3", ColumnType.STRING, 15));
+        tableCols.add(new ColInfo("Column1", ColumnType.INT, 0));
+        tableCols.add(new ColInfo("Column2", ColumnType.FLOAT, 0));
+        tableCols.add(new ColInfo("Column3", ColumnType.STRING, 15));
         tableCols.add(new ColInfo("Column4", ColumnType.VARSTRING, 50));
 
       
         ArrayList<String> recValues = new ArrayList<>();
-        //recValues.add("1247"); // INT
-        //recValues.add("469.85"); // FLOAT
-        //recValues.add("HelloTest"); // STRING
+        recValues.add("1247"); // INT
+        recValues.add("469.85"); // FLOAT
+        recValues.add("HelloTest"); // STRING
         recValues.add("Licence2Wirdo"); // VARSTRING
 
         PageID headerPageId=fileManager.createNewHeaderPage(); //create a headerPage
         //PageID headerPageId=new PageID(0,0); diskManager.AllocPage(); 
-        TableInfo tableInfo = new TableInfo("Table1", 1, tableCols, headerPageId); // Create the tableInfo
+        TableInfo tableInfo = new TableInfo("Table1", 4, tableCols, headerPageId); // Create the tableInfo
 
         Record record = new Record(tableInfo); // create the record
         record.setRecValues(recValues);

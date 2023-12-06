@@ -94,11 +94,11 @@ public class DiskManager {
 
         int fileIdx = pageId.getFileIdx();
         int pageIdx = pageId.getPageIdx();
-        if (filePageId.containsKey(fileIdx)) { // "To check if the file corresponding to the page exists
+        //if (filePageId.containsKey(fileIdx)) { // "To check if the file corresponding to the page exists
                                                // in the map
             ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // "A temporary array that will
                                                                              // update the map at the end
-            if (pageIdx >= 0 && pageIdx < currentFilePagesTab.size()) { // verify that the page exists in the file
+            //if (pageIdx >= 0 && pageIdx < currentFilePagesTab.size()) { // verify that the page exists in the file
                                                                         // 'better with the try catch)
 
                 desalocatedPage.add(pageId); // adding the page that we'll desalocate to the array of desallocated pages
@@ -110,12 +110,12 @@ public class DiskManager {
 
                 System.out.println("desalocated page : " + pageId.toString());
 
-            } else {
-                System.out.println("this page was not allocated");
-            }
-        } else {
-            System.out.println("this page doesn't belong to any file of the database");
-        }
+            //} else {
+                //System.out.println("this page was not allocated");
+            //}
+        //} else {
+            //System.out.println("this page doesn't belong to any file of the database");
+        //}
     }
 
     // write the content of the buffer at the indicated pageId
@@ -125,12 +125,12 @@ public class DiskManager {
         int pageIdx = pageId.getPageIdx();
 
         
-        if (filePageId.containsKey(fileIdx) && pageIdx >= 0) { // pageIdx >= 0, for now, it's a way to avoid errors
+        //if (filePageId.containsKey(fileIdx) && pageIdx >= 0) { // pageIdx >= 0, for now, it's a way to avoid errors
             ArrayList<PageID> currentFilePagesTab = filePageId.get(fileIdx); // we'll search the array that corresponds
                                                                              // to the key fileIdx
             int numPages = currentFilePagesTab.size();
 
-            if (pageIdx < numPages) {
+            //if (pageIdx < numPages) {
                 try {
 
                     String filePath = DBParams.DBPath + "/F" + fileIdx + ".data";
@@ -155,8 +155,8 @@ public class DiskManager {
                 } catch (IOException e) {
                     System.err.println(e);
                 }
-            }
-        }
+            //}
+        //}
 
     }
 
@@ -237,6 +237,10 @@ public class DiskManager {
             }
         }
         bf.position(0);
+        if(message.length()==0){
+            return null;
+        }
+
         return message;
     }
 
@@ -277,6 +281,22 @@ public class DiskManager {
             }
         }
     }
+
+    //find an empty page
+    public PageID getEmptyPage(){
+        for(int i=0;i<10;i++){
+            PageID page=AllocPage();
+            ByteBuffer buff=ByteBuffer.allocate(DBParams.SGBDPageSize);
+            ReadPage(page, buff);
+            StringBuilder content=readContentOfBuffer(buff);
+            if(content==null){
+                return page;
+            }
+        }
+        return null;
+    }
+
+
 
     // get a view of variables
     public String toString() {

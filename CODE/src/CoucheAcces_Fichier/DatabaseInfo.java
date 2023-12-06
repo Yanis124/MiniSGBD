@@ -31,6 +31,7 @@ public class DatabaseInfo implements Serializable {
     public static DatabaseInfo getInstance() {
         if (instance == null) {
             instance = new DatabaseInfo();
+            instance.Load();
             System.out.println("New instance of DBInfo created");
         }
         System.out.println("Instance of DBInfo returned");
@@ -121,6 +122,7 @@ public class DatabaseInfo implements Serializable {
     //check if the data of the database has been written in DBInfo.sava file
     public String toString(){
         String informationDatabase="";
+        System.out.println("size of relation : "+informationTable.size());
         for(TableInfo table: informationTable ){
             informationDatabase+=table.toString();
             informationDatabase+="\n";

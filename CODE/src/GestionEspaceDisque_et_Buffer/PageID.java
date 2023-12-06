@@ -1,8 +1,9 @@
 package GestionEspaceDisque_et_Buffer;
 
 import java.nio.ByteBuffer;
+import java.io.Serializable;
 
-public class PageID {
+public class PageID implements Serializable {
 
    private int fileIdx;
    private int pageIdx;

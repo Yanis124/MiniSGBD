@@ -12,6 +12,7 @@ public class BufferManager {
         for (int i = 0; i < DBParams.FrameCount; i++) {
             listFrames.add(new Frame());
         }
+        
     }
 
     public static BufferManager getBufferManager() {

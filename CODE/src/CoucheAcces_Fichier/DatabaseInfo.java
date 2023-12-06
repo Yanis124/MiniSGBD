@@ -60,16 +60,11 @@ public class DatabaseInfo implements Serializable {
 
     public TableInfo GetTableInfo(String nameRelation) { // gives us information (from TableInfo) about
         // a certain relation depending on a given name in argument
-        System.out.println("Valeur de informationTable :");
-        System.out.println(informationTable);
         for (TableInfo tabInfo : informationTable) { // a for each loop
-            System.out.println("Nom de la relation :");
-            System.out.println(tabInfo.getNameRelation());
             if ((tabInfo.getNameRelation()).equals(nameRelation)) {
                 return tabInfo;
             }
         }
-        System.out.println("On return null car on a pas trouvé de relation avec ce nom ");
         return null; // return null if none of them matches the given relation's name in the argument
     }
 

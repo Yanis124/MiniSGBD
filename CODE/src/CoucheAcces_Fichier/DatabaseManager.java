@@ -1,4 +1,5 @@
 package CoucheAcces_Fichier;
+import CoucheOperateursRelationnels.CreateTableCommand;
 import GestionEspaceDisque_et_Buffer.BufferManager;
 import GestionEspaceDisque_et_Buffer.DiskManager;
 
@@ -31,7 +32,13 @@ public class DatabaseManager {
             // reset the disk manager
             DiskManager.getDiskManager().resetDiskManager();
         }
-        else if(command.startsWith("INSERT INTO")){
+        //ajouter les differentes commandes 
+        else if(command.startsWith("CREATE TABLE")){
+            CreateTableCommand createTableCommand=new CreateTableCommand(command);
+            createTableCommand.Execute();
+        }
+
+        else if(command.startsWith("INSERT INTO")){  //TODO : create a class for inserting a record 
             String[] commandSplit = command.split(" ");
             String relationName = commandSplit[2];
             System.out.println("Pour vérifier le nom de la relation");
@@ -43,7 +50,6 @@ public class DatabaseManager {
             TableInfo tableInfo = DatabaseInfo.getInstance().GetTableInfo(relationName);
             System.out.println("Pour vérifier le tableInfo");
             System.out.println(tableInfo);
-            System.out.println("moi qui a fait ca  : : : : : :"+tableInfo.getHeaderPageId().toString()); //probleme dans le headerPage de la page
             Record record = new Record(tableInfo);
             for(int i = 0; i < valuesSplit.length; i++){
                 record.getRecValues().add(valuesSplit[i]);

@@ -45,8 +45,8 @@ public class App {
         
         
         //create a table with CREATE TABLE Profs (Nom:STRING(10),Matiere:STRING(10))
-        //String createTableCommand3 = "CREATE TABLE Profs (Nom:STRING(10),Matiere:STRING(10))";
-        //CreateTableCommand createTable3 = new CreateTableCommand(createTableCommand3);
+        String createTableCommand3 = "CREATE TABLE Profs (Nom:STRING(10),Matiere:STRING(10))";
+        databaseManager.ProcessCommand(createTableCommand3);
 
         //databaseManager.Finish();
 

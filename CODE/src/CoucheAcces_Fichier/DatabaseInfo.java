@@ -103,7 +103,7 @@ public class DatabaseInfo implements Serializable {
             String filePath = DBParams.DBPath + File.separator + databaseInfoFile;
             File file = new File(filePath);
     
-            if (file.exists() && file.length() !=0) {
+            if (file.exists() && file.length() >0) {
                 FileInputStream fileIn = new FileInputStream(filePath);
                 ObjectInputStream ois = new ObjectInputStream(fileIn);
                 DatabaseInfo dbInfo = (DatabaseInfo) ois.readObject();

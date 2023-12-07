@@ -2,6 +2,9 @@ package CoucheAcces_Fichier;
 import CoucheOperateursRelationnels.CreateTableCommand;
 import GestionEspaceDisque_et_Buffer.BufferManager;
 import GestionEspaceDisque_et_Buffer.DiskManager;
+import CoucheOperateursRelationnels.ImportCommande;
+import CoucheOperateursRelationnels.InsertCommand;
+
 
 public class DatabaseManager {
     
@@ -42,29 +45,15 @@ public class DatabaseManager {
         }
         //import a set of records from a file
         else if(command.startsWith("IMPORT INTO")){
-            Import importCommand=new Import(command);
+            ImportCommande importCommand=new ImportCommande(command);
             importCommand.printTableInfo();
             importCommand.Execute();
         }
 
         else if(command.startsWith("INSERT INTO")){  //TODO : create a class for inserting a record 
-            String[] commandSplit = command.split(" ");
-            String relationName = commandSplit[2];
-            System.out.println("Pour vérifier le nom de la relation");
-            System.out.println(relationName);
-            String values = commandSplit[4];
-            String[] valuesSplit = values.split(",");
+            InsertCommand insertCommand=new InsertCommand(command);
+            insertCommand.Execute();
 
-            
-            TableInfo tableInfo = DatabaseInfo.getInstance().GetTableInfo(relationName);
-            System.out.println("Pour vérifier le tableInfo");
-            System.out.println(tableInfo);
-            Record record = new Record(tableInfo);
-            for(int i = 0; i < valuesSplit.length; i++){
-                record.getRecValues().add(valuesSplit[i]);
-            }
-            
-            FileManager.getFileManager().InsertRecordIntoTable(record);
         }
     }
 

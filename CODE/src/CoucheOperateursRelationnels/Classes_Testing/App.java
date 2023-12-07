@@ -49,9 +49,9 @@ public class App {
         //create a table with CREATE TABLE Profs (Nom:STRING(10),Matiere:STRING(10))
         //String createTableCommand3 = "CREATE TABLE Profs (Nom:STRING 10, Matiere:VARSTRING 13 ,Age:INT)";
 
-        System.out.println("erhgiuerhiughr");
-        String importDataFromFileCommande1="IMPORT INTO Profs file.cvc";
-        DatabaseManager.ProcessCommand(importDataFromFileCommande1);
+        
+        //String importDataFromFileCommande1="IMPORT INTO Profs file.cvc";
+        //DatabaseManager.ProcessCommand(importDataFromFileCommande1);
 
         
 
@@ -59,11 +59,11 @@ public class App {
         //databaseManager.Finish();
 
         //createTable3.printTableInfo();
-
+        String insertDataCommande1="INSERT INTO Profs VALUES (Ileana,BDDA,14)";
         // test the INSERT command with INSERT INTO Profs VALUES (Ileana,BDDA)
-        //databaseManager.ProcessCommand("INSERT INTO Profs VALUES (Ileana,BDDA)");
+        DatabaseManager.ProcessCommand(insertDataCommande1);
 
-        //DatabaseManager.Finish(); //write everything into the database
+        DatabaseManager.Finish(); //write everything into the database
 
     }
 }

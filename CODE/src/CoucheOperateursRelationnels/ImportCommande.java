@@ -7,14 +7,14 @@ import CoucheAcces_Fichier.ColumnType;
 import CoucheAcces_Fichier.DatabaseInfo;
 import CoucheAcces_Fichier.TableInfo;
 
-public class Import {
+public class ImportCommande {
     private String tableName;
     private ArrayList<ColInfo> colsInfo=new ArrayList<>();
     private String filePath;
     private String userCommand; 
 
     //constructor
-    public Import(String userCommand){
+    public ImportCommande(String userCommand){
         
         this.userCommand=userCommand; 
 
@@ -22,8 +22,11 @@ public class Import {
         this.tableName = tokens[2]; //get the name of the relation
 
         TableInfo tableInfo = DatabaseInfo.getInstance().GetTableInfo(this.tableName); //get the relation 
+
+        ArrayList<ColInfo> colsInfos = tableInfo.getTableCols();
+        System.out.println("size :   "+colsInfos.size());
         
-        for(ColInfo colInfo : tableInfo.getTableCols()){ //get the colInfo of the relation
+        for(ColInfo colInfo : colsInfos){ //get the colInfo of the relation
             this.colsInfo.add(colInfo);
         }
 

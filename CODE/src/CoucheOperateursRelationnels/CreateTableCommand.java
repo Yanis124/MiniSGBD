@@ -80,18 +80,6 @@ public class CreateTableCommand {
        
     }
         
-    public void printTableInfo() {
-        System.out.println("Table Name: " + this.tableName);
-        System.out.println("Number of Columns: " + this.nbCol);
-        System.out.println("Column Information:");
-        for (ColInfo col : this.colsInfo) {
-            System.out.println("  Column Name: " + col.getNameCol());
-            System.out.println("  Column Type: " + col.getTypeCol());
-            if (col.getTypeCol() == ColumnType.STRING || col.getTypeCol() == ColumnType.VARSTRING) {
-                System.out.println("  Column Size: " + col.getLengthString());
-            }
-        }
-    }
 
     //add the table to the database
     public void Execute() {
@@ -99,7 +87,10 @@ public class CreateTableCommand {
         DatabaseInfo databaseInfo = DatabaseInfo.getInstance(); 
         FileManager fileManager = FileManager.getFileManager();
         PageID headerPageID =fileManager.createNewHeaderPage(); //crete a headerPage for the relation !!
-        databaseInfo.AddTableInfo(new TableInfo(tableName, nbCol, colsInfo, headerPageID)); //add the table to the database
+        TableInfo tableInfo = new TableInfo(tableName, nbCol, colsInfo, headerPageID); //create a tableInfo for the relation
+        databaseInfo.AddTableInfo(tableInfo); //add the table to the database
+        tableInfo.printTableInfo(); //print the tableInfo
+
     }
 
 }

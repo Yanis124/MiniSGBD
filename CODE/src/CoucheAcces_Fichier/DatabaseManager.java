@@ -1,6 +1,5 @@
 package CoucheAcces_Fichier;
 import CoucheOperateursRelationnels.CreateTableCommand;
-import CoucheOperateursRelationnels.Import;
 import GestionEspaceDisque_et_Buffer.BufferManager;
 import GestionEspaceDisque_et_Buffer.DiskManager;
 
@@ -18,6 +17,7 @@ public class DatabaseManager {
         BufferManager.getBufferManager().flushAll();
 
     }
+    
     
     
     public static void ProcessCommand(String command){
@@ -50,7 +50,8 @@ public class DatabaseManager {
         else if(command.startsWith("INSERT INTO")){  //TODO : create a class for inserting a record 
             String[] commandSplit = command.split(" ");
             String relationName = commandSplit[2];
-            
+            System.out.println("Pour vérifier le nom de la relation");
+            System.out.println(relationName);
             String values = commandSplit[4];
             String[] valuesSplit = values.split(",");
 
@@ -65,11 +66,6 @@ public class DatabaseManager {
             
             FileManager.getFileManager().InsertRecordIntoTable(record);
         }
-    }
-
-    //check if a relation exist in the database
-    public boolean relationExists(String relationName){
-        return true;
     }
 
     

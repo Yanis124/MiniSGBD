@@ -20,6 +20,9 @@ public class TableInfo implements Serializable{ // a set of usefull information 
         this.headerPageId = headerPageId;
     }
 
+
+
+
     public String getNameRelation() {
         return nameRelation;
     }
@@ -45,7 +48,15 @@ public class TableInfo implements Serializable{ // a set of usefull information 
         return TableInfo;
     }
 
-
-
+    public void printTableInfo(){
+        System.out.println("-----------------------------------------------------");
+        System.out.println("Table name: "+nameRelation);
+        System.out.println("Number of columns: "+numberCols);
+        System.out.println("Columns: ");
+        for(ColInfo col:tableCols){
+            System.out.println(col.toString());
+        }
+        System.out.println("-----------------------------------------------------");
+    }
 
 }

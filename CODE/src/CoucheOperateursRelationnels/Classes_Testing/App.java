@@ -2,14 +2,14 @@ package CoucheOperateursRelationnels.Classes_Testing;
 
 import java.io.File;
 
-import CoucheOperateursRelationnels.CreateTableCommand;
-import GestionEspaceDisque_et_Buffer.BufferManager;
+//import CoucheOperateursRelationnels.CreateTableCommand;
+//import GestionEspaceDisque_et_Buffer.BufferManager;
 import GestionEspaceDisque_et_Buffer.DBParams;
-import GestionEspaceDisque_et_Buffer.DiskManager;
-import GestionEspaceDisque_et_Buffer.Frame;
-import CoucheAcces_Fichier.DatabaseInfo;
+//import GestionEspaceDisque_et_Buffer.DiskManager;
+//import GestionEspaceDisque_et_Buffer.Frame;
+//import CoucheAcces_Fichier.DatabaseInfo;
 import CoucheAcces_Fichier.DatabaseManager;
-import CoucheAcces_Fichier.DatabaseManager;
+//import CoucheAcces_Fichier.DatabaseManager;
 
 public class App {
     public static void main(String[] args) { // class for the main method to test DB Tables 
@@ -65,9 +65,6 @@ public class App {
 
         //DatabaseManager.Finish(); //write everything into the database
 
-
-
-        
     }
 }
 

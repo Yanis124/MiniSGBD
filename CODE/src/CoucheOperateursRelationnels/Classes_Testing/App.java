@@ -41,21 +41,29 @@ public class App {
         
         //databaseManager.ProcessCommand("RESETDB");
 
-        DatabaseManager databaseManager = new DatabaseManager();
+        DatabaseManager.Init(); 
+
+        
         
         
         //create a table with CREATE TABLE Profs (Nom:STRING(10),Matiere:STRING(10))
-        String createTableCommand3 = "CREATE TABLE Profs (Nom:STRING(10),Matiere:STRING(10))";
-        databaseManager.ProcessCommand(createTableCommand3);
+        //String createTableCommand3 = "CREATE TABLE Profs (Nom:STRING 10, Matiere:VARSTRING 13 ,Age:INT)";
+
+        System.out.println("erhgiuerhiughr");
+        String importDataFromFileCommande1="IMPORT INTO Profs file.cvc";
+        DatabaseManager.ProcessCommand(importDataFromFileCommande1);
+
+        
+
 
         //databaseManager.Finish();
 
         //createTable3.printTableInfo();
 
         // test the INSERT command with INSERT INTO Profs VALUES (Ileana,BDDA)
-        databaseManager.ProcessCommand("INSERT INTO Profs VALUES (Ileana,BDDA)");
+        //databaseManager.ProcessCommand("INSERT INTO Profs VALUES (Ileana,BDDA)");
 
-        databaseManager.Finish(); //write everything into the database
+        //DatabaseManager.Finish(); //write everything into the database
 
 
 

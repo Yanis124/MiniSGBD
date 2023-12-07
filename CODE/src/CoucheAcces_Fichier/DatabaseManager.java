@@ -1,15 +1,18 @@
 package CoucheAcces_Fichier;
 import CoucheOperateursRelationnels.CreateTableCommand;
+import CoucheOperateursRelationnels.Import;
 import GestionEspaceDisque_et_Buffer.BufferManager;
 import GestionEspaceDisque_et_Buffer.DiskManager;
 
 public class DatabaseManager {
     
-    public void Init(){
-        DatabaseInfo.getInstance().Init();
+    public static  void Init(){
+        DatabaseInfo databaseInfo=DatabaseInfo.getInstance();
+
+        databaseInfo.Init();
     }
 
-    public void Finish(){ 
+    public static void Finish(){ 
         
         DatabaseInfo.getInstance().Finish();
         BufferManager.getBufferManager().flushAll();
@@ -17,8 +20,8 @@ public class DatabaseManager {
     }
     
     
-    public void ProcessCommand(String command){
-        if(command.equals("RESETDB")){
+    public static void ProcessCommand(String command){
+        if(command.equals("RESETDB")){  //TODO : create a class for resetDataBase a record
             
             // delete all the files in the DB folder
             FileManager.getFileManager().resetFileDB();
@@ -32,17 +35,22 @@ public class DatabaseManager {
             // reset the disk manager
             DiskManager.getDiskManager().resetDiskManager();
         }
-        //ajouter les differentes commandes 
+        //create a realtion
         else if(command.startsWith("CREATE TABLE")){
             CreateTableCommand createTableCommand=new CreateTableCommand(command);
             createTableCommand.Execute();
+        }
+        //import a set of records from a file
+        else if(command.startsWith("IMPORT INTO")){
+            Import importCommand=new Import(command);
+            importCommand.printTableInfo();
+            importCommand.Execute();
         }
 
         else if(command.startsWith("INSERT INTO")){  //TODO : create a class for inserting a record 
             String[] commandSplit = command.split(" ");
             String relationName = commandSplit[2];
-            System.out.println("Pour vérifier le nom de la relation");
-            System.out.println(relationName);
+            
             String values = commandSplit[4];
             String[] valuesSplit = values.split(",");
 
@@ -57,6 +65,11 @@ public class DatabaseManager {
             
             FileManager.getFileManager().InsertRecordIntoTable(record);
         }
+    }
+
+    //check if a relation exist in the database
+    public boolean relationExists(String relationName){
+        return true;
     }
 
     

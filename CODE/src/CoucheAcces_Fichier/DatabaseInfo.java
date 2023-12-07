@@ -15,7 +15,7 @@ import GestionEspaceDisque_et_Buffer.PageID;
 
 public class DatabaseInfo implements Serializable {
     // this class should have only and only a unique instance that will be initiallized in the later TPs
-    private static DatabaseInfo instance; 
+    private static DatabaseInfo instance=new DatabaseInfo();
     private String databaseInfoFile="DBInfo.save";
     private ArrayList<TableInfo> informationTable;
     private int counterRelations;
@@ -28,14 +28,19 @@ public class DatabaseInfo implements Serializable {
 
     // methods
 
+    //create a new databaseInfo instance
+    // public static DatabaseInfo createInstance() {
+    //         instance = new DatabaseInfo();
+    //         instance.Init();  //get all relation of the database
+    //         System.out.println("New instance of DBInfo created");
+        
+    //     System.out.println("Instance of DBInfo returned");
+    //     return instance;
+    // }
+
+    //get an existing databaseInfo instance
     public static DatabaseInfo getInstance() {
-        if (instance == null) {
-            instance = new DatabaseInfo();
-            instance.Load();
-            System.out.println("New instance of DBInfo created");
-        }
-        System.out.println("Instance of DBInfo returned");
-        return instance;
+       return instance;
     }
 
     // get PageID of the header page of a relation
@@ -60,12 +65,11 @@ public class DatabaseInfo implements Serializable {
 
     public TableInfo GetTableInfo(String nameRelation) { // gives us information (from TableInfo) about
         // a certain relation depending on a given name in argument
-        System.out.println("Valeur de informationTable :");
-        System.out.println(informationTable);
         for (TableInfo tabInfo : informationTable) { // a for each loop
-            System.out.println("Nom de la relation :");
+           
             System.out.println(tabInfo.getNameRelation());
             if ((tabInfo.getNameRelation()).equals(nameRelation)) {
+                System.out.println("On a trouvé une relation avec ce nom ");
                 return tabInfo;
             }
         }
@@ -100,7 +104,7 @@ public class DatabaseInfo implements Serializable {
             String filePath = DBParams.DBPath + File.separator + databaseInfoFile;
             File file = new File(filePath);
     
-            if (file.exists()) {
+            if (file.exists() && file.length() !=0) {
                 FileInputStream fileIn = new FileInputStream(filePath);
                 ObjectInputStream ois = new ObjectInputStream(fileIn);
                 DatabaseInfo dbInfo = (DatabaseInfo) ois.readObject();

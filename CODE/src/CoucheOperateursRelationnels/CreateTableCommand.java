@@ -1,13 +1,11 @@
 package CoucheOperateursRelationnels;
 
-import java.io.File;
 import java.util.ArrayList;
 import CoucheAcces_Fichier.ColInfo;
 import CoucheAcces_Fichier.ColumnType;
 import CoucheAcces_Fichier.DatabaseInfo;
 import CoucheAcces_Fichier.FileManager;
 import CoucheAcces_Fichier.TableInfo;
-import GestionEspaceDisque_et_Buffer.DiskManager;
 import GestionEspaceDisque_et_Buffer.PageID;
 
 public class CreateTableCommand {
@@ -30,6 +28,7 @@ public class CreateTableCommand {
         String colsStr = this.userCommand.substring(this.userCommand.indexOf('(') + 1, this.userCommand.indexOf(')'));
         String[] cols = colsStr.split(",");
         this.nbCol = cols.length;
+        
         this.colsInfo = new ArrayList<>();
 
         for (int i = 0; i < nbCol; i++) {
@@ -97,7 +96,7 @@ public class CreateTableCommand {
     //add the table to the database
     public void Execute() {
         
-        DatabaseInfo databaseInfo = DatabaseInfo.getInstance();
+        DatabaseInfo databaseInfo = DatabaseInfo.getInstance(); 
         FileManager fileManager = FileManager.getFileManager();
         PageID headerPageID =fileManager.createNewHeaderPage(); //crete a headerPage for the relation !!
         databaseInfo.AddTableInfo(new TableInfo(tableName, nbCol, colsInfo, headerPageID)); //add the table to the database

@@ -57,8 +57,7 @@ public class InsertCommand {
         }
 
         // Insert the record into the table
-        FileManager.getFileManager().InsertRecordIntoTable(record);
-        tableInfo.printTableInfo();
+        FileManager.getFileManager().InsertRecordIntoTable(record);       
     }
 
 }

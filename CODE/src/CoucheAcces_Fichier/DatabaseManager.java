@@ -1,9 +1,11 @@
 package CoucheAcces_Fichier;
+
+
 import CoucheOperateursRelationnels.CreateTableCommand;
 import GestionEspaceDisque_et_Buffer.BufferManager;
-import GestionEspaceDisque_et_Buffer.DiskManager;
 import CoucheOperateursRelationnels.ImportCommande;
 import CoucheOperateursRelationnels.InsertCommand;
+import CoucheOperateursRelationnels.ResetDBCommand;
 
 
 public class DatabaseManager {
@@ -24,19 +26,10 @@ public class DatabaseManager {
     
     
     public static void ProcessCommand(String command){
-        if(command.equals("RESETDB")){  //TODO : create a class for resetDataBase a record
-            
-            // delete all the files in the DB folder
-            FileManager.getFileManager().resetFileDB();
+        if(command.equals("RESETDB")){ 
+           ResetDBCommand  resetDBCommande=new ResetDBCommand(command);
+           resetDBCommande.Execute();
 
-            // flush all the frames in the buffer
-            BufferManager.getBufferManager().flushAll();
-            
-            // reset the database info
-            DatabaseInfo.getInstance().resetDataBaseInfo();
-
-            // reset the disk manager
-            DiskManager.getDiskManager().resetDiskManager();
         }
         //create a realtion
         else if(command.startsWith("CREATE TABLE")){
@@ -56,8 +49,5 @@ public class DatabaseManager {
 
         }
     }
-
-    
-
 
 }

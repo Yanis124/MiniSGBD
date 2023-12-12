@@ -19,6 +19,7 @@ public class InsertCommand {
         
         String[] commandSplit = userCommand.split(" ");
         this.relationName = commandSplit[2];
+        this.relationName = commandSplit[2]; // 3 because "INSERT INTO" has 2 words and we want to skip the space after it
 
         // Parsing des valeurs entre parenthèses
         String valuesStr = userCommand.substring(userCommand.indexOf('(') + 1, userCommand.lastIndexOf(')'));

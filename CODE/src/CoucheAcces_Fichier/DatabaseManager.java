@@ -5,6 +5,7 @@ import CoucheOperateursRelationnels.CreateTableCommand;
 import GestionEspaceDisque_et_Buffer.BufferManager;
 import CoucheOperateursRelationnels.ImportCommande;
 import CoucheOperateursRelationnels.InsertCommand;
+import CoucheOperateursRelationnels.SelectCommand;
 import CoucheOperateursRelationnels.ResetDBCommand;
 
 
@@ -47,6 +48,12 @@ public class DatabaseManager {
             InsertCommand insertCommand=new InsertCommand(command);
             insertCommand.Execute();
 
+        }
+        
+        else if (command.startsWith("SELECT")) {    // create a class for selecting a record
+            SelectCommand selectCommand = new SelectCommand(command);
+            selectCommand.Execute();
+            
         }
     }
 

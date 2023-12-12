@@ -123,7 +123,7 @@ public class FileManager {
         return new RecordId(pageIdDataPage, numberSlot);
     }
 
-    // add all the record of a dataPage to a list
+    // add all the records of a dataPage to a list
     public ArrayList<Record> getRecordsInDataPage(TableInfo tableInfo, PageID pageId) {
 
         ArrayList<Record> listRecords = new ArrayList<>(); // create the list of record
@@ -217,7 +217,7 @@ public class FileManager {
 
 
 
-    //get the record from a relation
+    //get the records from a relation
     public ArrayList<Record> getAllRecords (TableInfo tabInfo){
 
         ArrayList <Record> listRecords=new ArrayList<>();  //list of record

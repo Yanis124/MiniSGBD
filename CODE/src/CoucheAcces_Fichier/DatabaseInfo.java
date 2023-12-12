@@ -79,7 +79,7 @@ public class DatabaseInfo implements Serializable {
     public int GetCounterRelations() {
         return counterRelations;
     }
-
+    // Method to save DBinfo informations in a file
     public void Save() {
         try {
             // Complete path to the directory DB (depend on how you run the code)

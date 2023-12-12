@@ -55,6 +55,11 @@ public class App {
         String importDataFromFileCommande1="IMPORT INTO Profs ../../DB/file.csv";
         DatabaseManager.ProcessCommand(importDataFromFileCommande1);
 
+        // test the SELECT command with SELECT * FROM Profs
+        System.out.println();
+        System.out.println("####    SELECT * FROM Profs    ####");
+        DatabaseManager.ProcessCommand("SELECT * FROM Profs WHERE Age>20");
+
         
 
 

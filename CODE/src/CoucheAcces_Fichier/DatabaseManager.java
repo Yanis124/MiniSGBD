@@ -44,7 +44,7 @@ public class DatabaseManager {
             importCommand.Execute();
         }
 
-        else if(command.startsWith("INSERT INTO")){  //TODO : create a class for inserting a record 
+        else if(command.startsWith("INSERT INTO")){ 
             InsertCommand insertCommand=new InsertCommand(command);
             insertCommand.Execute();
 

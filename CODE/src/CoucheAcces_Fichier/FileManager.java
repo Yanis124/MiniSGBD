@@ -178,40 +178,14 @@ public class FileManager {
     // insert a record into a relation
     public RecordId InsertRecordIntoTable(Record record) {
 
-        //DiskManager diskManager=DiskManager.getDiskManager();
-        //BufferManager bufferManager=BufferManager.getBufferManager();
-
         TableInfo tableInfo = record.getTableInfo(); // get the relation of a record
         PageID freePageId = getFreePageId(tableInfo, record.sizeRecord()); // get a dataPage that has enough space
-        //PageID currentAllocatedPageId=diskManager.getCurrentAllocatedPage();
-        //int numberCurrentAllocated=DBParams.DMFileCount*currentAllocatedPageId.getPageIdx()+currentAllocatedPageId.getFileIdx();
 
-        
-        //ArrayList<PageID> listPages=getDataPages(record.getTableInfo());
-        
-        // if(freePageId.isValid()){  //we should allocate all page until the freePage
-        //     if(listPages.size()>0){
-        //         int numberAlloc=DBParams.DMFileCount*freePageId.getPageIdx()+freePageId.getFileIdx()-numberCurrentAllocated;
-        //         for(int i=0;i<numberAlloc;i++){
-        //             diskManager.AllocPage();
-        //         }
-        //     }
-        // }
-
-        if(!freePageId.isValid()){ //alocate all page
-            // if(listPages.size()>0){
-            //     PageID lastPageId=listPages.get(0);
-            //     int numberAlloc=DBParams.DMFileCount*lastPageId.getPageIdx()+lastPageId.getFileIdx()-numberCurrentAllocated;
-            //     for(int i=0;i<numberAlloc;i++){
-            //         diskManager.AllocPage();
-            //     }
-            // }
-            
+        if(!freePageId.isValid()){ 
             freePageId = addDataPage(tableInfo);
         }
-
         RecordId recordId= writeRecordToDataPage(record, freePageId);
-        //displayPages(tableInfo);
+
         return recordId;
     }
 

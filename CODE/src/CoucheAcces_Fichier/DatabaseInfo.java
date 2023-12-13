@@ -114,7 +114,9 @@ public class DatabaseInfo implements Serializable {
                 instance = dbInfo;
                 System.out.println("Data has been loaded to unique instance of DBinfo (updated)");
             } else {
-                System.out.println("DBInfo.save file does not exist or is empty.");
+                //if the file doesn't exist we create it
+                file = new File(filePath);
+                file.createNewFile();
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -137,6 +139,18 @@ public class DatabaseInfo implements Serializable {
     public void resetDataBaseInfo(){
         informationTable = new ArrayList<>();
         counterRelations = 0;
+        deleteDBInfoFile();
+    }
+
+    //delete the file DBInfo.save 
+    private void deleteDBInfoFile(){
+        String filePath = DBParams.DBPath + File.separator + databaseInfoFile;
+        File file = new File(filePath);
+
+        if (file.exists()) {
+            
+            file.delete();
+        }
     }
 
 }

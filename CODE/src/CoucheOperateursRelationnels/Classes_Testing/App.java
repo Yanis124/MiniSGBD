@@ -2,15 +2,8 @@ package CoucheOperateursRelationnels.Classes_Testing;
 
 import java.io.File;
 
-//import CoucheOperateursRelationnels.CreateTableCommand;
-//import GestionEspaceDisque_et_Buffer.BufferManager;
 import GestionEspaceDisque_et_Buffer.DBParams;
-//import GestionEspaceDisque_et_Buffer.DiskManager;
-//import GestionEspaceDisque_et_Buffer.Frame;
-//import CoucheAcces_Fichier.DatabaseInfo;
 import CoucheAcces_Fichier.DatabaseManager;
-//import CoucheAcces_Fichier.DatabaseManager;
-
 public class App {
     public static void main(String[] args) { // class for the main method to test DB Tables 
 
@@ -19,7 +12,8 @@ public class App {
         DBParams.DMFileCount = 4;
         DBParams.SGBDPageSize = 4096;
         DBParams.FrameCount = 10;
-        DBParams.PageFull=4000;
+        DBParams.PageFull=100;
+        DBParams.nbPageFile=50;
         
 
         // Your other tests with BufferManager go here...
@@ -44,6 +38,10 @@ public class App {
 
         DatabaseManager.Init(); 
 
+        //DatabaseManager.ProcessCommand("RESETDB"); 
+
+        
+
         
         
         
@@ -55,20 +53,20 @@ public class App {
         String importDataFromFileCommande1="IMPORT INTO Profs ../../DB/file.csv";
         DatabaseManager.ProcessCommand(importDataFromFileCommande1);
 
-        // test the SELECT command with SELECT * FROM Profs
-        System.out.println();
-        System.out.println("####    SELECT * FROM Profs    ####");
-        DatabaseManager.ProcessCommand("SELECT * FROM Profs WHERE Age>20");
+        // // test the SELECT command with SELECT * FROM Profs
+        // System.out.println();
+        // System.out.println("####    SELECT * FROM Profs    ####");
+        // DatabaseManager.ProcessCommand("SELECT * FROM Profs WHERE Age>20");
 
         
 
 
-        //databaseManager.Finish();
 
-        //createTable3.printTableInfo();
-        //String insertDataCommande1="INSERT INTO Profs VALUES (Ileana,BDDA,14)";
-        // test the INSERT command with INSERT INTO Profs VALUES (Ileana,BDDA)
-        //DatabaseManager.ProcessCommand(insertDataCommande1);
+
+        // //createTable3.printTableInfo();
+        // //String insertDataCommande1="INSERT INTO Profs VALUES (Ileana,BDDA,14)";
+        // // test the INSERT command with INSERT INTO Profs VALUES (Ileana,BDDA)
+        // //DatabaseManager.ProcessCommand(insertDataCommande1);
 
         DatabaseManager.Finish(); //write everything into the database
 

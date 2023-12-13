@@ -1,6 +1,6 @@
 package CoucheAcces_Fichier;
 
-
+import GestionEspaceDisque_et_Buffer.DiskManager;
 import CoucheOperateursRelationnels.CreateTableCommand;
 import GestionEspaceDisque_et_Buffer.BufferManager;
 import CoucheOperateursRelationnels.ImportCommande;
@@ -11,7 +11,9 @@ import CoucheOperateursRelationnels.ResetDBCommand;
 
 public class DatabaseManager {
     
+    
     public static  void Init(){
+        DiskManager.getDiskManager(); //create the files of the database 
         DatabaseInfo databaseInfo=DatabaseInfo.getInstance();
 
         databaseInfo.Init();
@@ -35,6 +37,7 @@ public class DatabaseManager {
         //create a realtion
         else if(command.startsWith("CREATE TABLE")){
             CreateTableCommand createTableCommand=new CreateTableCommand(command);
+
             createTableCommand.Execute();
         }
         //import a set of records from a file

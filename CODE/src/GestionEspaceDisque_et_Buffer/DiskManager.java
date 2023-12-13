@@ -284,7 +284,7 @@ public class DiskManager {
 
     //find an empty page
     public PageID getEmptyPage(){
-        for(int i=0;i<10;i++){
+        for(int i=0;i<DBParams.NumFichier*DBParams.nbPageFile;i++){
             PageID page=AllocPage();
             ByteBuffer buff=ByteBuffer.allocate(DBParams.SGBDPageSize);
             ReadPage(page, buff);

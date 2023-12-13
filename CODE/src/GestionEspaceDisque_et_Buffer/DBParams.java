@@ -4,12 +4,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class DBParams {
-    public static String DBPath;
-    public static int SGBDPageSize;
-    public static int DMFileCount;
-    public static int NumFichier;
-    public static int FrameCount;
-    public static int PageFull;
+    public static String DBPath; // the path of the database
+    public static int SGBDPageSize; //  the size of page
+    public static int DMFileCount;   // number of file
+    public static int NumFichier; 
+    public static int FrameCount;  // the number of frame
+    public static int PageFull;  // we assume that a page is full when the page only have PageFull bytes remaining
+    public static int nbPageFile;  //number of page in a file
 
     public static int createFile() {
         NumFichier = 0;

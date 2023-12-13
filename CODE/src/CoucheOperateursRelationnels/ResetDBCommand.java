@@ -14,6 +14,8 @@ public class ResetDBCommand {
     }
 
     public void Execute(){
+
+        
          // delete all the files in the DB folder
         FileManager.getFileManager().resetFileDB();
 

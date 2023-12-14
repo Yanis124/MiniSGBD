@@ -96,7 +96,6 @@ public class FileManager {
         int posFreeSpace = dataPages.getPosFreeSpace(); // get the position where we should write the record
 
         ByteBuffer byteBuffer = dataPages.getByteBuffer(); // get the content of the dataPage
-        System.out.println("inside function "+dataPages.toString());
 
         record.writeToBuffer(byteBuffer, posFreeSpace); // writte the record to the byteBuffer of the dataPage
 
@@ -111,8 +110,6 @@ public class FileManager {
         dataPages.setPosFreeSpace(posFreeSpace + sizeRecord);
         dataPages.setNumberSlot(numberSlot + 1);
 
-        System.out.println("inside function "+dataPages.toString());
-
         dataPages.finalize(); 
         // check if the page is full
         if (dataPages.getAvailableSpace() <= DBParams.PageFull) {
@@ -123,6 +120,24 @@ public class FileManager {
 
         return new RecordId(pageIdDataPage, numberSlot);
     }
+
+    //delete a record from a dataPage
+    public void deleteRecordToDataPage(PageID pageIdDataPage,int indexRecord) {
+
+        DataPages dataPages = getDataPages(pageIdDataPage); // get the dataPage
+
+        ByteBuffer byteBuffer = dataPages.getByteBuffer(); // get the content of the dataPage
+
+        byteBuffer.position(DBParams.SGBDPageSize - (indexRecord * 8 + 8 + 8));// position of the new slot
+
+        // set the pos of the record to -1 as deleted
+        byteBuffer.putInt(-1);
+        System.out.println("-1");
+
+        dataPages.finalize(); 
+
+    }
+
 
     // add all the records of a dataPage to a list
     public ArrayList<Record> getRecordsInDataPage(TableInfo tableInfo, PageID pageId) {
@@ -136,9 +151,13 @@ public class FileManager {
         for (int i = 0; i < numberRecod; i++) {
             Record record = new Record(tableInfo);// create an empty record
             int positionRecord = dataPage.getPosRecord(i);
+            System.out.println("position record : "+positionRecord);
 
-            record.readFromBuffer(byteBuffer, positionRecord);
-            listRecords.add(record);
+            //if the pos=-1 the record is not read
+           if(positionRecord!=-1){
+                record.readFromBuffer(byteBuffer, positionRecord);
+                listRecords.add(record);
+           }
         }
 
         dataPage.finalize(); //free the dataPage 

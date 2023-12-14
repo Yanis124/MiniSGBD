@@ -50,10 +50,10 @@ public class App {
 
         // // test the SELECT command with SELECT * FROM Profs
 
-        String selectAllCommande1="SELECT * FROM Profs ";
-        DatabaseManager.ProcessCommand(selectAllCommande1);
-        // System.out.println("SELECT * FROM Profs");
-        //DatabaseManager.ProcessCommand("SELECT * FROM Profs WHERE Age>20");
+        //String selectAllCommande1="SELECT * FROM Profs ";
+        //DatabaseManager.ProcessCommand(selectAllCommande1);
+         //System.out.println("SELECT * FROM Profs");
+        DatabaseManager.ProcessCommand("DELETE * FROM Profs ");
 
         
 

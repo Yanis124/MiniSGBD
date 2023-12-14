@@ -2,6 +2,7 @@ package CoucheAcces_Fichier;
 
 import GestionEspaceDisque_et_Buffer.DiskManager;
 import CoucheOperateursRelationnels.CreateTableCommand;
+import CoucheOperateursRelationnels.DeleteRecordsCommand;
 import GestionEspaceDisque_et_Buffer.BufferManager;
 import CoucheOperateursRelationnels.ImportCommande;
 import CoucheOperateursRelationnels.InsertCommand;
@@ -56,9 +57,14 @@ public class DatabaseManager {
         
         else if (command.startsWith("SELECT")) {    // create a class for selecting a record
             SelectCommand selectCommand = new SelectCommand(command);
-            System.out.println("rueghiurehgiuheri");
             selectCommand.Execute();
             
+        }
+
+        else if(command.startsWith("DELETE")){
+            DeleteRecordsCommand deleteRecordsCommand=new DeleteRecordsCommand(command);
+            
+            deleteRecordsCommand.Execute();
         }
     }
 

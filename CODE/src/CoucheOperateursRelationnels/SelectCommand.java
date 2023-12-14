@@ -32,14 +32,11 @@ public class SelectCommand {
 
         this.relationName = commandSplit[3]; // the relation name is the 4th word in the command
         
-
-        // parse the conditions
-        String conditionsStr = "";
-        
         //verifie if the select have a condition 
-        
 
         if(this.condition==true){
+            
+            String conditionsStr = ""; // parse the conditions
             int whereIndex = userCommand.indexOf("WHERE");
             
             if (whereIndex != -1) {

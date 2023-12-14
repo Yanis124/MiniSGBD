@@ -12,6 +12,8 @@ public class SelectCommand {
     private String userCommand;
     private String relationName;
     private ArrayList<SelectCondition> conditions;
+    private boolean condition=false;
+    
 
     // Constructor for the SelectCommand class using the parsing of the userCommand
     public SelectCommand(String userCommand) {
@@ -19,19 +21,36 @@ public class SelectCommand {
 
         // Extraction of the relation name
         String[] commandSplit = userCommand.split(" ");
+
+        for(String elements:commandSplit){
+            if(elements.equals("WHERE")){
+                this.condition=true;
+                break;
+
+            }
+        }
+
         this.relationName = commandSplit[3]; // the relation name is the 4th word in the command
+        
 
         // parse the conditions
         String conditionsStr = "";
-        int whereIndex = userCommand.indexOf("WHERE");
-        if (whereIndex != -1) {
-            conditionsStr = userCommand.substring(whereIndex + 6).trim(); // 6 because "WHERE" has 5 characters and we
-                                                                          // want to skip the space after it
-        }
+        
+        //verifie if the select have a condition 
+        
 
-        this.conditions = parseConditions(conditionsStr);
-        // conditions now contains the parsed conditions (only the String part after the
-        // WHERE)
+        if(this.condition==true){
+            int whereIndex = userCommand.indexOf("WHERE");
+            
+            if (whereIndex != -1) {
+                conditionsStr = userCommand.substring(whereIndex + 6).trim(); // 6 because "WHERE" has 5 characters and we
+                                                                            // want to skip the space after it
+            }
+
+            this.conditions = parseConditions(conditionsStr);
+            // conditions now contains the parsed conditions (only the String part after the
+            // WHERE)
+        }
     }
 
     // this method to analyze the conditions and return an ArrayList of
@@ -78,13 +97,28 @@ public class SelectCommand {
         TableInfo tableInfo = DatabaseInfo.getInstance().GetTableInfo(this.relationName);
 
         // get all the records from the table
+        
         ArrayList<Record> records = FileManager.getFileManager().getAllRecords(tableInfo);
 
         // filter the records based on the conditions
         ArrayList<Record> selectedRecords = new ArrayList<>();
-        for (Record record : records) {
-            if (satisfiesConditions(record)) {
+
+        //filter records if there is a condition
+        if(this.condition){
+            System.out.println("condition executed");
+            for (Record record : records) {
+                if (satisfiesConditions(record)) {
+                    selectedRecords.add(record);
+                }
+            }
+        }
+
+        //select all the records
+        else{  
+            System.out.println("nonononno condition executed");
+            for (Record record : records) {
                 selectedRecords.add(record);
+                
             }
         }
 
@@ -103,7 +137,7 @@ public class SelectCommand {
         return true; // all conditions are satisfied
     }
 
-    // Method to print the selected records
+    //Method to print the selected records
     private void printSelectedRecords(ArrayList<Record> records) {
         System.out.println("        <<<<Selected records:>>>>       ");
         for (Record record : records) {
@@ -113,7 +147,6 @@ public class SelectCommand {
         }
 
         //print the total number of records
-        System.out.println("hjiujyhgrfdsqrdthgkhgjhdgfdsqfghj");
         System.out.println("Total records=" + records.size());
     }
 

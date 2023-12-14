@@ -43,6 +43,7 @@ public class DatabaseManager {
         //import a set of records from a file
         else if(command.startsWith("IMPORT INTO")){
             ImportCommande importCommand=new ImportCommande(command);
+            
             importCommand.printTableInfo();
             importCommand.Execute();
         }
@@ -55,6 +56,7 @@ public class DatabaseManager {
         
         else if (command.startsWith("SELECT")) {    // create a class for selecting a record
             SelectCommand selectCommand = new SelectCommand(command);
+            System.out.println("rueghiurehgiuheri");
             selectCommand.Execute();
             
         }

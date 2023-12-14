@@ -39,6 +39,7 @@ public class FileManager {
 
         DiskManager diskManager = DiskManager.getDiskManager();
         PageID pageId = diskManager.getEmptyPage(); // allocate a page
+        System.out.println(pageId.toString());
 
         DataPages dataPages = new DataPages(pageId); // create the new dataPage
 

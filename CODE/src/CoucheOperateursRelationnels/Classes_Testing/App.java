@@ -34,29 +34,26 @@ public class App {
         // reset the DB
         
         
-        //databaseManager.ProcessCommand("RESETDB");
+        
 
         DatabaseManager.Init(); 
 
         //DatabaseManager.ProcessCommand("RESETDB"); 
 
-        
-
-        
-        
-        
         //create a table with CREATE TABLE Profs (Nom:STRING(10),Matiere:STRING(10))
         //String createTableCommand3 = "CREATE TABLE Profs (Nom:STRING 10, Matiere:VARSTRING 13 ,Age:INT)";
         //DatabaseManager.ProcessCommand(createTableCommand3);
 
         
-        String importDataFromFileCommande1="IMPORT INTO Profs ../../DB/file.csv";
-        DatabaseManager.ProcessCommand(importDataFromFileCommande1);
+        //String importDataFromFileCommande1="IMPORT INTO Profs ../../DB/file.csv";
+        //DatabaseManager.ProcessCommand(importDataFromFileCommande1);
 
         // // test the SELECT command with SELECT * FROM Profs
-        // System.out.println();
-        // System.out.println("####    SELECT * FROM Profs    ####");
-        // DatabaseManager.ProcessCommand("SELECT * FROM Profs WHERE Age>20");
+
+        String selectAllCommande1="SELECT * FROM Profs ";
+        DatabaseManager.ProcessCommand(selectAllCommande1);
+        // System.out.println("SELECT * FROM Profs");
+        //DatabaseManager.ProcessCommand("SELECT * FROM Profs WHERE Age>20");
 
         
 
@@ -64,11 +61,11 @@ public class App {
 
 
         // //createTable3.printTableInfo();
-        // //String insertDataCommande1="INSERT INTO Profs VALUES (Ileana,BDDA,14)";
+        //String insertDataCommande1="INSERT INTO Profs VALUES (ivan,cyber,23)";
         // // test the INSERT command with INSERT INTO Profs VALUES (Ileana,BDDA)
-        // //DatabaseManager.ProcessCommand(insertDataCommande1);
+        //DatabaseManager.ProcessCommand(insertDataCommande1);
 
-        DatabaseManager.Finish(); //write everything into the database
+        //DatabaseManager.Finish(); //write everything into the database
 
     }
 }

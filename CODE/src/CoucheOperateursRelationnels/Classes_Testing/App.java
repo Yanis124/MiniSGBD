@@ -1,9 +1,9 @@
 package CoucheOperateursRelationnels.Classes_Testing;
 
+import CoucheAcces_Fichier.DatabaseManager;
+import GestionEspaceDisque_et_Buffer.DBParams;
 import java.io.File;
 
-import GestionEspaceDisque_et_Buffer.DBParams;
-import CoucheAcces_Fichier.DatabaseManager;
 public class App {
     public static void main(String[] args) { // class for the main method to test DB Tables 
 
@@ -14,8 +14,8 @@ public class App {
         DBParams.FrameCount = 10;
         DBParams.PageFull=100;
         DBParams.nbPageFile=50;
-        
 
+        
         // Your other tests with BufferManager go here...
 
         // Test your CreateTableCommand
@@ -50,10 +50,10 @@ public class App {
 
         // // test the SELECT command with SELECT * FROM Profs
 
-        //String selectAllCommande1="SELECT * FROM Profs ";
-        //DatabaseManager.ProcessCommand(selectAllCommande1);
+        String selectAllCommande1="SELECT * FROM Profs ";
+        DatabaseManager.ProcessCommand(selectAllCommande1);
          //System.out.println("SELECT * FROM Profs");
-        DatabaseManager.ProcessCommand("DELETE * FROM Profs ");
+        //DatabaseManager.ProcessCommand("DELETE * FROM Profs ");
 
         
 

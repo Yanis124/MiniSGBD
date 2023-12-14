@@ -1,12 +1,12 @@
 package CoucheOperateursRelationnels;
 
-import java.util.ArrayList;
-
 import CoucheAcces_Fichier.DatabaseInfo;
 import CoucheAcces_Fichier.FileManager;
+import CoucheAcces_Fichier.Record;
 import CoucheAcces_Fichier.TableInfo;
 import GestionEspaceDisque_et_Buffer.PageID;
-import CoucheAcces_Fichier.Record;
+import java.util.ArrayList;
+
 
 public class DeleteRecordsCommand {
     
@@ -120,17 +120,22 @@ public class DeleteRecordsCommand {
 
         FileManager fileManager=FileManager.getFileManager();
         ArrayList<PageID> listDataPages =fileManager.getDataPages(tableInfo) ; //get all dataPages of a relation
+        
 
         for(PageID pageID : listDataPages){
-            int indexRecord=0; //index of the record inside the table
+           int indexRecord=0;
+                        
             ArrayList<Record> recordsInPage = fileManager.getRecordsInDataPage(tableInfo, pageID); //get all records of a dataPage
+
             for(Record record : recordsInPage){
 
-                if(selectedRecords.contains(record)){
-                    
-                    fileManager.deleteRecordToDataPage(pageID, indexRecord);
-                    
+                for(Record selectedRecord : selectedRecords){
+                    if(record.compare(selectedRecord)){
+                        System.out.println("record deleted ");
+                        fileManager.deleteRecordToDataPage(pageID, indexRecord);
+                    }
                 }
+
                 indexRecord++;
             }
         }

@@ -1,11 +1,11 @@
 package CoucheOperateursRelationnels;
 
-import java.util.ArrayList;
-
 import CoucheAcces_Fichier.DatabaseInfo;
 import CoucheAcces_Fichier.FileManager;
-import CoucheAcces_Fichier.TableInfo;
 import CoucheAcces_Fichier.Record;
+import CoucheAcces_Fichier.TableInfo;
+import java.util.ArrayList;
+
 
 public class SelectCommand {
 
@@ -102,7 +102,7 @@ public class SelectCommand {
 
         //filter records if there is a condition
         if(this.condition){
-            System.out.println("condition executed");
+            
             for (Record record : records) {
                 if (satisfiesConditions(record)) {
                     selectedRecords.add(record);
@@ -112,7 +112,7 @@ public class SelectCommand {
 
         //select all the records
         else{  
-            System.out.println("nonononno condition executed");
+            
             for (Record record : records) {
                 selectedRecords.add(record);
                 

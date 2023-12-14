@@ -4,9 +4,9 @@ import GestionEspaceDisque_et_Buffer.BufferManager;
 import GestionEspaceDisque_et_Buffer.DBParams;
 import GestionEspaceDisque_et_Buffer.DiskManager;
 import GestionEspaceDisque_et_Buffer.PageID;
-
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+
 
 public class FileManager {
 
@@ -132,7 +132,7 @@ public class FileManager {
 
         // set the pos of the record to -1 as deleted
         byteBuffer.putInt(-1);
-        System.out.println("-1");
+       
 
         dataPages.finalize(); 
 
@@ -148,15 +148,21 @@ public class FileManager {
         
 
         ByteBuffer byteBuffer = dataPage.getByteBuffer();
+        
         for (int i = 0; i < numberRecod; i++) {
             Record record = new Record(tableInfo);// create an empty record
             int positionRecord = dataPage.getPosRecord(i);
-            System.out.println("position record : "+positionRecord);
-
+            
+            System.out.println("posiotn : "+positionRecord);
             //if the pos=-1 the record is not read
            if(positionRecord!=-1){
+            
                 record.readFromBuffer(byteBuffer, positionRecord);
+
                 listRecords.add(record);
+           }
+           else{
+                listRecords.add(new Record(tableInfo));
            }
         }
 

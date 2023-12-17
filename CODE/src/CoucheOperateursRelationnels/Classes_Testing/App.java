@@ -50,10 +50,10 @@ public class App {
 
         // // test the SELECT command with SELECT * FROM Profs
 
-        String selectAllCommande1="SELECT * FROM Profs ";
+        String selectAllCommande1="SELECT * FROM Profs WHERE Profs.Age>40 ";
         DatabaseManager.ProcessCommand(selectAllCommande1);
          //System.out.println("SELECT * FROM Profs");
-        //DatabaseManager.ProcessCommand("DELETE * FROM Profs ");
+        //DatabaseManager.ProcessCommand("DELETE * FROM Profs WHERE Profs.Age>40");
 
         
 
@@ -61,7 +61,7 @@ public class App {
 
 
         // //createTable3.printTableInfo();
-        //String insertDataCommande1="INSERT INTO Profs VALUES (ivan,cyber,23)";
+        //String insertDataCommande1="INSERT INTO Profs VALUES (soto,BDD,64)";
         // // test the INSERT command with INSERT INTO Profs VALUES (Ileana,BDDA)
         //DatabaseManager.ProcessCommand(insertDataCommande1);
 

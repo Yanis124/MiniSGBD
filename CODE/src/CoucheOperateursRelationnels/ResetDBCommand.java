@@ -27,5 +27,7 @@ public class ResetDBCommand {
 
         // reset the disk manager
         DiskManager.getDiskManager().resetDiskManager();
+
+        
     }
 }

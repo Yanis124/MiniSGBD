@@ -72,21 +72,29 @@ public class DeleteRecordsCommand {
     // this method to analyze each condition and return a SelectCondition
     // used inside the parseConditions method
     private SelectCondition parseEachCondition(String conditionStr) {
+        
         // parse the condition
         String[] parts = conditionStr.split("=|<|>|<=|>=|<>"); // split the condition based on the operator
 
-        String columnName = parts[0].trim(); // the first part is the column name
+        String [] parseColumnName = parts[0].split("\\."); //split the relationName.colName
+        
+        String columnName = parseColumnName[1].trim(); // the first part is the column name
+        System.out.println(columnName);
         String value = parts[1].trim(); // the second part is the value (it's technically the third part and the
                                         // operator is the second part)
-        String operator = conditionStr.substring(columnName.length(), conditionStr.length() - value.length()).trim();
+        String operator = conditionStr.substring(relationName.length()+columnName.length()+1, conditionStr.length() - value.length()).trim();
         // the operator is the remaining part of the condition after removing the column
         // name and the value
+
+        System.out.println(operator);
 
         return new SelectCondition(columnName, operator, value);
     }
 
+
     // Method to execute the SelectCommand
     public void Execute() {
+        int nbDeletedRecords=0;
         // get the table info
         TableInfo tableInfo = DatabaseInfo.getInstance().GetTableInfo(this.relationName);
 
@@ -99,10 +107,12 @@ public class DeleteRecordsCommand {
 
         //filter records if there is a condition
         if(this.condition){
-            System.out.println("condition executed");
+            
             for (Record record : records) {
-                if (satisfiesConditions(record)) {
-                    selectedRecords.add(record);
+                if(record.isDeleted()==false){
+                    if (satisfiesConditions(record)) {
+                        selectedRecords.add(record);
+                    }
                 }
             }
         }
@@ -110,7 +120,9 @@ public class DeleteRecordsCommand {
         //select all the records
         else{  
             for (Record record : records) {
-                selectedRecords.add(record);
+                if(record.isDeleted()==false){
+                    selectedRecords.add(record);
+                }
                 
             }
         }
@@ -124,21 +136,27 @@ public class DeleteRecordsCommand {
 
         for(PageID pageID : listDataPages){
            int indexRecord=0;
+           
                         
             ArrayList<Record> recordsInPage = fileManager.getRecordsInDataPage(tableInfo, pageID); //get all records of a dataPage
 
             for(Record record : recordsInPage){
 
                 for(Record selectedRecord : selectedRecords){
-                    if(record.compare(selectedRecord)){
-                        System.out.println("record deleted ");
-                        fileManager.deleteRecordToDataPage(pageID, indexRecord);
+                    if(selectedRecord.isDeleted()==false){
+                        
+                        if(record.compare(selectedRecord)){
+                            
+                            fileManager.deleteRecordToDataPage(pageID, indexRecord);
+                            nbDeletedRecords++;
+                        }
                     }
                 }
 
                 indexRecord++;
             }
         }
+        System.out.println("number of records deleted : "+nbDeletedRecords);
 
     }
 
@@ -152,19 +170,5 @@ public class DeleteRecordsCommand {
 
         return true; // all conditions are satisfied
     }
-
-    //Method to print the selected records
-    private void printSelectedRecords(ArrayList<Record> records) {
-        System.out.println("        <<<< records:>>>>       ");
-        for (Record record : records) {
-            // print the record values separated by " ; " and end with a dot
-            System.out.print(String.join(" ; ", record.getRecValues()));
-            System.out.println(".");
-        }
-
-        //print the total number of records
-        System.out.println("Total records=" + records.size());
-    }
-
 
 }

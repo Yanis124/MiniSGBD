@@ -162,7 +162,10 @@ public class FileManager {
                 listRecords.add(record);
            }
            else{
-                listRecords.add(new Record(tableInfo));
+                Record deletedRecord= new Record(tableInfo);
+                deletedRecord.setAsDeleted();
+                
+                listRecords.add(deletedRecord);
            }
         }
 

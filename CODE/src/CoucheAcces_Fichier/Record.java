@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Record {
     private TableInfo tabInfo;
     private ArrayList<String> recValues;
+    private boolean deletedRecord=false;
 
     // The constructor
     public Record(TableInfo tableInfo) {
@@ -16,6 +17,16 @@ public class Record {
     // method to update the recValues
     public void setRecValues(ArrayList<String> recVals) {
         recValues = recVals;
+    }
+
+    //set the deletedRecord to true
+    public void setAsDeleted(){
+        this.deletedRecord=true;
+    }
+
+    //mark if a recrod is deleted
+    public boolean isDeleted(){
+        return this.deletedRecord;
     }
 
     // method to retrieve the recValues

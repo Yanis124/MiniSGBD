@@ -14,6 +14,7 @@ public class SelectCommand {
     private ArrayList<SelectCondition> conditions;
     private boolean condition=false;
     
+    
 
     // Constructor for the SelectCommand class using the parsing of the userCommand
     public SelectCommand(String userCommand) {
@@ -75,15 +76,21 @@ public class SelectCommand {
     // this method to analyze each condition and return a SelectCondition
     // used inside the parseConditions method
     private SelectCondition parseEachCondition(String conditionStr) {
+        
         // parse the condition
         String[] parts = conditionStr.split("=|<|>|<=|>=|<>"); // split the condition based on the operator
 
-        String columnName = parts[0].trim(); // the first part is the column name
+        String [] parseColumnName = parts[0].split("\\.");
+        
+        String columnName = parseColumnName[1].trim(); // the first part is the column name
+        System.out.println(columnName);
         String value = parts[1].trim(); // the second part is the value (it's technically the third part and the
                                         // operator is the second part)
-        String operator = conditionStr.substring(columnName.length(), conditionStr.length() - value.length()).trim();
+        String operator = conditionStr.substring(relationName.length()+columnName.length()+1, conditionStr.length() - value.length()).trim();
         // the operator is the remaining part of the condition after removing the column
         // name and the value
+
+        System.out.println(operator);
 
         return new SelectCondition(columnName, operator, value);
     }
@@ -104,8 +111,10 @@ public class SelectCommand {
         if(this.condition){
             
             for (Record record : records) {
-                if (satisfiesConditions(record)) {
-                    selectedRecords.add(record);
+                if(record.isDeleted()==false){      //if the record is deleted it will not be selected
+                    if (satisfiesConditions(record) ) {
+                        selectedRecords.add(record);
+                    }
                 }
             }
         }
@@ -114,7 +123,10 @@ public class SelectCommand {
         else{  
             
             for (Record record : records) {
-                selectedRecords.add(record);
+                
+                if(record.isDeleted()==false){
+                    selectedRecords.add(record);
+                }
                 
             }
         }
@@ -139,8 +151,8 @@ public class SelectCommand {
         System.out.println("        <<<<Selected records:>>>>       ");
         for (Record record : records) {
             // print the record values separated by " ; " and end with a dot
-            System.out.print(String.join(" ; ", record.getRecValues()));
-            System.out.println(".");
+            System.out.println(String.join(" ; ", record.getRecValues()));
+            
         }
 
         //print the total number of records

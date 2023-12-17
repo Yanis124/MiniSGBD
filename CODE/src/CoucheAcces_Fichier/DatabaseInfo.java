@@ -1,5 +1,7 @@
 package CoucheAcces_Fichier;
 
+import GestionEspaceDisque_et_Buffer.DBParams;
+import GestionEspaceDisque_et_Buffer.PageID;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,8 +11,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import GestionEspaceDisque_et_Buffer.DBParams;
-import GestionEspaceDisque_et_Buffer.PageID;
 
 
 public class DatabaseInfo implements Serializable {
@@ -125,6 +125,7 @@ public class DatabaseInfo implements Serializable {
     
 
     //check if the data of the database has been written in DBInfo.sava file
+    @Override
     public String toString(){
         String informationDatabase="";
         System.out.println("size of relation : "+informationTable.size());
@@ -139,18 +140,5 @@ public class DatabaseInfo implements Serializable {
     public void resetDataBaseInfo(){
         informationTable = new ArrayList<>();
         counterRelations = 0;
-        deleteDBInfoFile();
     }
-
-    //delete the file DBInfo.save 
-    private void deleteDBInfoFile(){
-        String filePath = DBParams.DBPath + File.separator + databaseInfoFile;
-        File file = new File(filePath);
-
-        if (file.exists()) {
-            
-            file.delete();
-        }
-    }
-
 }

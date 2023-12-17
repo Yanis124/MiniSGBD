@@ -1,13 +1,13 @@
 package GestionEspaceDisque_et_Buffer;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DiskManager {
 
@@ -297,6 +297,7 @@ public class DiskManager {
     }
 
     // get a view of variables
+    @Override
     public String toString() {
         String filePageIdInfo = "filePageId : \n";
         for (int fileIdx : filePageId.keySet()) {
@@ -313,16 +314,32 @@ public class DiskManager {
         return filePageIdInfo + "]";
     }
 
-    // supprimer tous les fichiers du dossier DB
+    // delete all file off the DB folder
     public void deleteAllDBFiles() {
-        for (int i = 0; i < DBParams.DMFileCount; i++) {
-            String filePath = DBParams.DBPath + File.separator + "F" + i + ".data";
-            File file = new File(filePath);
-            if (file.exists()) {
-                file.delete();
+        
+        File directory = new File(DBParams.DBPath);
+
+        // Check if the directory exists
+        if (directory.exists() && directory.isDirectory()) {
+            // List all files in the directory
+            File[] files = directory.listFiles();
+
+            // Iterate through the files and delete them
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile()) {
+                        // Delete the file
+                        if (file.delete()) {
+                            System.out.println("Deleted: " + file.getAbsolutePath());
+                        } else {
+                            System.err.println("Failed to delete: " + file.getAbsolutePath());
+                        }
+                    }
+                }
             }
-        }
+        } 
     }
+    
 
     // « remettre tout à 0 » dans le DiskManager.
     public void resetDiskManager(){

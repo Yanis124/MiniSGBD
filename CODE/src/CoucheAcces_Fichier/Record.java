@@ -194,14 +194,13 @@ public class Record {
     //compare two records
     public boolean compare(Record record){
 
-        System.out.println("list ");
         if(record.getRecValues().isEmpty()|| this.recValues.isEmpty()){
-            System.out.println("list empty");
             return false;
         }
         
         for(int i=0;i<recValues.size();i++){
             if(!recValues.get(i).equals(record.getRecValues().get(i))){
+                
                 return false;
             }
         }

@@ -167,14 +167,15 @@ public class SelectCommand {
         // filter the records based on the conditions
         ArrayList<Record> selectedRecordsFirstRelation = new ArrayList<>();
         ArrayList<Record> selectedRecordsSecondRelation = new ArrayList<>();
-        ArrayList<ArrayList<Record>> selectedRecordsJoin =null;
+        ArrayList<ArrayList<ArrayList<Record>>> selectedRecordsJoin =null;
 
         //filter records if there is a condition
         if(this.condition){
             getSelectedRecordsCondition(recordsFirstRelation, recordsSecondRelation, selectedRecordsFirstRelation, selectedRecordsSecondRelation);
             if(secondtableInfo!=null){
                 selectedRecordsJoin=selectedRecordsJoin(selectedRecordsFirstRelation, selectedRecordsSecondRelation);
-                printSelectedRecordsJoin(selectedRecordsJoin);
+                ArrayList<ArrayList<Record>> records=intersectRecords(selectedRecordsJoin);
+                printSelectedRecordsJoin(records);
             }
             else{
                 printSelectedRecords(selectedRecordsFirstRelation);
@@ -184,11 +185,11 @@ public class SelectCommand {
         //no condition
         else{
             getSelectedRecords(recordsFirstRelation, recordsSecondRelation, selectedRecordsFirstRelation, selectedRecordsSecondRelation);
-            System.out.println("size: "+selectedRecordsFirstRelation.size());
-            System.out.println("size : "+selectedRecordsSecondRelation.size());
+         
             if(secondtableInfo!=null){
-                selectedRecordsJoin=combinateRecords(selectedRecordsFirstRelation, selectedRecordsSecondRelation);
-                printSelectedRecordsJoin(selectedRecordsJoin);
+                selectedRecordsJoin=selectedRecordsJoin(selectedRecordsFirstRelation, selectedRecordsSecondRelation);
+                ArrayList<ArrayList<Record>> records=intersectRecords(selectedRecordsJoin);
+                printSelectedRecordsJoin(records);
             }
             else{
                 printSelectedRecords(selectedRecordsFirstRelation);
@@ -250,19 +251,19 @@ public class SelectCommand {
     }
 
     // verifie if a recod satisfies all condition if it a join condition
-    private ArrayList<ArrayList<Record>> selectedRecordsJoin(ArrayList<Record> selectedRecordsFirstRelation,ArrayList<Record> selectedRecordsSecondRelation){
+    private ArrayList<ArrayList<ArrayList<Record>>> selectedRecordsJoin(ArrayList<Record> selectedRecordsFirstRelation,ArrayList<Record> selectedRecordsSecondRelation){
         
-        ArrayList<ArrayList<Record>> selectedRecordsJoin=new ArrayList<>();
+        ArrayList<ArrayList<ArrayList<Record>>> selectedRecordsJoin=new ArrayList<>();
         boolean joinCondition=false;
 
         for(SelectCondition selectedCondition : this.conditions){
             if(selectedCondition.getTypeCondition()){ //if the condition of type join
                 joinCondition=true;
-                selectedRecordsJoin= SelectCondition.joinRelations(selectedCondition,selectedRecordsFirstRelation,selectedRecordsSecondRelation);
+                selectedRecordsJoin.add(SelectCondition.joinRelations(selectedCondition,selectedRecordsFirstRelation,selectedRecordsSecondRelation));
             }
         }
         if(joinCondition==false){
-            selectedRecordsJoin=combinateRecords(selectedRecordsFirstRelation, selectedRecordsSecondRelation);
+            selectedRecordsJoin.add(combinateRecords(selectedRecordsFirstRelation, selectedRecordsSecondRelation));
         }
 
         return selectedRecordsJoin;
@@ -282,11 +283,34 @@ public class SelectCommand {
                 newRecord.add(recordSecondRelation);
                 combinateRecords.add(newRecord);
             }
-            
-            
         }
 
         return combinateRecords;
+    }
+
+    private ArrayList<ArrayList<Record>> intersectRecords(ArrayList<ArrayList<ArrayList<Record>>> selectedRecordsJoin){
+        ArrayList<ArrayList<Record>> records=new ArrayList<>();
+        
+        if(selectedRecordsJoin.size()==1){
+            return selectedRecordsJoin.get(0);
+        }
+
+        //there is two condition of type R1.col1=R2.col2
+        else{
+            ArrayList<ArrayList<Record>> records1=selectedRecordsJoin.get(0); //get the recods of the first condition
+            ArrayList<ArrayList<Record>> records2=selectedRecordsJoin.get(1); //get the records of the second condtion
+
+            for(int i=0;i<records1.size();i++){
+                for(int j=0;j<records2.size();j++){ //if the recods is in both list
+                    if(records1.get(i).get(0).compare(records2.get(j).get(0)) && records1.get(i).get(1).compare(records2.get(j).get(1)) ){
+                        records.add(records1.get(i));
+                        
+                    }
+                }
+            }
+            return records;
+        }
+
     }
 
     //Method to print the selected records
@@ -304,8 +328,6 @@ public class SelectCommand {
 
     private void printSelectedRecordsJoin(ArrayList<ArrayList<Record>> records) {
         System.out.println("        <<<<Selected records:>>>>       ");
-
-        System.out.println("size : :: "+records.size());
         
         for(ArrayList<Record> record : records){
             Record record1=record.get(0);

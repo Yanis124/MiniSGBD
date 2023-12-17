@@ -59,7 +59,7 @@ public class DatabaseManager {
             SelectCommand selectCommand = new SelectCommand(command);
             
             
-            //System.out.print("yes");
+            System.out.print("yes");
             selectCommand.Execute();
             
         }

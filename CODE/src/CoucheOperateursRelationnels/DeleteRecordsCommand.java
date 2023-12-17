@@ -11,46 +11,72 @@ import java.util.ArrayList;
 public class DeleteRecordsCommand {
     
     private String userCommand;
-    private String relationName;
+    private ArrayList<String> listRelationNames;
     private ArrayList<SelectCondition> conditions;
     private boolean condition=false;
+    
+    
 
-    public DeleteRecordsCommand(String userCommand){
-
+    // Constructor for the SelectCommand class using the parsing of the userCommand
+    public DeleteRecordsCommand(String userCommand) {
         this.userCommand = userCommand;
 
+        // Extraction of the relation name
         String[] commandSplit = userCommand.split(" ");
 
-        //check if there is a condition
-        for (String elements : commandSplit) {
-            if (elements.equals("WHERE")) {
-                this.condition = true;
+        for(String elements:commandSplit){
+            if(elements.equals("WHERE")){
+                this.condition=true;
                 break;
 
             }
         }
 
-        this.relationName = commandSplit[3]; // the relation name is the 4th word in the command
+        String relationNames = commandSplit[3]; // get the raltions in the command
+        this.listRelationNames = parseRelationNames(relationNames); // get the relations 
 
-        if (this.condition == true) {
+        //verifie if the select have a condition 
 
+        if(this.condition==true){
+            
             String conditionsStr = ""; // parse the conditions
             int whereIndex = userCommand.indexOf("WHERE");
-
+            
             if (whereIndex != -1) {
-                conditionsStr = userCommand.substring(whereIndex + 6).trim(); // 6 because "WHERE" has 5 characters and
-                                                                              // we
-                                                                              // want to skip the space after it
+                conditionsStr = userCommand.substring(whereIndex + 6).trim(); // 6 because "WHERE" has 5 characters and we
+                                                                            // want to skip the space after it
             }
 
             this.conditions = parseConditions(conditionsStr);
             // conditions now contains the parsed conditions (only the String part after the
             // WHERE)
         }
-
-
     }
-     private ArrayList<SelectCondition> parseConditions(String conditionsStr) {
+
+    // this method to analyze the conditions and return an ArrayList of
+    // SelectCondition
+    // used inside the constructor
+
+    //get the relationNames in the commande
+    private ArrayList<String> parseRelationNames(String relationNames){
+        ArrayList<String> parsedRelationNames = new ArrayList<>();
+
+        if(!relationNames.isEmpty()){
+            String[] relationNamesSplit = relationNames.split(","); // split the relations based on the comma
+            for(String relationName:relationNamesSplit){
+                parsedRelationNames.add(relationName.trim()); // add the relation name to the ArrayList
+            }
+        }
+        else{
+            parsedRelationNames.add(relationNames.trim()); // add the relation name to the ArrayList
+        }
+        
+        return parsedRelationNames;
+    }
+
+
+
+    private ArrayList<SelectCondition> parseConditions(String conditionsStr) {
         ArrayList<SelectCondition> parsedConditions = new ArrayList<>();
 
         // check if there are conditions
@@ -72,31 +98,64 @@ public class DeleteRecordsCommand {
     // this method to analyze each condition and return a SelectCondition
     // used inside the parseConditions method
     private SelectCondition parseEachCondition(String conditionStr) {
-        
+
+        String[] parts = conditionStr.split("=|<|>|<=|>=|<>"); // split the condition based on the operator
+        String [] parseColumnName = parts[0].split("\\.");
+    
+        if(parseColumnName.length>=2){
+            return parseConditionJoint(conditionStr);
+        }
+
+        else{
+            return parseConditionValue(conditionStr);
+        }        
+    }
+
+
+    private SelectCondition parseConditionValue(String conditionStr) {
         // parse the condition
+
+         // parse the condition
         String[] parts = conditionStr.split("=|<|>|<=|>=|<>"); // split the condition based on the operator
 
-        String [] parseColumnName = parts[0].split("\\."); //split the relationName.colName
+        String [] parseColumnName = parts[0].split("\\.");
         
-        String columnName = parseColumnName[1].trim(); // the first part is the column name
-        System.out.println(columnName);
+        String relationName=parseColumnName[0].trim(); // the first part is the relation name
+        String columnName = parseColumnName[1].trim(); // the second part is the column name
+        
         String value = parts[1].trim(); // the second part is the value (it's technically the third part and the
                                         // operator is the second part)
         String operator = conditionStr.substring(relationName.length()+columnName.length()+1, conditionStr.length() - value.length()).trim();
         // the operator is the remaining part of the condition after removing the column
         // name and the value
 
-        System.out.println(operator);
-
-        return new SelectCondition(columnName, operator, value);
+        return new SelectCondition(columnName, operator, value, relationName);
     }
 
+    //parse a condition of type R.col=S.col
+    private SelectCondition parseConditionJoint(String joinConditionStr){
+
+        String [] parts = joinConditionStr.split("=|<|>|<=|>=|<>"); // split the condition based on the operator
+        
+        String [] firstPartCondition=parts[0].split("\\.");
+        String [] secondPartCondition=parts[1].split("\\.");
+
+        String firstRelationName=firstPartCondition[0].trim();
+        String firstColumnName=firstPartCondition[1].trim();
+        String secondRelationName=secondPartCondition[1].trim();
+        String secondColumnName=secondPartCondition[1].trim();
+
+        String operator=joinConditionStr.substring(firstRelationName.length()+firstColumnName.length()+1, joinConditionStr.length() - secondRelationName.length()+secondColumnName.length()+1).trim();
+
+        return new SelectCondition(firstRelationName,firstColumnName,secondRelationName,secondColumnName,operator);
+
+    }
 
     // Method to execute the SelectCommand
     public void Execute() {
         int nbDeletedRecords=0;
         // get the table info
-        TableInfo tableInfo = DatabaseInfo.getInstance().GetTableInfo(this.relationName);
+        TableInfo tableInfo = DatabaseInfo.getInstance().GetTableInfo(this.listRelationNames.get(0));
 
         // get all the records from the table
         

@@ -288,30 +288,43 @@ public class SelectCommand {
         return combinateRecords;
     }
 
-    private ArrayList<ArrayList<Record>> intersectRecords(ArrayList<ArrayList<ArrayList<Record>>> selectedRecordsJoin){
-        ArrayList<ArrayList<Record>> records=new ArrayList<>();
-        
-        if(selectedRecordsJoin.size()==1){
-            return selectedRecordsJoin.get(0);
+    private ArrayList<ArrayList<Record>> intersectRecords(ArrayList<ArrayList<ArrayList<Record>>> selectedRecordsJoin) {
+    ArrayList<ArrayList<Record>> records = new ArrayList<>();
+
+    if (selectedRecordsJoin.size() == 1) {
+        return selectedRecordsJoin.get(0);
+    }
+
+    else {
+        // Initialize records with the content of the first list
+        records.addAll(selectedRecordsJoin.get(0));
+
+        // Iterate through the remaining lists and retain common elements
+        for (int i = 1; i < selectedRecordsJoin.size(); i++) {
+            records = intersectTwoLists(records, selectedRecordsJoin.get(i));
         }
 
-        //there is two condition of type R1.col1=R2.col2
-        else{
-            ArrayList<ArrayList<Record>> records1=selectedRecordsJoin.get(0); //get the recods of the first condition
-            ArrayList<ArrayList<Record>> records2=selectedRecordsJoin.get(1); //get the records of the second condtion
+        return records;
+    }
+}
 
-            for(int i=0;i<records1.size();i++){
-                for(int j=0;j<records2.size();j++){ //if the recods is in both list
-                    if(records1.get(i).get(0).compare(records2.get(j).get(0)) && records1.get(i).get(1).compare(records2.get(j).get(1)) ){
-                        records.add(records1.get(i));
-                        
-                    }
+    // Method to intersect two lists of records
+    private ArrayList<ArrayList<Record>> intersectTwoLists(ArrayList<ArrayList<Record>> list1, ArrayList<ArrayList<Record>> list2) {
+        ArrayList<ArrayList<Record>> intersection = new ArrayList<>();
+
+        for (ArrayList<Record> sublist1 : list1) {
+            for (ArrayList<Record> sublist2 : list2) {
+                ArrayList<Record> commonRecords = new ArrayList<>(sublist1);
+
+                if(sublist1.get(0).compare(sublist1.get(0)) && sublist1.get(1).compare(sublist2.get(1))){
+                    intersection.add(commonRecords);
                 }
             }
-            return records;
         }
 
+        return intersection;
     }
+
 
     //Method to print the selected records
     private void printSelectedRecords(ArrayList<Record> records) {

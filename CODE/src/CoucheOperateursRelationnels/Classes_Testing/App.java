@@ -41,11 +41,11 @@ public class App {
         //DatabaseManager.ProcessCommand("RESETDB"); 
 
         //create a table with CREATE TABLE Profs (Nom:STRING(10),Matiere:STRING(10))
-        // String createTableCommand3 = "CREATE TABLE Profs (nom:STRING 10, Matiere:VARSTRING 13, age:INT, Classe:STRING 10)";
-        // DatabaseManager.ProcessCommand(createTableCommand3);
+        //String createTableCommand3 = "CREATE TABLE Personne (Nom:STRING 10, Prenom:VARSTRING 13, Age:INT, Salaire:STRING 10)";
+        //DatabaseManager.ProcessCommand(createTableCommand3);
 
-        // String createTableCommand4 = "CREATE TABLE Classe (Classe:STRING 10, Matiere:VARSTRING 13)";
-        // DatabaseManager.ProcessCommand(createTableCommand4);
+         //String createTableCommand4 = "CREATE TABLE Employe (Nom:STRING 10, Prenom:VARSTRING 13, Age:INT)";
+        //DatabaseManager.ProcessCommand(createTableCommand4);
 
         
         //String importDataFromFileCommande1="IMPORT INTO Profs ../../DB/file.csv";
@@ -53,7 +53,7 @@ public class App {
 
         // // test the SELECT command with SELECT * FROM Profs
 
-        String selectAllCommande1="SELECT * FROM Profs,Classe WHERE Classe.Matiere=Profs.Matiere AND Profs.Classe=Classe.Classe"; 
+        String selectAllCommande1="SELECT * FROM Personne,Employe WHERE Personne.Nom=Employe.Nom AND Personne.Prenom=Employe.Prenom AND Personne.Age=Employe.Age"; 
         DatabaseManager.ProcessCommand(selectAllCommande1);
          //System.out.println("SELECT * FROM Profs");
         //DatabaseManager.ProcessCommand("DELETE * FROM Profs WHERE Profs.Age>40");
@@ -64,13 +64,13 @@ public class App {
 
 
         // //createTable3.printTableInfo();
-        //String insertDataCommande1="INSERT INTO Profs VALUES (lomeni,Algo,55,L3)";
-        // String insertDataCommande2="INSERT INTO Profs VALUES (soto,BDD,64,L3)";
+        // String insertDataCommande1="INSERT INTO Personne VALUES (lomeni,HAMMACI,55,10000)";
+        // String insertDataCommande2="INSERT INTO Personne VALUES (soto,ZERIOUL,64,12000)";
 
-        // String insertDataCommande3="INSERT INTO Classe VALUES (L2,BDD)";
-        // String insertDataCommande4="INSERT INTO Classe VALUES (L3,Algo)";
-        // // // // test the INSERT command with INSERT INTO Profs VALUES (Ileana,BDDA)
-        //DatabaseManager.ProcessCommand(insertDataCommande1);
+        // String insertDataCommande3="INSERT INTO Employe VALUES (lomeni,HAMMACI,55)";
+        // String insertDataCommande4="INSERT INTO Employe VALUES (soto,ZERIOUL,64)";
+        // // // // // test the INSERT command with INSERT INTO Profs VALUES (Ileana,BDDA)
+        // DatabaseManager.ProcessCommand(insertDataCommande1);
         // DatabaseManager.ProcessCommand(insertDataCommande2);
         // DatabaseManager.ProcessCommand(insertDataCommande3);
         // DatabaseManager.ProcessCommand(insertDataCommande4);

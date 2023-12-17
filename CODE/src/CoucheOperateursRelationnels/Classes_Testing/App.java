@@ -41,8 +41,8 @@ public class App {
         //DatabaseManager.ProcessCommand("RESETDB"); 
 
         //create a table with CREATE TABLE Profs (Nom:STRING(10),Matiere:STRING(10))
-        //String createTableCommand3 = "CREATE TABLE Profs (Nom:STRING 10, Matiere:VARSTRING 13 ,Age:INT)";
-        //DatabaseManager.ProcessCommand(createTableCommand3);
+        String createTableCommand3 = "CREATE TABLE Profs (Classe:STRING 10, Matiere:VARSTRING 13)";
+        DatabaseManager.ProcessCommand(createTableCommand3);
 
         
         //String importDataFromFileCommande1="IMPORT INTO Profs ../../DB/file.csv";

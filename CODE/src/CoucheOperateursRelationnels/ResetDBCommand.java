@@ -15,7 +15,7 @@ public class ResetDBCommand {
 
     public void Execute(){
 
-        
+        System.out.println("yes");
          // delete all the files in the DB folder
         FileManager.getFileManager().resetFileDB();
 

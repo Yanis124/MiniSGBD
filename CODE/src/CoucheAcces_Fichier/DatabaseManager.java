@@ -30,7 +30,8 @@ public class DatabaseManager {
     
     
     public static void ProcessCommand(String command){
-        if(command.equals("RESETDB")){ 
+        if(command.equals("RESETDB")){
+            System.out.print("yes"); 
            ResetDBCommand  resetDBCommande=new ResetDBCommand(command);
            resetDBCommande.Execute();
            

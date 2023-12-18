@@ -57,14 +57,14 @@ public class DatabaseManager {
         
         else if (command.startsWith("SELECT")) {    // create a class for selecting a record
             SelectCommand selectCommand = new SelectCommand(command);
-            System.out.print("yes");
+           
             selectCommand.Execute();
             
         }
 
         else if(command.startsWith("DELETE")){
             DeleteRecordsCommand deleteRecordsCommand=new DeleteRecordsCommand(command);
-            
+             System.out.print("yes");
             deleteRecordsCommand.Execute();
         }
     }

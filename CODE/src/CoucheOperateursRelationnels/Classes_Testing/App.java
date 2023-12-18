@@ -53,8 +53,8 @@ public class App {
         //String createSecondTable="CREATE TABLE S (AA:INT,BB:INT)";
         //DatabaseManager.ProcessCommand(createSecondTable);
 
-        // String insertfirstRecords="INSERT INTO S VALUES (1,2)";
-        // String insertSecondRecods="INSERT INTO S VALUES (3,2)";
+        //String insertfirstRecords="INSERT INTO S VALUES (1,2)";
+        //String insertSecondRecods="INSERT INTO S VALUES (3,2)";
         // String insertThirsdRecods="INSERT INTO S VALUES (4,5)";
         // DatabaseManager.ProcessCommand(insertfirstRecords);
         // DatabaseManager.ProcessCommand(insertSecondRecods);
@@ -63,10 +63,11 @@ public class App {
         //String firstSelect="SELECT * FROM R,S WHERE R.C1=S.AA";
         //DatabaseManager.ProcessCommand(firstSelect);
 
-        String secondSelect="SELECT * FROM R,S WHERE R.C3=S.BB AND R.C1<=S.BB";
+        String secondSelect="SELECT * FROM R,S WHERE R.C3=S.BB AND R.C1<S.BB";
         DatabaseManager.ProcessCommand(secondSelect);
         
-
+        //String delteCommande="DELETE * FROM R WHERE R.C1=2";
+        //DatabaseManager.ProcessCommand(delteCommande);
         
         //DatabaseManager.Finish(); //write everything into the database
 

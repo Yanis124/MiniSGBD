@@ -99,16 +99,8 @@ public class DeleteRecordsCommand {
     // used inside the parseConditions method
     private SelectCondition parseEachCondition(String conditionStr) {
 
-        String[] parts = conditionStr.split("=|<|>|<=|>=|<>"); // split the condition based on the operator
-        String [] parseColumnName = parts[0].split("\\.");
-    
-        if(parseColumnName.length>=2){
-            return parseConditionJoint(conditionStr);
-        }
-
-        else{
-            return parseConditionValue(conditionStr);
-        }        
+        return parseConditionValue(conditionStr);
+                
     }
 
 
@@ -130,25 +122,6 @@ public class DeleteRecordsCommand {
         // name and the value
 
         return new SelectCondition(columnName, operator, value, relationName);
-    }
-
-    //parse a condition of type R.col=S.col
-    private SelectCondition parseConditionJoint(String joinConditionStr){
-
-        String [] parts = joinConditionStr.split("=|<|>|<=|>=|<>"); // split the condition based on the operator
-        
-        String [] firstPartCondition=parts[0].split("\\.");
-        String [] secondPartCondition=parts[1].split("\\.");
-
-        String firstRelationName=firstPartCondition[0].trim();
-        String firstColumnName=firstPartCondition[1].trim();
-        String secondRelationName=secondPartCondition[1].trim();
-        String secondColumnName=secondPartCondition[1].trim();
-
-        String operator=joinConditionStr.substring(firstRelationName.length()+firstColumnName.length()+1, joinConditionStr.length() - secondRelationName.length()+secondColumnName.length()+1).trim();
-
-        return new SelectCondition(firstRelationName,firstColumnName,secondRelationName,secondColumnName,operator);
-
     }
 
     // Method to execute the SelectCommand

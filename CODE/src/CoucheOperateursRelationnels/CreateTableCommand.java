@@ -1,12 +1,12 @@
 package CoucheOperateursRelationnels;
 
-import java.util.ArrayList;
 import CoucheAcces_Fichier.ColInfo;
 import CoucheAcces_Fichier.ColumnType;
 import CoucheAcces_Fichier.DatabaseInfo;
 import CoucheAcces_Fichier.FileManager;
 import CoucheAcces_Fichier.TableInfo;
 import GestionEspaceDisque_et_Buffer.PageID;
+import java.util.ArrayList;
 
 public class CreateTableCommand {
     private String tableName;
@@ -25,7 +25,7 @@ public class CreateTableCommand {
 
         String[] tokens = this.userCommand.split(" ");
         this.tableName = tokens[2];
-        String colsStr = this.userCommand.substring(this.userCommand.indexOf('(') + 1, this.userCommand.indexOf(')'));
+        String colsStr = tokens[3].substring(1, tokens[3].length() - 1); // Supprimez les parenthèses autour des colonnes
         String[] cols = colsStr.split(",");
         this.nbCol = cols.length;
         

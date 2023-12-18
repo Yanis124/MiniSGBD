@@ -189,6 +189,7 @@ public class Record {
         for(int i=0;i<recValues.size();i++){
             System.out.print(recValues.get(i));
         }
+        System.out.println("\n");
     }
 
     //compare two records

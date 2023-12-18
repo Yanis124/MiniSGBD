@@ -50,16 +50,20 @@ public class SelectCondition {
     }
 
     // Getters for the attributes
-    public String getColumnName() {
-        return firstColumnName;
+    public String getFirstColumnName() {
+        return this.firstColumnName;
     }
 
+    public String getSecondColumnName(){
+        return this.secondColumnName;
+    }
+    
     public String getOperator() {
-        return operator;
+        return this.operator;
     }
 
     public String getValue() {
-        return value;
+        return this.value;
     }
 
     public String getFirstRelationName(){
@@ -111,7 +115,9 @@ public class SelectCondition {
     public static ArrayList<ArrayList<Record>> joinRelations(SelectCondition selectCondition,ArrayList<Record> selectedRecordsFirstRelation, ArrayList<Record> selectedRecordsSecondRelation){
         
 
-        String columnName=selectCondition.getColumnName(); //get the column name of the condition joint
+        String columnNameFirstRelation=selectCondition.getFirstColumnName(); //get the column name of the condition joint
+        String columnNameSecondRelarion=selectCondition.getSecondColumnName(); //get the column name of the condition joint
+
         String operator=selectCondition.getOperator();  //get the oparator of the condition joint
         String firstRelationName=selectCondition.getFirstRelationName(); //get the name of the first relation
         String secondRelationName=selectCondition.getSecondRelationName(); //get the name of the second relation
@@ -119,8 +125,8 @@ public class SelectCondition {
         TableInfo firstTableInfo= DatabaseInfo.getInstance().GetTableInfo(firstRelationName);
         TableInfo secondTableInfo=DatabaseInfo.getInstance().GetTableInfo(secondRelationName); //get the table info of the second relation
 
-        int columnIndexFirstRelation=selectCondition.getColumnIndex(columnName,firstTableInfo); //get the index of the column in the first relation
-        int columnIndexSecondRelation=selectCondition.getColumnIndex(columnName,secondTableInfo); //get the index of the column in the second relation
+        int columnIndexFirstRelation=selectCondition.getColumnIndex(columnNameFirstRelation,firstTableInfo); //get the index of the column in the first relation
+        int columnIndexSecondRelation=selectCondition.getColumnIndex(columnNameSecondRelarion,secondTableInfo); //get the index of the column in the second relation
 
        
         return joinRecords(selectedRecordsFirstRelation,selectedRecordsSecondRelation,columnIndexFirstRelation,columnIndexSecondRelation,operator);
@@ -132,13 +138,15 @@ public class SelectCondition {
 
         for(int i=0;i<selectedRecordsFirstRelation.size();i++){
             Record recordFirstRelation=selectedRecordsFirstRelation.get(i); //select a record from the first relation
-            ArrayList<Record> newRecord=new ArrayList<Record>(); //it a that containe [record1,record2]
-            newRecord.add(recordFirstRelation);
+           
 
             
             String columnValueFirstRelation=recordFirstRelation.getRecValues().get(columnIndexFirstRelation); //get the value of the column in the first relation
 
             for(int j=0;j<selectedRecordsSecondRelation.size();j++){
+                 ArrayList<Record> newRecord=new ArrayList<Record>(); //it a that containe [record1,record2]
+                newRecord.add(recordFirstRelation);
+
                 Record recordSecondRelation=selectedRecordsSecondRelation.get(j); //Select a record from the second relation
                 String columnValueSecondRelation=recordSecondRelation.getRecValues().get(columnIndexSecondRelation); //get the value of the column in the second relation
 
@@ -146,46 +154,74 @@ public class SelectCondition {
 
                     case "=":
                         if(columnValueFirstRelation.equals(columnValueSecondRelation)){
+                            System.out.println("first value :"+columnValueFirstRelation);
+                            System.out.println("second value :"+columnValueSecondRelation);
+                            
                             newRecord.add(recordSecondRelation);
                             joinedRecords.add(newRecord);
+                            
+                            for(Record record : newRecord) {
+                                record.displayRecord();
+                            }
                             
                         }
                         break;
                     case "<":
                         if(columnValueFirstRelation.compareTo(columnValueSecondRelation)<0){
+                            System.out.println("first value :"+columnValueFirstRelation);
+                            System.out.println("second value :"+columnValueSecondRelation);
+                            
+
                             newRecord.add(recordSecondRelation);
                             joinedRecords.add(newRecord);
+                             for(Record record : newRecord) {
+                                record.displayRecord();
+                            }
+                            
                         }
                         break;
                     case ">":
                         if(columnValueFirstRelation.compareTo(columnValueSecondRelation)>0){
                             newRecord.add(recordSecondRelation);
                             joinedRecords.add(newRecord);
+                             
                         }
                         break;
                     case "<=":
                         if(columnValueFirstRelation.compareTo(columnValueSecondRelation)<=0){
                             newRecord.add(recordSecondRelation);
                             joinedRecords.add(newRecord);
+                            for(Record record : newRecord) {
+                                record.displayRecord();
+                            }
+                             
                         }
                         break;
                     case ">=":
                         if(columnValueFirstRelation.compareTo(columnValueSecondRelation)>=0){
                             newRecord.add(recordSecondRelation);
                             joinedRecords.add(newRecord);
+                            for(Record record : newRecord) {
+                                record.displayRecord();
+                            }
+                             
                         }
                         break;
                     case "<>":
                         if(!columnValueFirstRelation.equals(columnValueSecondRelation)){
                             newRecord.add(recordSecondRelation);
                             joinedRecords.add(newRecord);
+                             
                         }
                         break;
                     default:
                         break;
                 }
+
+                
             }
         }
+        System.out.println(" terminate : "+operator);
 
         return joinedRecords;
     }

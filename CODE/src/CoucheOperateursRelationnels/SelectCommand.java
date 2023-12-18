@@ -32,6 +32,8 @@ public class SelectCommand {
 
             }
         }
+        
+        //System.out.println("yes");
 
         String relationNames = commandSplit[3]; // get the raltions in the command
         this.listRelationNames = parseRelationNames(relationNames); // get the relations 
@@ -113,10 +115,9 @@ public class SelectCommand {
 
 
     private SelectCondition parseConditionValue(String conditionStr) {
-        // parse the condition
 
          // parse the condition
-        String[] parts = conditionStr.split("=|<|>|<=|>=|<>"); // split the condition based on the operator
+        String[] parts = conditionStr.split("<=|>=|<>|<|>|="); // split the condition based on the operator
 
         String [] parseColumnName = parts[0].split("\\.");
         
@@ -135,8 +136,8 @@ public class SelectCommand {
     //parse a condition of type R.col=S.col
     private SelectCondition parseConditionJoint(String joinConditionStr){
 
-        String [] parts = joinConditionStr.split("=|<|>|<=|>=|<>"); // split the condition based on the operator
-        
+        String [] parts = joinConditionStr.split("<=|>=|<>|<|>|="); // split the condition based on the operator
+ 
         String [] firstPartCondition=parts[0].split("\\.");
         String [] secondPartCondition=parts[1].split("\\.");
 
@@ -256,15 +257,20 @@ public class SelectCommand {
         ArrayList<ArrayList<ArrayList<Record>>> selectedRecordsJoin=new ArrayList<>();
         boolean joinCondition=false;
 
-        for(SelectCondition selectedCondition : this.conditions){
-            if(selectedCondition.getTypeCondition()){ //if the condition of type join
-                joinCondition=true;
-                selectedRecordsJoin.add(SelectCondition.joinRelations(selectedCondition,selectedRecordsFirstRelation,selectedRecordsSecondRelation));
+        if(this.condition){
+            for(SelectCondition selectedCondition : this.conditions){
+                if(selectedCondition.getTypeCondition()){ //if the condition of type join
+                    joinCondition=true;
+                    selectedRecordsJoin.add(SelectCondition.joinRelations(selectedCondition,selectedRecordsFirstRelation,selectedRecordsSecondRelation));
+                }
             }
         }
+
         if(joinCondition==false){
             selectedRecordsJoin.add(combinateRecords(selectedRecordsFirstRelation, selectedRecordsSecondRelation));
         }
+
+        
 
         return selectedRecordsJoin;
     }
@@ -316,7 +322,7 @@ public class SelectCommand {
             for (ArrayList<Record> sublist2 : list2) {
                 ArrayList<Record> commonRecords = new ArrayList<>(sublist1);
 
-                if(sublist1.get(0).compare(sublist1.get(0)) && sublist1.get(1).compare(sublist2.get(1))){
+                if(sublist1.get(0).compare(sublist2.get(0)) && sublist1.get(1).compare(sublist2.get(1))){
                     intersection.add(commonRecords);
                 }
             }

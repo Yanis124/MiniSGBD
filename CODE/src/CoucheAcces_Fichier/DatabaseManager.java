@@ -31,7 +31,7 @@ public class DatabaseManager {
     
     public static void ProcessCommand(String command){
         if(command.equals("RESETDB")){
-            System.out.print("yes"); 
+           
            ResetDBCommand  resetDBCommande=new ResetDBCommand(command);
            resetDBCommande.Execute();
            
@@ -40,7 +40,7 @@ public class DatabaseManager {
         //create a realtion
         else if(command.startsWith("CREATE TABLE")){
             CreateTableCommand createTableCommand=new CreateTableCommand(command);
-
+            
             createTableCommand.Execute();
         }
         //import a set of records from a file
@@ -57,9 +57,7 @@ public class DatabaseManager {
         
         else if (command.startsWith("SELECT")) {    // create a class for selecting a record
             SelectCommand selectCommand = new SelectCommand(command);
-            
-            
-            //System.out.print("yes");
+            System.out.print("yes");
             selectCommand.Execute();
             
         }

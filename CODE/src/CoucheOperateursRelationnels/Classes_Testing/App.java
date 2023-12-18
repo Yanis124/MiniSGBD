@@ -40,41 +40,34 @@ public class App {
 
         //DatabaseManager.ProcessCommand("RESETDB"); 
 
-        //create a table with CREATE TABLE Profs (Nom:STRING(10),Matiere:STRING(10))
-        //String createTableCommand3 = "CREATE TABLE Personne (Nom:STRING 10, Prenom:VARSTRING 13, Age:INT, Salaire:STRING 10)";
-        //DatabaseManager.ProcessCommand(createTableCommand3);
+        
+        //String createFirstTable= "CREATE TABLE R (C1:INT,C2:VARSTRING(3),C3:INT)";
+        //DatabaseManager.ProcessCommand(createFirstTable);
 
-         //String createTableCommand4 = "CREATE TABLE Employe (Nom:STRING 10, Prenom:VARSTRING 13, Age:INT)";
-        //DatabaseManager.ProcessCommand(createTableCommand4);
+        //String insertCommande="INSERT INTO R VALUES (2,ac,2)";
+        //DatabaseManager.ProcessCommand(insertCommande);
+
+        //String insertSecondRecods="INSERT INTO R VALUES (1,aab,2)";
+        //DatabaseManager.ProcessCommand(insertSecondRecods);
+
+        //String createSecondTable="CREATE TABLE S (AA:INT,BB:INT)";
+        //DatabaseManager.ProcessCommand(createSecondTable);
+
+        // String insertfirstRecords="INSERT INTO S VALUES (1,2)";
+        // String insertSecondRecods="INSERT INTO S VALUES (3,2)";
+        // String insertThirsdRecods="INSERT INTO S VALUES (4,5)";
+        // DatabaseManager.ProcessCommand(insertfirstRecords);
+        // DatabaseManager.ProcessCommand(insertSecondRecods);
+        // DatabaseManager.ProcessCommand(insertThirsdRecods);
+
+        //String firstSelect="SELECT * FROM R,S WHERE R.C1=S.AA";
+        //DatabaseManager.ProcessCommand(firstSelect);
+
+        String secondSelect="SELECT * FROM R,S WHERE R.C3=S.BB AND R.C1<=S.BB";
+        DatabaseManager.ProcessCommand(secondSelect);
+        
 
         
-        //String importDataFromFileCommande1="IMPORT INTO Profs ../../DB/file.csv";
-        //DatabaseManager.ProcessCommand(importDataFromFileCommande1);
-
-        // // test the SELECT command with SELECT * FROM Profs
-
-        String selectAllCommande1="SELECT * FROM Personne,Employe WHERE Personne.Nom=Employe.Nom AND Personne.Prenom=Employe.Prenom AND Personne.Age=Employe.Age"; 
-        DatabaseManager.ProcessCommand(selectAllCommande1);
-         //System.out.println("SELECT * FROM Profs");
-        //DatabaseManager.ProcessCommand("DELETE * FROM Profs WHERE Profs.Age>40");
-
-        
-
-
-
-
-        // //createTable3.printTableInfo();
-        // String insertDataCommande1="INSERT INTO Personne VALUES (lomeni,HAMMACI,55,10000)";
-        // String insertDataCommande2="INSERT INTO Personne VALUES (soto,ZERIOUL,64,12000)";
-
-        // String insertDataCommande3="INSERT INTO Employe VALUES (lomeni,HAMMACI,55)";
-        // String insertDataCommande4="INSERT INTO Employe VALUES (soto,ZERIOUL,64)";
-        // // // // // test the INSERT command with INSERT INTO Profs VALUES (Ileana,BDDA)
-        // DatabaseManager.ProcessCommand(insertDataCommande1);
-        // DatabaseManager.ProcessCommand(insertDataCommande2);
-        // DatabaseManager.ProcessCommand(insertDataCommande3);
-        // DatabaseManager.ProcessCommand(insertDataCommande4);
-
         //DatabaseManager.Finish(); //write everything into the database
 
     }

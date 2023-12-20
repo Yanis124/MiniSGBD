@@ -156,7 +156,7 @@ public class SelectCondition {
             return false;
         }
 
-        String newValue=value;
+        String newValue=value;;
 
         if(columnType==ColumnType.FLOAT){
             newValue=value.replace(",", ".");
@@ -181,21 +181,33 @@ public class SelectCondition {
             case "<":
              if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
                  return Float.parseFloat(columnValue)<(Float.parseFloat(newValue));
-            }
+                }
+                else{
+                    return columnValue.compareTo(value) < 0;
+                }
                
             case ">":
                 if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
                  return Float.parseFloat(columnValue)>(Float.parseFloat(newValue));
+                }
+                else{
+                    return columnValue.compareTo(value) > 0;
                 }
                 
             case "<=":
                 if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
                      return Float.parseFloat(columnValue)<=(Float.parseFloat(newValue));
                 }
+                else{
+                    return columnValue.compareTo(value) <= 0;
+                }
                
             case ">=":
                 if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
                     return Float.parseFloat(columnValue)>=(Float.parseFloat(newValue));
+                }
+                else{
+                    return columnValue.compareTo(value) >= 0;
                 }
                 
             case "<>":

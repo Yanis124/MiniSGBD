@@ -24,7 +24,7 @@ public class SelectCommand {
      */
     public SelectCommand(String userCommand) {
         this.userCommand = userCommand;
-      
+        
 
         // Extraction of the relation name
         String[] commandSplit = userCommand.split(" ");

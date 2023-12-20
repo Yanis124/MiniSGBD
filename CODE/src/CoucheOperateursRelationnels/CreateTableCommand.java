@@ -8,7 +8,7 @@ import CoucheAcces_Fichier.TableInfo;
 import GestionEspaceDisque_et_Buffer.PageID;
 import java.util.ArrayList;
 
-/*
+/**
  * Class CreateTableCommand that represents the command to create a table
  */
 public class CreateTableCommand {
@@ -18,7 +18,7 @@ public class CreateTableCommand {
     private String userCommand; 
 
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : userCommand : the command to create a table
      */
@@ -85,7 +85,7 @@ public class CreateTableCommand {
     
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method Execute which is called to execute the command to create a table
      * @param : nothing
      * @return void : nothing

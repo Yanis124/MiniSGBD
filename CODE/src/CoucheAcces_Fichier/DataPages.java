@@ -3,14 +3,14 @@ package CoucheAcces_Fichier;
 import java.nio.ByteBuffer;
 import GestionEspaceDisque_et_Buffer.*;
 
-/*
+/**
  * Class DataPages that represents the data pages
  */
 public class DataPages {
     private ByteBuffer byteBuffer;
     private PageID pageId;
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : pageId : the pageID of the dataPage
      */
@@ -40,7 +40,7 @@ public class DataPages {
 
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method DataPages which is called to create a dataPage
      * @param : byteBuffer : the byteBuffer of the dataPage
      * @param : pageId : the pageID of the dataPage
@@ -56,7 +56,7 @@ public class DataPages {
         }
     }
 
-    /*
+    /**
      * Method getPageID that returns the pageID of a dataPage
      * @param : nothing
      * @return PageID : the pageID of the dataPage
@@ -65,7 +65,7 @@ public class DataPages {
         return pageId;
     }
 
-    /*
+    /**
      * Method setPageID that sets the pageID of a dataPage
      * @param : pageId : the pageID of the dataPage
      * @return void : nothing
@@ -74,7 +74,7 @@ public class DataPages {
         this.pageId = pageId;
     }
 
-    /*
+    /**
      * Method setNextPage that sets the next page of the dataPage
      * @param : pageId : the pageID of the next page
      * @return void : nothing
@@ -86,7 +86,7 @@ public class DataPages {
         byteBuffer.putInt(pageId.getPageIdx());
     }
 
-    /*
+    /**
      * Method getNextPage that returns the next page of the dataPage
      * @param : nothing
      * @return PageID : the pageID of the next page
@@ -97,7 +97,7 @@ public class DataPages {
         return new PageID(byteBuffer.getInt(), byteBuffer.getInt());
     }
 
-    /*
+    /**
      * Method getPosFreeSpace that returns the position of the free space in the dataPage
      * @param : nothing
      * @return int : the position of the free space in the dataPage
@@ -109,7 +109,7 @@ public class DataPages {
         return byteBuffer.getInt();
     }
 
-    /*
+    /**
      * Method setPosFreeSpace that sets the position of the free space in the dataPage
      * @param : freeSpace : the position of the free space in the dataPage
      * @return void : nothing
@@ -121,7 +121,7 @@ public class DataPages {
 
     }
 
-    /*
+    /**
      * Method getNumberSlot that returns the number of slot in the dataPage
      * @param : nothing
      * @return int : the number of slot in the dataPage
@@ -133,7 +133,7 @@ public class DataPages {
         return byteBuffer.getInt();
     }
 
-    /*
+    /**
      * Method setNumberSlot that sets the number of slot in the dataPage
      * @param : numberSlot : the number of slot in the dataPage
      * @return void : nothing
@@ -144,7 +144,7 @@ public class DataPages {
         byteBuffer.putInt(numberSlot);
     }
 
-    /*
+    /**
      * Method getAvailableSpace that returns the available space in the dataPage
      * @param : nothing
      * @return int : the available space in the dataPage
@@ -157,7 +157,7 @@ public class DataPages {
         return availableSpace;
     }
 
-    /*
+    /**
      * Method getPosRecord that returns the position of a record in the dataPage
      * @param : indexRecod : the index of the record
      * @return int : the position of the record in the dataPage
@@ -168,7 +168,7 @@ public class DataPages {
         return byteBuffer.getInt();
     }
 
-    /*
+    /**
     * Method getSpaceRecod that returns the space of a record in the dataPage
     * @param : indexRecod : the index of the record
     * @return int : the space of the record in the dataPage
@@ -179,7 +179,7 @@ public class DataPages {
         return byteBuffer.getInt();
     }
 
-    /*
+    /**
      * Method getByteBuffer that returns the byteBuffer of the dataPage
      * @param : nothing
      * @return ByteBuffer : the byteBuffer of the dataPage
@@ -188,7 +188,7 @@ public class DataPages {
         return this.byteBuffer;
     }
 
-    /*
+    /**
      * Method getDataPage that returns the dataPage
      * @param : pageId : the pageID of the dataPage
      * @return ByteBuffer : the byteBuffer of the dataPage
@@ -200,7 +200,7 @@ public class DataPages {
         return bufferManager.getPage(pageId);
     }
 
-    /*
+    /**
      * Method toString that returns the information of the dataPage
      * @param : nothing
      * @return String : the information of the dataPage
@@ -218,7 +218,7 @@ public class DataPages {
         return content;
     }
 
-    /*
+    /**
      * Method finalize that is called when the garbage collector is called
      * @param : nothing
      * @return void : nothing

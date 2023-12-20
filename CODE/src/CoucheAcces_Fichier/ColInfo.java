@@ -2,7 +2,7 @@ package CoucheAcces_Fichier;
 
 import java.io.Serializable;
 
-/*
+/**
  * Class ColInfo that represents the information of a column
  */
 public class ColInfo implements Serializable{ // we've separated each column's info as advised in the TP
@@ -10,7 +10,7 @@ public class ColInfo implements Serializable{ // we've separated each column's i
     private ColumnType typeCol;
     private int lengthString;
     
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * 
      * @param : nameCol : the name of the column, typeCol : the type of the column
@@ -24,7 +24,7 @@ public class ColInfo implements Serializable{ // we've separated each column's i
 
 // ----------------   Methods   ----------------
 
-    /* 
+    /* *
     Method getNameCol that returns the name of a column
     @param : nothing
     @return String : name of the column
@@ -33,7 +33,7 @@ public class ColInfo implements Serializable{ // we've separated each column's i
         return nameCol;
     }
 
-    /*
+    /**
     Method getTypeCol that returns the type of a column
     @param : nothing
     @return ColumnType : type of the column
@@ -42,7 +42,7 @@ public class ColInfo implements Serializable{ // we've separated each column's i
         return typeCol;
     }
 
-    /*
+    /**
     Method getLengthString that returns the length of a column
     @param : nothing
     @return int : length of the column
@@ -51,7 +51,7 @@ public class ColInfo implements Serializable{ // we've separated each column's i
         return lengthString;
     }
 
-    /*
+    /**
     Method toString that returns the name, type and length of a column
     @param : nothing
     @return String : name, type and length of the column

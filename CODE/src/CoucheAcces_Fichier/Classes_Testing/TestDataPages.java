@@ -4,11 +4,11 @@ import CoucheAcces_Fichier.DataPages;
 import GestionEspaceDisque_et_Buffer.DBParams;
 import GestionEspaceDisque_et_Buffer.PageID;
 
-/*
+/**
  * Class TestDataPages that tests the DataPages class
  */
 public class TestDataPages {
-    /*
+    /**
      * ----------------   Main   ----------------
      * @param : args : arguments
      */

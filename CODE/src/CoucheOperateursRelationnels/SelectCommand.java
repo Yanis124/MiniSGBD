@@ -7,7 +7,7 @@ import CoucheAcces_Fichier.TableInfo;
 import java.util.ArrayList;
 
 
-/*
+/**
  * Class SelectCommand that represents the command to select records
  */
 public class SelectCommand {
@@ -18,7 +18,7 @@ public class SelectCommand {
     private ArrayList<SelectCondition> conditions;
     private boolean condition=false;
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : userCommand : the command to select records
      */
@@ -62,7 +62,7 @@ public class SelectCommand {
 
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method parseRelationNames which is called to parse the relation names, it's anakyze the condition and return an ArrayList of SelectCondition
      * @param : relationNames : the relation names
      * @return ArrayList<String> : the parsed relation names
@@ -84,7 +84,7 @@ public class SelectCommand {
     }
 
 
-    /*
+    /**
      * Method parseConditions which is called to parse the conditions
      * @param : conditionsStr : the conditions
      * @return ArrayList<SelectCondition> : the parsed conditions
@@ -108,7 +108,7 @@ public class SelectCommand {
         return parsedConditions;
     }
 
-    /*
+    /**
      * Method parseEachCondition which is called to parse each condition, it's analyzed each condition and return a SelectCondition, used inside the parseConditions method
      * @param : conditionStr : the condition
      * @return SelectCondition : the parsed condition
@@ -126,7 +126,7 @@ public class SelectCommand {
         }        
     }
 
-    /*
+    /**
      * Method parseConditionValue which is called to parse the condition value, used inside the parseEachCondition method
      * @param : conditionStr : the condition
      * @return SelectCondition : the parsed condition
@@ -150,7 +150,7 @@ public class SelectCommand {
         return new SelectCondition(columnName, operator, value, relationName);
     }
 
-    /*
+    /**
      * Method parseConditionJoint which is called to parse the condition joint, used inside the parseEachCondition method
      * @param : conditionStr : the condition
      * @return SelectCondition : the parsed condition
@@ -173,7 +173,7 @@ public class SelectCommand {
 
     }
 
-    /*
+    /**
      * Method Execute which is called to execute the command to select records
      * @param : nothing
      * @return : nothing
@@ -223,7 +223,7 @@ public class SelectCommand {
         }
     }
 
-    /*
+    /**
      * Method getSelectedRecordsCondition which is called to select records with condition
      * @param : recordsFirstRelation : the records of the first relation
      * @param : recordsSecondRelation : the records of the second relation
@@ -252,7 +252,7 @@ public class SelectCommand {
         }
     }
 
-    /*
+    /**
      * Method getSelectedRecords which is called to select records
      * @param : recordsFirstRelation : the records of the first relation
      * @param : recordsSecondRelation : the records of the second relation
@@ -281,7 +281,7 @@ public class SelectCommand {
         
     }
 
-    /*
+    /**
      * Method satisfiesConditions which is called to check if the record satisfies the conditions
      * @param : record : the record
      * @return boolean : true if the record satisfies the conditions, false otherwise
@@ -298,7 +298,7 @@ public class SelectCommand {
         return true; // all conditions are satisfied
     }
 
-    /*
+    /**
      * Method selectedRecordsJoin which is called to select records with join condition
      * @param : selectedRecordsFirstRelation : the selected records of the first relation
      * @param : selectedRecordsSecondRelation : the selected records of the second relation
@@ -327,7 +327,7 @@ public class SelectCommand {
         return selectedRecordsJoin;
     }
 
-    /*
+    /**
      * Method combinateRecords which is called to combinate records
      * @param : selectedRecordsFirstRelation : the selected records of the first relation
      * @param : selectedRecordsSecondRelation : the selected records of the second relation
@@ -352,7 +352,7 @@ public class SelectCommand {
         return combinateRecords;
     }
 
-    /*
+    /**
      * Method intersectRecords which is called to intersect records
      * @param : selectedRecordsJoin : the selected records with join condition
      * @return ArrayList<ArrayList<Record>> : the intersected records
@@ -377,7 +377,7 @@ public class SelectCommand {
     }
 }
 
-    /*
+    /**
      * Method intersectTwoLists which is called to intersect two lists
      * @param : list1 : the first list
      * @param : list2 : the second list 
@@ -400,7 +400,7 @@ public class SelectCommand {
     }
 
 
-    /*
+    /**
      * Method printSelectedRecords which is called to print the selected records
      * @param : records : the selected records
      * @return : nothing
@@ -417,7 +417,7 @@ public class SelectCommand {
         System.out.println("Total records=" + records.size());
     }
 
-    /*
+    /**
      * Method printSelectedRecordsJoin which is called to print the selected records with join condition
      * @param : records : the selected records with join condition
      * @return : nothing

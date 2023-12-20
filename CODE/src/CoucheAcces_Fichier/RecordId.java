@@ -2,7 +2,7 @@ package CoucheAcces_Fichier;
 
 import GestionEspaceDisque_et_Buffer.PageID;
 
-/*
+/**
  * Class RecordId that represents the recordID
  */
 public class RecordId {
@@ -10,7 +10,7 @@ public class RecordId {
     private PageID pageId;
     private int slotIdx;
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : pageId : the pageID of the record
      * @param : slotIdx : the index of the record in the page
@@ -20,7 +20,7 @@ public class RecordId {
         this.slotIdx = slotIdx;
     }
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : nothing
      */
@@ -31,7 +31,7 @@ public class RecordId {
 
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method isValid which is called to check if the RecordId is valid
      * @param : nothing
      * @return boolean : true if the RecordId is valid, false otherwise
@@ -43,7 +43,7 @@ public class RecordId {
         return false;
     }
 
-    /*
+    /**
      * Method toString which is called to get the string representation of the RecordId
      * @param : nothing
      * @return String : the string representation of the RecordId

@@ -10,7 +10,7 @@ import java.util.List;
 
 
 
-/*
+/**
  * Class SelectCondition that represents the condition of a select command
  */
 public class SelectCondition {
@@ -22,7 +22,7 @@ public class SelectCondition {
     private String secondRelationName;
     private Boolean isJointCondition=false;
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : columnName : the name of the column
      * @param : operator : the operator of the condition
@@ -38,7 +38,7 @@ public class SelectCondition {
         this.secondRelationName=null;
     }
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : firstRelationName : the name of the first relation
      * @pram : firstColumnName : the name of the first column, 
@@ -57,7 +57,7 @@ public class SelectCondition {
         this.isJointCondition=true;
     }
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : nothing
      */
@@ -72,7 +72,7 @@ public class SelectCondition {
 
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method getFirstColumnName that returns the name of the first column
      * @param : nothing
      * @return String : name of the first column
@@ -81,7 +81,7 @@ public class SelectCondition {
         return this.firstColumnName;
     }
     
-    /*
+    /**
      * Method getSecondColumnName that returns the name of the second column
      * @param : nothing
      * @return String : name of the second column
@@ -90,7 +90,7 @@ public class SelectCondition {
         return this.secondColumnName;
     }
     
-    /*
+    /**
      * Method getOperator that returns the operator of the condition
      * @param : nothing
      * @return String : operator of the condition
@@ -99,7 +99,7 @@ public class SelectCondition {
         return this.operator;
     }
 
-    /*
+    /**
      * Method getValue that returns the value of the condition
      * @param : nothing
      * @return String : value of the condition
@@ -108,7 +108,7 @@ public class SelectCondition {
         return this.value;
     }
 
-    /*
+    /**
      * Method getFirstRelationName that returns the name of the first relation
      * @param : nothing
      * @return String : name of the first relation
@@ -117,7 +117,7 @@ public class SelectCondition {
         return this.firstRelationName;
     }
 
-    /*
+    /**
      * Method getSecondRelationName that returns the name of the second relation
      * @param : nothing
      * @return String : name of the second relation
@@ -126,7 +126,7 @@ public class SelectCondition {
         return this.secondRelationName;
     }
 
-    /*
+    /**
      * Method getTypeCondition that returns the type of the condition
      * @param : nothing
      * @return Boolean : type of the condition
@@ -135,7 +135,7 @@ public class SelectCondition {
         return this.isJointCondition;
     }
 
-    /*
+    /**
      * Method isSatisfiedBy that check if the condition is satisfied by the record
      * @param : record : the record to check
      * @return Boolean : true if the condition is satisfied by the record, false otherwise
@@ -224,7 +224,7 @@ public class SelectCondition {
         }
     }
 
-    /*
+    /**
      * Method joinRelations that join two relations
      * @param : selectCondition : the condition of the join
      * @param : selectedRecordsFirstRelation : the selected records of the first relation
@@ -252,7 +252,7 @@ public class SelectCondition {
         return joinRecords(selectedRecordsFirstRelation,selectedRecordsSecondRelation,columnIndexFirstRelation,columnIndexSecondRelation,operator,columnType);
     }
 
-    /*
+    /**
      * Method joinRecords that join two records
      * @param : selectedRecordsFirstRelation : the selected records of the first relation
      * @param : selectedRecordsSecondRelation : the selected records of the second relation
@@ -408,7 +408,7 @@ public class SelectCondition {
         return joinedRecords;
     }
 
-    /*
+    /**
      * Method getColumnIndex that returns the index of the column
      * @param : columnName : the name of the column
      * @param : tableInfo : the table info of the relation
@@ -428,6 +428,12 @@ public class SelectCondition {
         return columnIndex;
     }
 
+    /**
+     * Method getColumnType that returns the type of the column
+     * @param : columnName : the name of the column
+     * @param : tableInfo : the table info of the relation
+     * @return ColumnType : the type of the column
+     */
     private ColumnType getColumnType(String columnName, TableInfo tableInfo) {
 
         int columnIndex = -1;
@@ -445,7 +451,7 @@ public class SelectCondition {
         return tableCols.get(columnIndex).getTypeCol();
     }
 
-    /*
+    /**
      * Method toString that returns the condition
      * @param : nothing
      * @return String : the condition

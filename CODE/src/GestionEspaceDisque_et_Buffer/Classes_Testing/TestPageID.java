@@ -2,11 +2,11 @@ package GestionEspaceDisque_et_Buffer.Classes_Testing;
 
 import GestionEspaceDisque_et_Buffer.PageID;
 
-/*
+/**
  * Class TestPageID that tests the PageID class
  */
 public class TestPageID {
-    /*
+    /**
      * ----------------   Main   ----------------
      * @param : args : arguments
      */

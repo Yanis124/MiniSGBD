@@ -10,14 +10,14 @@ import GestionEspaceDisque_et_Buffer.BufferManager;
 import GestionEspaceDisque_et_Buffer.DiskManager;
 
 
-/*
+/**
  * Class DatabaseManager that manages the database
  */
 public class DatabaseManager {
     
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method Init which is called at the beginning of the program
      * @param : nothing
      * @return void : nothing
@@ -30,7 +30,7 @@ public class DatabaseManager {
         databaseInfo.Init();
     }
 
-    /*
+    /**
      * Method Finish which is called at the end of the program
      * @param : nothing
      * @return void : nothing
@@ -43,7 +43,7 @@ public class DatabaseManager {
     }
     
     
-    /*
+    /**
      * Method ProcessCommand that processes the command entered by the user
      * @param : command : the command entered by the user
      * @return void : nothing

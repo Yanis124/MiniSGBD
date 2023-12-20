@@ -3,11 +3,11 @@ package CoucheAcces_Fichier.Classes_Testing;
 import GestionEspaceDisque_et_Buffer.*;
 import CoucheAcces_Fichier.*;
 
-/*
+/**
  * Class TestHeaderPage that tests the HeaderPage class
  */
 public class TestHeaderPage {
-    /*
+    /**
      * ----------------   Main   ----------------
      * @param : args : arguments
      */

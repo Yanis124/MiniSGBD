@@ -2,11 +2,11 @@ package CoucheAcces_Fichier.Classes_Testing;
 
 import CoucheAcces_Fichier.*;
 
-/*
+/**
  * Class TestColInfo that tests the ColInfo class
  */
 public class TestColInfo {
-    /*
+    /**
      * ----------------   Main   ----------------
      * @param : args : arguments
      */

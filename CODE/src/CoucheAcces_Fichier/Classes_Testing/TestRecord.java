@@ -8,11 +8,11 @@ import GestionEspaceDisque_et_Buffer.PageID;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-/*
+/**
  * Class TestRecord that tests the Record class
  */
 public class TestRecord {
-    /*
+    /**
      * ----------------   Main   ----------------
      * @param : args : arguments
      */

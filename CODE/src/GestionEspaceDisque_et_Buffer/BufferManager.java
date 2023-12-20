@@ -3,7 +3,7 @@ package GestionEspaceDisque_et_Buffer;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-/*
+/**
  * Class BufferManager that represents the buffer manager
  */
 public class BufferManager {
@@ -11,7 +11,7 @@ public class BufferManager {
     private static BufferManager bufferManager = new BufferManager(); 
     private ArrayList<Frame> listFrames = new ArrayList<Frame>();
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : nothing
      */
@@ -25,7 +25,7 @@ public class BufferManager {
 
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method getBufferManager that returns the buffer manager
      * @param : nothing
      * @return BufferManager : the buffer manager
@@ -34,7 +34,7 @@ public class BufferManager {
         return bufferManager;
     }
 
-    /*
+    /**
      * Method getPage that returns the content of a page
      * @param : pageId : the id of the page
      * @return ByteBuffer : the content of the page
@@ -79,7 +79,7 @@ public class BufferManager {
         return Bf;
     }
 
-    /*
+    /**
      * Method getFrameWithSmallestPinCount that returns the frame with the smallest pin count
      * @param : nothing
      * @return Frame : the frame with the smallest pin count
@@ -108,7 +108,7 @@ public class BufferManager {
     }
     
 
-    /* 
+    /**
      * Method freePage that frees a page
      * @param : pageId : the id of the page
      * @param : flagDirty : the flag dirty
@@ -129,7 +129,7 @@ public class BufferManager {
         }
     }
 
-    /*
+    /**
      * Method flushAll that resets all the frames and write the content of the frames whose flag dirty is true
      * @param : nothing
      * @return void : nothing
@@ -147,7 +147,7 @@ public class BufferManager {
         }
     }
 
-    /*
+    /**
      * Method getFrame that returns the frame of a page
      * @param : pageId : the id of the page
      * @return Frame : the frame of the page
@@ -161,7 +161,7 @@ public class BufferManager {
         return null;
     }
 
-    /*
+    /**
      * Method getByteBufferPage that returns the byte buffer of a page
      * @param : pageId : the id of the page
      * @return ByteBuffer : the byte buffer of the page
@@ -178,7 +178,7 @@ public class BufferManager {
         return getPage(pageId); // otherwise we need to write the content of the page straight from the file
     }
 
-    /*
+    /**
      * Method displaySatetOfFrames that displays the state of the frames
      * @param : nothing
      * @return void : nothing

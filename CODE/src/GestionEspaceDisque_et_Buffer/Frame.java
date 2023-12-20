@@ -1,7 +1,7 @@
 package GestionEspaceDisque_et_Buffer;
 import java.nio.ByteBuffer;
 
-/*
+/**
  * Class Frame that represents a frame
  */
 public class Frame {
@@ -11,7 +11,7 @@ public class Frame {
     private int pinCount ;
     private boolean flagDirty;
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : nothing
      */
@@ -25,7 +25,7 @@ public class Frame {
 
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method setByteBuffer that sets the content of a page
      * @param : byteBuff : the content of the page
      * @return nothing
@@ -34,7 +34,7 @@ public class Frame {
         this.byteBuff = byteBuff;
     }
 
-    /*
+    /**
      * Method setPage that sets the id of a page
      * @param : pageId : the id of the page
      * @return nothing
@@ -43,7 +43,7 @@ public class Frame {
         this.pageId = page;
     }
 
-    /*
+    /**
      * Method setPinCount that sets the pincount of a frame
      * @param : pinCount : the pincount of the frame
      * @return nothing
@@ -52,7 +52,7 @@ public class Frame {
         this.pinCount = pinCount;
     }
 
-    /*
+    /**
      * Method setFlagDirty that sets the flag dirty of a frame
      * @param : flagDirty : the flag dirty of the frame
      * @return nothing
@@ -61,7 +61,7 @@ public class Frame {
         this.flagDirty = flagDirty;
     }
 
-    /*
+    /**
      * Method getByteBuffer that returns the content of a page
      * @param : nothing
      * @return ByteBuffer : the content of the page
@@ -70,7 +70,7 @@ public class Frame {
         return this.byteBuff;
     }
 
-    /*
+    /**
      * Method getPageId that returns the id of a page
      * @param : nothing
      * @return PageID : the id of the page
@@ -79,7 +79,7 @@ public class Frame {
         return this.pageId;
     }
 
-    /*
+    /**
      * Method getPinCount that returns the pincount of a frame
      * @param : nothing
      * @return int : the pincount of the frame
@@ -88,7 +88,7 @@ public class Frame {
         return this.pinCount;
     }
 
-    /*
+    /**
      * Method getFlagDirty that returns the flag dirty of a frame
      * @param : nothing
      * @return boolean : the flag dirty of the frame
@@ -97,7 +97,7 @@ public class Frame {
         return this.flagDirty;
     }
 
-    /*
+    /**
      * Method addPinCount that increments the pincount of a frame
      * @param : nothing
      * @return nothing
@@ -106,7 +106,7 @@ public class Frame {
         this.pinCount++;
     }
 
-    /*
+    /**
      * Method compareFrames that compares the id of a page with the id of a frame
      * @param : page : the id of the page
      * @return boolean : true if the id of the page is the same as the id of the frame, false otherwise
@@ -118,7 +118,7 @@ public class Frame {
         return false;
     }
 
-    /*
+    /**
      * Method frameIsEmpty that checks if a frame is empty
      * @param : nothing
      * @return boolean : true if the id of the frame is -1, false otherwise
@@ -130,7 +130,7 @@ public class Frame {
         return false;
     }
 
-    /*
+    /**
      * Method cleanFrame that resets the frame
      * @param : nothing
      * @return nothing

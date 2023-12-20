@@ -5,7 +5,7 @@ import GestionEspaceDisque_et_Buffer.PageID;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/*
+/**
  * Class TableInfo that represents the information of a relation
  */
 public class TableInfo implements Serializable{ // a set of usefull information about a relation
@@ -15,7 +15,7 @@ public class TableInfo implements Serializable{ // a set of usefull information 
 
     private PageID headerPageId;
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : nameRelation : the name of the relation
      * @param : numberCols : the number of columns in the relation
@@ -31,7 +31,7 @@ public class TableInfo implements Serializable{ // a set of usefull information 
 
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method GetNameRelation which is called to get the name of the relation
      * @param : nothing
      * @return String : the name of the relation
@@ -40,7 +40,7 @@ public class TableInfo implements Serializable{ // a set of usefull information 
         return nameRelation;
     }
 
-    /*
+    /**
      * Method GetNumberCols which is called to get the number of columns in the relation
      * @param : nothing
      * @return int : the number of columns in the relation
@@ -49,7 +49,7 @@ public class TableInfo implements Serializable{ // a set of usefull information 
         return numberCols;
     }
 
-    /*
+    /**
      * Method GetTableCols which is called to get the list of all the columns in the relation
      * @param : nothing
      * @return ArrayList<ColInfo> : the list of all the columns in the relation
@@ -58,7 +58,7 @@ public class TableInfo implements Serializable{ // a set of usefull information 
         return tableCols;
     }
 
-    /*
+    /**
      * Method getHeaderPageId which is called to get the pageID of the header page of the relation
      * @param : nothing
      * @return PageID : the pageID of the header page of the relation
@@ -67,7 +67,7 @@ public class TableInfo implements Serializable{ // a set of usefull information 
         return headerPageId;
     }
 
-    /*
+    /**
      * Method toString which is called to get the string representation of the tableInfo
      * @param : nothing
      * @return String : the string representation of the tableInfo
@@ -81,7 +81,7 @@ public class TableInfo implements Serializable{ // a set of usefull information 
         return TableInfo;
     }
 
-    /*
+    /**
      * Method printTableInfo which is called to display the tableInfo
      * @param : nothing
      * @return void : nothing

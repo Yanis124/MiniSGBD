@@ -6,11 +6,11 @@ import CoucheAcces_Fichier.Record;
 
 import java.util.ArrayList;
 
-/*
+/**
  * Class TestFileManager that tests the FileManager class
  */
 public class TestFileManager {
-    /*
+    /**
      * ----------------   Main   ----------------
      * @param : args : arguments
      */

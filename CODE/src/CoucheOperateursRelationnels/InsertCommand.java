@@ -7,7 +7,7 @@ import CoucheAcces_Fichier.TableInfo;
 
 import java.util.ArrayList;
 
-/*
+/**
  * Class InsertCommand that represents the command to insert a record
  */
 public class InsertCommand {
@@ -15,7 +15,7 @@ public class InsertCommand {
     private String relationName;
     private ArrayList<String> values;
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : userCommand : the command to insert a record
      */
@@ -41,7 +41,7 @@ public class InsertCommand {
 
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method printInsertCommand that prints the command to insert a record
      * @param : nothing
      * @return : nothing
@@ -54,7 +54,7 @@ public class InsertCommand {
 
    
 
-    /*
+    /**
      * Method Execute that executes the command to insert a record
      * @param : nothing
      * @return : nothing

@@ -9,12 +9,12 @@ import GestionEspaceDisque_et_Buffer.Frame;
 import java.io.File;
 import java.nio.ByteBuffer;
 
-/*
+/**
  * Class TestBufferManager that tests the buffer manager
  */
 public class TestBufferManager {
 
-    /*
+    /**
      * ----------------   Main   ----------------
      * @param : args : arguments
      */

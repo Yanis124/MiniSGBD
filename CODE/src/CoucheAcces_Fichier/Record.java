@@ -3,7 +3,7 @@ package CoucheAcces_Fichier;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-/*
+/**
  * Class Record that represents a record
  */
 public class Record {
@@ -11,7 +11,7 @@ public class Record {
     private ArrayList<String> recValues;
     private boolean deletedRecord=false;
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : tableInfo : the tableInfo of the record
      */
@@ -22,7 +22,7 @@ public class Record {
 
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method setRecValues which is called to set the recValues of a record
      * @param : recVals : the list of values of the record
      * @return void : nothing
@@ -31,7 +31,7 @@ public class Record {
         recValues = recVals;
     }
 
-    /*
+    /**
      * Method setAsDeleted which is called to set a record as deleted, it means that the record is not in the database anymore
      * @param : nothing
      * @return void : nothing
@@ -40,7 +40,7 @@ public class Record {
         this.deletedRecord=true;
     }
 
-    /*
+    /**
      * Method isDeleted which is called to know if a record is deleted or not
      * @param : nothing
      * @return boolean : true if the record is deleted, false otherwise
@@ -49,7 +49,7 @@ public class Record {
         return this.deletedRecord;
     }
 
-    /*
+    /**
      * Method getRecValues which is called to retrieve the recValues of a record
      * @param : nothing
      * @return ArrayList<String> : the list of values of the record
@@ -58,7 +58,7 @@ public class Record {
         return recValues;
     }
 
-    /*
+    /**
      * Method writeToBuffer which is called to write the record to a buffer, it's used to write the record to a page
      * @param : buff : the buffer to write to
      * @param : pos : the position in the buffer
@@ -116,7 +116,7 @@ public class Record {
         }
     }
 
-    /*
+    /**
      * Method sizeRecord which is called to get the size of a record
      * @param : nothing
      * @return int : the size of the record
@@ -151,7 +151,7 @@ public class Record {
             return totalSize;
     }
 
-    /*
+    /**
      * Method readFromBuffer which is called to read a record from a buffer, it's used to read a record from a page
      * @param : buff : the buffer to read from
      * @param : pos : the position in the buffer
@@ -203,7 +203,7 @@ public class Record {
         }
     }
 
-    /*
+    /**
      * Method getTabInfo which is called to get the tableInfo of a record
      * @param : nothing
      * @return TableInfo : the tableInfo of the record
@@ -212,7 +212,7 @@ public class Record {
         return this.tabInfo;
     }
 
-    /*
+    /**
      * Method displayRecord which is called to display the values of a record, it's used for testing
      * @param : nothing
      * @return void : nothing
@@ -224,7 +224,7 @@ public class Record {
         System.out.println("\n");
     }
 
-    /*
+    /**
      * Method compare which is called to compare two records
      * @param : record : the record to compare with
      * @return boolean : true if the records are the same, false otherwise

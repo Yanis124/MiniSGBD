@@ -4,11 +4,11 @@ import GestionEspaceDisque_et_Buffer.*;
 import CoucheAcces_Fichier.*;
 import java.util.ArrayList;
 
-/*
+/**
  * Class TestDatabaseInfo that tests the DatabaseInfo class
  */
 public class TestDatabaseInfo {
-    /*
+    /**
      * ----------------   Main   ----------------
      * @param : args : arguments
      */

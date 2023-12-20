@@ -7,7 +7,7 @@ import CoucheAcces_Fichier.TableInfo;
 import GestionEspaceDisque_et_Buffer.PageID;
 import java.util.ArrayList;
 
-/*
+/**
  * Class DeleteRecordsCommand that represents the command to delete records
  */
 public class DeleteRecordsCommand {
@@ -18,7 +18,7 @@ public class DeleteRecordsCommand {
     private ArrayList<SelectCondition> conditions;
     private boolean condition=false;
     
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : userCommand : the command to delete records
      */
@@ -60,7 +60,7 @@ public class DeleteRecordsCommand {
 
     // ----------------   Methods   ----------------
     
-    /*
+    /**
      * Method parseRelationNames which is called to parse the relation names
      * @param : relationNames : the relation names
      * @return ArrayList<String> : the parsed relation names
@@ -82,7 +82,7 @@ public class DeleteRecordsCommand {
     }
 
 
-    /*
+    /**
      * Method parseConditions which is called to parse the conditions
      * @param : conditionsStr : the conditions
      * @return ArrayList<SelectCondition> : the parsed conditions
@@ -109,7 +109,7 @@ public class DeleteRecordsCommand {
         return parsedConditions;
     }
 
-    /*
+    /**
      * Method parseEachCondition which is called to parse each condition, it's analyzed each condition and return a SelectCondition
      * @param : conditionStr : the condition
      * @return SelectCondition : the parsed condition
@@ -120,7 +120,7 @@ public class DeleteRecordsCommand {
                 
     }
 
-    /*
+    /**
      * Method parseConditionValue which is called to parse the condition value
      * @param : conditionStr : the condition
      * @return SelectCondition : the parsed condition
@@ -145,7 +145,7 @@ public class DeleteRecordsCommand {
         return new SelectCondition(columnName, operator, value, relationName);
     }
 
-    /*
+    /**
      * Method Execute which is called to execute the command to delete records
      * @param : nothing
      * @return nothing
@@ -220,7 +220,7 @@ public class DeleteRecordsCommand {
 
     }
 
-    /*
+    /**
      * Method satisfiesConditions which is called to check if the record satisfies the conditions
      * @param : record : the record
      * @return boolean : true if the record satisfies the conditions, false otherwise

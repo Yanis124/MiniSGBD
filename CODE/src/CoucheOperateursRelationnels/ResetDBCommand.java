@@ -5,7 +5,7 @@ import CoucheAcces_Fichier.FileManager;
 import GestionEspaceDisque_et_Buffer.BufferManager;
 import GestionEspaceDisque_et_Buffer.DiskManager;
 
-/*
+/**
  * Class ResetDBCommand that represents the command to reset the database
  */
 public class ResetDBCommand {
@@ -13,7 +13,7 @@ public class ResetDBCommand {
     @SuppressWarnings("unused") // it's used only in the constructor
     private String userCommand;
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : userCommand : the command to reset the database
      */
@@ -23,7 +23,7 @@ public class ResetDBCommand {
 
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method Execute which is called to execute the command
      * @param : nothing
      * @return : nothing

@@ -4,7 +4,7 @@ import GestionEspaceDisque_et_Buffer.*;
 
 import java.nio.ByteBuffer;
 
-/*
+/**
  * Class HeaderPage that represents the header page of a directory page
  */
 public class HeaderPage {
@@ -12,7 +12,7 @@ public class HeaderPage {
     private ByteBuffer byteBuffer;
     private PageID pageId;
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : pageId : the pageID of the headerPage
      */
@@ -32,7 +32,7 @@ public class HeaderPage {
         setFullPage(fullPageId);
     }
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : byteBuffer : the byteBuffer of the headerPage
      * @param : pageId : the pageID of the headerPage
@@ -44,7 +44,7 @@ public class HeaderPage {
 
     // ----------------   Methods   ----------------
     
-    /*
+    /**
      * Method setFreePage which is called to set the pageID of the freePage
      * @param : pageId : the pageID of the freePage
      * @return void : nothing
@@ -59,7 +59,7 @@ public class HeaderPage {
         byteBuffer.putInt(freePageIdx);
     }
 
-    /*
+    /**
      * Method setFullPage which is called to set the pageID of the fullPage
      * @param : pageId : the pageID of the fullPage
      * @return void : nothing
@@ -75,7 +75,7 @@ public class HeaderPage {
 
     }
 
-    /*
+    /**
      * Method getFreePage which is called to get the pageID of the freePage
      * @param : nothing
      * @return PageID : the pageID of the freePage
@@ -87,7 +87,7 @@ public class HeaderPage {
         return new PageID(byteBuffer.getInt(), byteBuffer.getInt());
     }
 
-    /*
+    /**
      * Method getFullPage which is called to get the pageID of the fullPage
      * @param : nothing
      * @return PageID : the pageID of the fullPage
@@ -98,7 +98,7 @@ public class HeaderPage {
         return new PageID(byteBuffer.getInt(), byteBuffer.getInt());
     }
 
-    /*
+    /**
      * Method getPageID which is called to get the pageID of the headerPage
      * @param : nothing
      * @return PageID : the pageID of the headerPage
@@ -107,7 +107,7 @@ public class HeaderPage {
         return pageId;
     }
 
-    /*
+    /**
      * Method setPageID which is called to set the pageID of the headerPage
      * @param : pageId : the pageID of the headerPage
      * @return void : nothing
@@ -116,7 +116,7 @@ public class HeaderPage {
         this.pageId = pageId;
     }
 
-    /*
+    /**
      * Method getHeaderPage which is called to get the content of a created HeaderPage that has been written in a file
      * @param : pageId : the pageID of the headerPage
      * @return ByteBuffer : the content of the headerPage
@@ -129,7 +129,7 @@ public class HeaderPage {
         return byteBuffer;
     }
 
-    /*
+    /**
      * Method toString which is called to display the content of the headerPage
      * @param : nothing
      * @return String : the content of the headerPage
@@ -142,7 +142,7 @@ public class HeaderPage {
         return content;
     }
 
-    /*
+    /**
      * Method finalize which is called to free the headerPage and write its content
      * @param : nothing
      * @return void : nothing

@@ -4,11 +4,11 @@ import CoucheAcces_Fichier.*;
 import java.util.ArrayList;
 import GestionEspaceDisque_et_Buffer.PageID;
 
-/*
+/**
  * Class TestTableInfo that tests the TableInfo class
  */
 public class TestTableInfo {
-    /*
+    /**
      * ----------------   Main   ----------------
      * @param : args : arguments
      */

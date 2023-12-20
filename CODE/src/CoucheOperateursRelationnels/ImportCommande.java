@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 
 
-/*
+/**
  * Class ImportCommande that represents the command to import a file
  */
 public class ImportCommande {
@@ -23,7 +23,7 @@ public class ImportCommande {
     private String filePath;
     private String userCommand; 
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : userCommand : the command to import a file
      */
@@ -47,7 +47,7 @@ public class ImportCommande {
 
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method printTableInfo that prints the information of the table
      * @param : nothing
      * @return : nothing
@@ -66,7 +66,7 @@ public class ImportCommande {
         }
     }
 
-    /*
+    /**
      * Method Execute which is called to execute the command to import a file
      * @param : nothing
      * @return : nothing
@@ -81,7 +81,7 @@ public class ImportCommande {
         }
     }
 
-    /*
+    /**
      * Method createListRecords that creates the list of records
      * @param : nothing
      * @return ArrayList<Record> : the list of records

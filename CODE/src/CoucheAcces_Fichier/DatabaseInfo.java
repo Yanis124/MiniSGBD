@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-/*
+/**
  * Class DatabaseInfo that represents the information of a database
  */
 public class DatabaseInfo implements Serializable {
@@ -22,7 +22,7 @@ public class DatabaseInfo implements Serializable {
     private ArrayList<TableInfo> informationTable;
     private int counterRelations;
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : informationTable : the list of all the tables in the database, counterRelations : the number of relations in the database
      */
@@ -33,7 +33,7 @@ public class DatabaseInfo implements Serializable {
 
     // ----------------   Methods   ----------------
     
-    /*
+    /**
      * Method getInstance that returns the unique instance of DatabaseInfo
      * @return DatabaseInfo : the unique instance of DatabaseInfo
      */
@@ -41,7 +41,7 @@ public class DatabaseInfo implements Serializable {
        return instance;
     }
 
-    /*
+    /**
      * Method getHeaderPageID that returns the list of all the tables in the database
      * param : relationName : the name of the relation
      * @return PageID : the pageID of the header page of the relation
@@ -51,7 +51,7 @@ public class DatabaseInfo implements Serializable {
         return tableInfo.getHeaderPageId();
     }
 
-    /*
+    /**
      * Method Init which is called at the beginning of the program
      * @param : nothing
      * @return void : nothing
@@ -60,7 +60,7 @@ public class DatabaseInfo implements Serializable {
         Load();
     } // initialize an instance
 
-    /*
+    /**
      * Method Finish which is called at the end of the program
      * @param : nothing
      * @return void : nothing
@@ -69,7 +69,7 @@ public class DatabaseInfo implements Serializable {
         Save();
     } // for cleaning
 
-    /*
+    /**
      * Method AddTableInfo which adds a tableInfo to the list of all the tables in the database
      * @param : tabInfo : the tableInfo to add
      * @return void : nothing
@@ -80,7 +80,7 @@ public class DatabaseInfo implements Serializable {
         counterRelations++;
     }
 
-    /*
+    /**
      * Method GetTableInfo which returns the tableInfo of a relation given its name
      * @param : nameRelation : the name of the relation
      * @return TableInfo : the tableInfo of the relation or null if the relation doesn't exist
@@ -98,7 +98,7 @@ public class DatabaseInfo implements Serializable {
         return null; // return null if none of them matches the given relation's name in the argument
     }
 
-    /*
+    /**
      * Method GetCounterRelations which returns the number of relations in the database
      * @param : nothing
      * @return int : the number of relations in the database
@@ -107,7 +107,7 @@ public class DatabaseInfo implements Serializable {
         return counterRelations;
     }
     
-    /*
+    /**
      * Method Save which saves the informations of the database in a file
      * @param : nothing
      * @return void : nothing
@@ -129,7 +129,7 @@ public class DatabaseInfo implements Serializable {
         }
     }
 
-    /*
+    /**
      * Method Load which loads the informations of the database from a file
      * @param : nothing
      * @return void : nothing
@@ -160,7 +160,7 @@ public class DatabaseInfo implements Serializable {
     }
     
 
-    /*
+    /**
      * Method toString which returns the informations of the database
      * @param : nothing
      * @return String : the informations of the database
@@ -176,7 +176,7 @@ public class DatabaseInfo implements Serializable {
         return informationDatabase;
     }
 
-    /*
+    /**
      * Method resetDataBaseInfo which resets the informations of the database
      * @param : nothing
      * @return void : nothing

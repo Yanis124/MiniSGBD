@@ -7,14 +7,14 @@ import GestionEspaceDisque_et_Buffer.PageID;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-/*
+/**
  * Class FileManager that manages the files
  */
 public class FileManager {
 
     private static FileManager fileManager = new FileManager();
 
-    /*
+    /**
      * ----------------   Constructor   ----------------
      * @param : nothing
      */
@@ -24,7 +24,7 @@ public class FileManager {
 
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method getFileManager that returns the unique instance of FileManager
      * @return FileManager : the unique instance of FileManager
      */
@@ -32,7 +32,7 @@ public class FileManager {
         return fileManager;
     }
 
-    /*
+    /**
      * Method createNewHeaderPage which is called to create a new headerPage
      * @param : nothing
      * @return PageID : the pageID of the new headerPage
@@ -50,7 +50,7 @@ public class FileManager {
         return pageId; // Return PageId
     }
 
-    /*
+    /**
      * Method addDataPage which is called to add a new dataPage to a relation
      * @param : tableInfo : the relation of the dataPage
      * @return PageID : the pageID of the new dataPage
@@ -81,7 +81,7 @@ public class FileManager {
         return pageId;
     }
 
-    /*
+    /**
      * Method getFreePageId which is called to get a freePage with enough space
      * @param : tableInfo : the relation of the dataPage
      * @param : sizeRecord : the size of the record
@@ -112,7 +112,7 @@ public class FileManager {
         
     }
 
-    /*
+    /**
      * Method writeRecordToDataPage which is called to write a record to a dataPage
      * @param : record : the record to write
      * @param : pageIdDataPage : the pageID of the dataPage
@@ -151,7 +151,7 @@ public class FileManager {
         return new RecordId(pageIdDataPage, numberSlot);
     }
 
-    /*
+    /**
      * Method deleteRecordToDataPage which is called to delete a record to a dataPage
      * @param : pageIdDataPage : the pageID of the dataPage
      * @param : indexRecord : the index of the record
@@ -174,7 +174,7 @@ public class FileManager {
     }
 
 
-    /*
+    /**
      * Method getRecordsInDataPage which is called to get all the records of a dataPage
      * @param : tableInfo : the relation of the dataPage
      * @param : pageId : the pageID of the dataPage
@@ -214,7 +214,7 @@ public class FileManager {
         return listRecords;
     }
 
-    /*
+    /**
      * Method getDataPages which is called to get all the dataPages of a relation
      * @param : tableInfo : the relation of the dataPage
      * @return ArrayList<PageID> : the list of all the dataPages of the relation
@@ -248,7 +248,7 @@ public class FileManager {
         return listDataPagesId;
     }
 
-    /*
+    /**
      * Method insertRecordIntoTable which is called to insert a record into a relation
      * @param : record : the record to insert
      * @return RecordId : the recordID of the record
@@ -268,7 +268,7 @@ public class FileManager {
 
 
 
-    /*
+    /**
      * Method getAllRecords which is called to get all the records of a relation
      * @param : tabInfo : the relation of the dataPage
      * @return ArrayList<Record> : the list of all the records of the relation
@@ -289,7 +289,7 @@ public class FileManager {
         return listRecords;
     }
 
-    /*
+    /**
      * Method updateToFullPage which is called to update a dataPage to a fullPage
      * @param : newFullPageId : the pageID of the new fullPage
      * @param : tableInfo : the relation of the dataPage
@@ -339,7 +339,7 @@ public class FileManager {
 
     }
 
-    /*
+    /**
      * Method getHeaderPageOfTableInfo which is called to get the headerPage of a relation
      * @param : tableInfo : the relation of the dataPage
      * @return HeaderPage : the headerPage of the relation
@@ -356,7 +356,7 @@ public class FileManager {
         return headerPage;
     }
 
-    /*
+    /**
      * Method getDataPages which is called to get a dataPage
      * @param : pageId : the pageID of the dataPage
      * @return DataPages : the dataPage
@@ -372,7 +372,7 @@ public class FileManager {
         return dataPages;
     }
 
-    /*
+    /**
      * Method displayPages which is called to display all the dataPages of a relation
      * @param : tableInfo : the relation of the dataPage
      * @return String : the content of all the dataPages of the relation
@@ -388,7 +388,7 @@ public class FileManager {
         return content;
     }
 
-    /*
+    /**
      * Method resetFileDB which is called to reset the database
      * @param : nothing
      * @return void : nothing

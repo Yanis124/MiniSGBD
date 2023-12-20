@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/*
+/**
  * Class DiskManager that represents the disk manager
  */
 public class DiskManager {
@@ -20,7 +20,7 @@ public class DiskManager {
     private ArrayList<PageID> desalocatedPage = new ArrayList<PageID>(); // for desallocated page
     private PageID currentAllocatedPageId;
 
-    /*
+    /**
      * ---------------- Constructor ----------------
      * 
      * @param : nothing
@@ -31,7 +31,7 @@ public class DiskManager {
 
     // ---------------- Methods ----------------
 
-    /*
+    /**
      * Method getDiskManager that returns the disk manager
      * @param : nothing
      * @return DiskManager : the disk manager
@@ -56,7 +56,7 @@ public class DiskManager {
         }
     }
 
-    /*
+    /**
      * Method AllocPage that allocates a page
      * @param : nothing
      * @return PageID : the id of the allocated page
@@ -89,7 +89,7 @@ public class DiskManager {
         return currentAllocatedPage;
     }
 
-    /*
+    /**
      * Method updateFilePageId that updates the map filePageId
      * @param : currentAllocatedPage : the page that we'll add to the map
      * @return void : nothing
@@ -108,7 +108,7 @@ public class DiskManager {
         filePageId.put(currentAllocatedPage.getFileIdx(), filePages);
     }
 
-    /*
+    /**
      * Method getSmallestPage that returns the last page of the file with the
      * smallest allocated page
      * @param : nothing
@@ -128,7 +128,7 @@ public class DiskManager {
         return new PageID(fileIdxWithSmallestSize, smallestFileSize);
     }
 
-    /*
+    /**
      * Method DeallocPage that desallocates a page
      * @param : pageId : the id of the page that we'll desallocate
      * @return void : nothing
@@ -163,7 +163,7 @@ public class DiskManager {
         // }
     }
 
-    /*
+    /**
      * Method WritePage that writes a page
      * @param : pageId : the id of the page that we'll write
      * @param : buff : the byte buffer that we'll write
@@ -197,7 +197,7 @@ public class DiskManager {
 
     }
 
-    /*
+    /**
      * Method getPageSize that returns the size of a page
      * @param : filePath : the path of the file
      * @param : pageIdx : the index of the page
@@ -235,7 +235,7 @@ public class DiskManager {
         return 0;
     }
 
-    /*
+    /**
      * Method ReadPage that reads a page
      * @param : pageId : the id of the page that we'll read
      * @param : buff : the byte buffer that we'll read
@@ -268,7 +268,7 @@ public class DiskManager {
         return buff;
     }
 
-    /*
+    /**
      * Method readContentOfBuffer that reads the content of a buffer
      * @param : bf : the byte buffer that we'll read
      * @return StringBuilder : the content of the buffer
@@ -295,7 +295,7 @@ public class DiskManager {
         return message;
     }
 
-    /*
+    /**
      * Method getByteBufferSize that returns the size of a buffer
      * @param : bf : the byte buffer that we'll read
      * @return int : the size of the buffer
@@ -314,7 +314,7 @@ public class DiskManager {
         return size;
     }
 
-    /*
+    /**
      * Method getCurrentCountAllocPages that returns the number of allocated pages
      * @param : nothing
      * @return int : the number of allocated pages
@@ -327,7 +327,7 @@ public class DiskManager {
         return currentAllocatedPages;
     }
 
-    /*
+    /**
      * Method getCurrentAllocatedPage that returns the current allocated page
      * @param : nothing
      * @return PageID : the current allocated page
@@ -352,7 +352,7 @@ public class DiskManager {
         }
     }
 
-    /*
+    /**
      * Method getEmptyPage that returns an empty page
      * @param : nothing
      * @return PageID : an empty page
@@ -370,7 +370,7 @@ public class DiskManager {
         return null;
     }
 
-    /*
+    /**
      * Method toString that returns the information of the disk manager
      * @param : nothing
      * @return String : the information of the disk manager
@@ -392,7 +392,7 @@ public class DiskManager {
         return filePageIdInfo + "]";
     }
 
-    /*
+    /**
      * Method deleteAllDBFiles that deletes all files of the database
      * @param : nothing
      * @return void : nothing
@@ -422,7 +422,7 @@ public class DiskManager {
         }
     }
 
-    /*
+    /**
      * Method resetDiskManager that resets the disk manager
      * @param : nothing
      * @return void : nothing

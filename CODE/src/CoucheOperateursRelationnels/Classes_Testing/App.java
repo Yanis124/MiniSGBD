@@ -5,11 +5,12 @@ import GestionEspaceDisque_et_Buffer.DBParams;
 import java.io.File;
 import java.util.Scanner;
 
-/*
- * Classe App qui teste les tables de la base de données
+/**
+ * Class App : Class principal of the application to test the database 
  */
 public class App {
-    /*
+    
+    /**
      * ----------------   Main   ----------------
      * @param : args : arguments
      */

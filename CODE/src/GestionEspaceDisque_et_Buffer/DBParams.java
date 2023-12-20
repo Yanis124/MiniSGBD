@@ -3,7 +3,7 @@ package GestionEspaceDisque_et_Buffer;
 import java.io.File;
 import java.io.IOException;
 
-/*
+/**
  * Class DBParams that represents the parameters of the database
  */
 public class DBParams {
@@ -17,7 +17,7 @@ public class DBParams {
 
     // ----------------   Methods   ----------------
 
-    /*
+    /**
      * Method createFile that creates a file, if the file doesn't exist it will be created
      * @param : nothing
      * @return int : the number of the file

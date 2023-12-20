@@ -3,11 +3,11 @@ package GestionEspaceDisque_et_Buffer.Classes_Testing;
 import GestionEspaceDisque_et_Buffer.*;
 import java.nio.ByteBuffer;
 
-/*
+/**
  * Class TestDiskManager that tests the DiskManager class
  */
 public class TestDiskManager {
-    /*
+    /**
      * ----------------   Main   ----------------
      * @param : args : arguments
      */

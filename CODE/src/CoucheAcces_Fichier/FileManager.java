@@ -193,7 +193,7 @@ public class FileManager {
             Record record = new Record(tableInfo);// create an empty record
             int positionRecord = dataPage.getPosRecord(i);
             
-            System.out.println("posiotn : "+positionRecord);
+            
             //if the pos=-1 the record is not read
            if(positionRecord!=-1){
             

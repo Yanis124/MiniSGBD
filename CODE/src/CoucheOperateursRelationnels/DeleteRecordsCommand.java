@@ -35,6 +35,7 @@ public class DeleteRecordsCommand {
 
             }
         }
+       
 
         String relationNames = commandSplit[3]; // get the raltions in the command
         this.listRelationNames = parseRelationNames(relationNames); // get the relations 
@@ -98,9 +99,12 @@ public class DeleteRecordsCommand {
                 parsedConditions.add(parseEachCondition(conditionStr.trim()));
             }
         } else {
+            
             // No conditions specified in the command
             parsedConditions.add(new SelectCondition()); // add an empty condition
         }
+
+      
 
         return parsedConditions;
     }
@@ -168,6 +172,7 @@ public class DeleteRecordsCommand {
                     }
                 }
             }
+
         }
 
         //select all the records
@@ -179,6 +184,8 @@ public class DeleteRecordsCommand {
                 
             }
         }
+
+        System.out.println("selected Recods  "+selectedRecords.size());
 
         // print the selected records
         //printSelectedRecords(selectedRecords);
@@ -218,14 +225,18 @@ public class DeleteRecordsCommand {
      * @param : record : the record
      * @return boolean : true if the record satisfies the conditions, false otherwise
      */
-    private boolean satisfiesConditions(Record record) {
+     private boolean satisfiesConditions(Record record) {
         for (SelectCondition condition : conditions) {
-            if (!condition.isSatisfiedBy(record)) {
-                return false; // if one condition is not satisfied, the record is not selected
+            if(condition.getFirstRelationName().equals(record.getTableInfo().getNameRelation()) && !condition.getTypeCondition()){ //if the condition is applied to the record
+                if (!condition.isSatisfiedBy(record)) {
+                    return false; // if one condition is not satisfied, the record is not selected
+                }
             }
         }
 
         return true; // all conditions are satisfied
     }
+
+
 
 }

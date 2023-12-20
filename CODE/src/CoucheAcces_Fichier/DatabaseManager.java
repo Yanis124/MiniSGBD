@@ -85,6 +85,7 @@ public class DatabaseManager {
 
         else if(command.startsWith("DELETE")){
             DeleteRecordsCommand deleteRecordsCommand=new DeleteRecordsCommand(command);
+            System.out.println("yes");
             deleteRecordsCommand.Execute();
         }
     }

@@ -229,7 +229,7 @@ public class SelectCommand {
      * @param : selectedRecordsSecondRelation : the selected records of the second relation
      * @return : nothing
      */
-    private void getSelectedRecordsCondition(ArrayList<Record> recordsFirstRelation,ArrayList<Record> recordsSecondRelation,ArrayList<Record> selectedRecordsFirstRelation,ArrayList<Record> selectedRecordsSecondRelation) {
+    public void getSelectedRecordsCondition(ArrayList<Record> recordsFirstRelation,ArrayList<Record> recordsSecondRelation,ArrayList<Record> selectedRecordsFirstRelation,ArrayList<Record> selectedRecordsSecondRelation) {
 
         for (Record record : recordsFirstRelation) {
             if(record.isDeleted()==false){      //if the record is deleted it will not be selected
@@ -288,7 +288,6 @@ public class SelectCommand {
         for (SelectCondition condition : conditions) {
             if(condition.getFirstRelationName().equals(record.getTableInfo().getNameRelation()) && !condition.getTypeCondition()){ //if the condition is applied to the record
                 if (!condition.isSatisfiedBy(record)) {
-                    System.out.println("condition satisfied");
                     return false; // if one condition is not satisfied, the record is not selected
                 }
             }

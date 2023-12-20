@@ -146,7 +146,7 @@ public class SelectCondition {
 
         int columnIndex = getColumnIndex(firstColumnName, tableInfo);
         ColumnType columnType=getColumnType(firstColumnName,tableInfo);
-        System.out.println("ecolumnType : "+columnType);
+        
 
         String columnValue = record.getRecValues().get(columnIndex);
         if (columnValue == null) {
@@ -166,7 +166,6 @@ public class SelectCondition {
         switch (operator) {
             
             case "=":
-            System.out.println("columnType "+columnType);
             if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
                 
                 
@@ -213,13 +212,13 @@ public class SelectCondition {
             case "<>":
                  if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
 
-                return Float.parseFloat(columnValue)!=(Float.parseFloat(newValue));
-                }
+                    return Float.parseFloat(columnValue)!=(Float.parseFloat(newValue));
+                    }
                 
-            else{
-                return !columnValue.equals(value); //string
+                else{
+                    return !columnValue.equals(value); //string
 
-            }
+                }
             default:
                 return false;
         }
@@ -282,8 +281,6 @@ public class SelectCondition {
 
                     case "=":
                         if(columnValueFirstRelation.equals(columnValueSecondRelation)){
-                            System.out.println("first value :"+columnValueFirstRelation);
-                            System.out.println("second value :"+columnValueSecondRelation);
                             
                             newRecord.add(recordSecondRelation);
                             joinedRecords.add(newRecord);

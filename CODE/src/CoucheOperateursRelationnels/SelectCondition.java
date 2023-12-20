@@ -246,8 +246,10 @@ public class SelectCondition {
         int columnIndexFirstRelation=selectCondition.getColumnIndex(columnNameFirstRelation,firstTableInfo); //get the index of the column in the first relation
         int columnIndexSecondRelation=selectCondition.getColumnIndex(columnNameSecondRelarion,secondTableInfo); //get the index of the column in the second relation
 
+        ColumnType columnType=selectCondition.getColumnType(columnNameFirstRelation,firstTableInfo);
+
        
-        return joinRecords(selectedRecordsFirstRelation,selectedRecordsSecondRelation,columnIndexFirstRelation,columnIndexSecondRelation,operator);
+        return joinRecords(selectedRecordsFirstRelation,selectedRecordsSecondRelation,columnIndexFirstRelation,columnIndexSecondRelation,operator,columnType);
     }
 
     /*
@@ -259,7 +261,7 @@ public class SelectCondition {
      * @param : operator : the operator of the condition joint
      * @return ArrayList<ArrayList<Record>> : the joined records
      */
-    public static ArrayList<ArrayList<Record>> joinRecords(ArrayList<Record> selectedRecordsFirstRelation, ArrayList<Record> selectedRecordsSecondRelation, int columnIndexFirstRelation, int columnIndexSecondRelation, String operator) {
+    public static ArrayList<ArrayList<Record>> joinRecords(ArrayList<Record> selectedRecordsFirstRelation, ArrayList<Record> selectedRecordsSecondRelation, int columnIndexFirstRelation, int columnIndexSecondRelation, String operator, ColumnType columnType) {
        
         ArrayList<ArrayList<Record>> joinedRecords=new ArrayList<ArrayList<Record>>();
 
@@ -277,65 +279,123 @@ public class SelectCondition {
                 Record recordSecondRelation=selectedRecordsSecondRelation.get(j); //Select a record from the second relation
                 String columnValueSecondRelation=recordSecondRelation.getRecValues().get(columnIndexSecondRelation); //get the value of the column in the second relation
 
+
+                if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                    columnValueFirstRelation=columnValueFirstRelation.replace(",", ".");
+                    columnValueSecondRelation=columnValueSecondRelation.replace(",", ".");
+                }
+
                 switch(operator){
 
                     case "=":
-                        if(columnValueFirstRelation.equals(columnValueSecondRelation)){
-                            
-                            newRecord.add(recordSecondRelation);
-                            joinedRecords.add(newRecord);
-                            
-                            for(Record record : newRecord) {
-                                record.displayRecord();
-                            }
-                            
-                        }
-                        break;
-                    case "<":
-                        if(columnValueFirstRelation.compareTo(columnValueSecondRelation)<0){
-                            
+
+                    if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                         if(Float.parseFloat(columnValueFirstRelation)==(Float.parseFloat(columnValueSecondRelation))){
 
                             newRecord.add(recordSecondRelation);
                             joinedRecords.add(newRecord);
-                             for(Record record : newRecord) {
-                                record.displayRecord();
-                            }
-                            
+                         }
+                         
+                    }
+
+                    else{
+                        if(columnValueFirstRelation.equals(columnValueSecondRelation)){
+                            newRecord.add(recordSecondRelation);
+                            joinedRecords.add(newRecord);
                         }
+                    }
+
+                    
+                        break;
+                    case "<":
+                        if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                         if(Float.parseFloat(columnValueFirstRelation)<(Float.parseFloat(columnValueSecondRelation))){
+
+                            newRecord.add(recordSecondRelation);
+                            joinedRecords.add(newRecord);
+                         }
+                         
+                    }
+
+                    else{
+                        if(columnValueFirstRelation.compareTo(columnValueSecondRelation)<0){
+                            newRecord.add(recordSecondRelation);
+                            joinedRecords.add(newRecord);
+                        }
+                    }
+
                         break;
                     case ">":
+                        if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                         if(Float.parseFloat(columnValueFirstRelation)>(Float.parseFloat(columnValueSecondRelation))){
+
+                            newRecord.add(recordSecondRelation);
+                            joinedRecords.add(newRecord);
+                         }
+                         
+                    }
+
+                    else{
                         if(columnValueFirstRelation.compareTo(columnValueSecondRelation)>0){
                             newRecord.add(recordSecondRelation);
                             joinedRecords.add(newRecord);
-                             
                         }
+                    }
+
                         break;
                     case "<=":
+                        if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                         if(Float.parseFloat(columnValueFirstRelation)<=(Float.parseFloat(columnValueSecondRelation))){
+
+                            newRecord.add(recordSecondRelation);
+                            joinedRecords.add(newRecord);
+                         }
+                         
+                    }
+
+                    else{
                         if(columnValueFirstRelation.compareTo(columnValueSecondRelation)<=0){
                             newRecord.add(recordSecondRelation);
                             joinedRecords.add(newRecord);
-                            for(Record record : newRecord) {
-                                record.displayRecord();
-                            }
-                             
                         }
+                    }
+
                         break;
                     case ">=":
+                         if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                         if(Float.parseFloat(columnValueFirstRelation)>=(Float.parseFloat(columnValueSecondRelation))){
+
+                            newRecord.add(recordSecondRelation);
+                            joinedRecords.add(newRecord);
+                         }
+                         
+                    }
+
+                    else{
                         if(columnValueFirstRelation.compareTo(columnValueSecondRelation)>=0){
                             newRecord.add(recordSecondRelation);
                             joinedRecords.add(newRecord);
-                            for(Record record : newRecord) {
-                                record.displayRecord();
-                            }
-                             
                         }
+                    }
+
                         break;
                     case "<>":
+                        if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                         if(Float.parseFloat(columnValueFirstRelation)!=(Float.parseFloat(columnValueSecondRelation))){
+
+                            newRecord.add(recordSecondRelation);
+                            joinedRecords.add(newRecord);
+                         }
+                         
+                    }
+
+                    else{
                         if(!columnValueFirstRelation.equals(columnValueSecondRelation)){
                             newRecord.add(recordSecondRelation);
                             joinedRecords.add(newRecord);
-                             
                         }
+                    }
+
                         break;
                     default:
                         break;
@@ -381,7 +441,7 @@ public class SelectCondition {
             
         }
 
-        System.out.println(columnIndex);
+        
         return tableCols.get(columnIndex).getTypeCol();
     }
 

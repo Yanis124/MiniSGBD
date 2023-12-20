@@ -55,6 +55,8 @@ public class SelectCommand {
             this.conditions = parseConditions(conditionsStr);
             // conditions now contains the parsed conditions (only the String part after the
             // WHERE)
+            System.out.println("yes");
+            
         }
     }
 
@@ -428,6 +430,8 @@ public class SelectCommand {
             Record record2=record.get(1);
             System.out.println(String.join(" ; ", record1.getRecValues())+" ; "+String.join(" ; ", record2.getRecValues()));
         }
+
+         System.out.println("Total records=" + records.size());
 
     }
 

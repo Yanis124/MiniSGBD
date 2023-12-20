@@ -156,7 +156,7 @@ public class SelectCondition {
             return false;
         }
 
-        String newValue=value;;
+        String newValue=value;
 
         if(columnType==ColumnType.FLOAT){
             newValue=value.replace(",", ".");

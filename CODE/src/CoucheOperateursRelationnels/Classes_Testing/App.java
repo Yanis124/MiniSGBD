@@ -31,26 +31,28 @@ public class App {
         System.out.println("Bienvenue dans l'application de test de base de donnees !");
         System.out.println("Instructions :");
         System.out.println("1. Creer une table");
-        System.out.println("   Exemple : CREATE TABLE table1 (col1:INT, col2:FLOAT, col3:STRING(15))");
+        System.out.println("   Exemple : CREATE TABLE table1 (col1:INT,col2:FLOAT,col3:STRING(15))");
         System.out.println("");
         System.out.println("2. Pour reinitialiser la base de donnees");
         System.out.println("   Exemple : RESETDB");
         System.out.println("");
         System.out.println("3. Inserer dans une table");
-        System.out.println("   Exemple : INSERT INTO table1 VALUES (1, 3.14, 'exemple')");
+        System.out.println("   Exemple : INSERT INTO R VALUES (300,papillon,blu,0.7)");
         System.out.println("");
         System.out.println("4. Selectionner dans une table");
-        System.out.println("   Exemple : SELECT * FROM table1, table2 WHERE table1.col1 = table2.col2");
+        System.out.println("   Exemple : SELECT * FROM R WHERE R.A=9,5");
+        System.out.println("   /!/ NB : Pour les float, il faut mettre une virgule et non un point.");
+        System.out.println("   /!/ NB : Après le WHERE, il faut préciser le format suivant NomTable.Colonne=Valeur");
         System.out.println("");
         System.out.println("5. Supprimer dans une table");
-        System.out.println("   Exemple : DELETE FROM table1 WHERE col1 = 2");
+        System.out.println("   Exemple : DELETE * FROM A WHERE C1=bug");
         System.out.println("Tapez 'EXIT' pour quitter.");
         System.out.println("--------------------------------------------------");
         System.out.println("");
 
         while (true) {
            
-            System.out.print("Entrez une commande, veuillez a bien respecter l'ecrire des commandes, sinon il faut relancer le programme: ");
+            System.out.print("Entrez une commande, veuillez a bien respecter l'ecriture des commandes, sinon il faut relancer le programme: ");
             String userInput = scanner.nextLine().trim();
             
 

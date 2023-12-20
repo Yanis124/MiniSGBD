@@ -161,6 +161,11 @@ public class SelectCondition {
         if(columnType==ColumnType.FLOAT){
             newValue=value.replace(",", ".");
         }
+        else{
+            newValue=value;
+        }
+
+    
 
         // Compare the value with the condition
         switch (operator) {
@@ -195,6 +200,7 @@ public class SelectCondition {
                 
             case "<=":
                 if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                     
                      return Float.parseFloat(columnValue)<=(Float.parseFloat(newValue));
                 }
                 else{
@@ -203,6 +209,7 @@ public class SelectCondition {
                
             case ">=":
                 if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                   
                     return Float.parseFloat(columnValue)>=(Float.parseFloat(newValue));
                 }
                 else{

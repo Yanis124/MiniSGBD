@@ -55,7 +55,7 @@ public class SelectCommand {
             this.conditions = parseConditions(conditionsStr);
             // conditions now contains the parsed conditions (only the String part after the
             // WHERE)
-            System.out.println("yes");
+            
             
         }
     }

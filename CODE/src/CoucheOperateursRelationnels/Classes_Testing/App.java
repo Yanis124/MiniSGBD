@@ -21,7 +21,7 @@ public class App {
         DBParams.DBPath = ".." + File.separator + ".." + File.separator + "DB";
         DBParams.DMFileCount = 4;
         DBParams.SGBDPageSize = 4096;
-        DBParams.FrameCount = 10;
+        DBParams.FrameCount = 1000;
         DBParams.PageFull = 100;
         DBParams.nbPageFile = 50;
 

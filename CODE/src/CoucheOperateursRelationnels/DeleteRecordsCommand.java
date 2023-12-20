@@ -55,6 +55,7 @@ public class DeleteRecordsCommand {
             this.conditions = parseConditions(conditionsStr);
             // conditions now contains the parsed conditions (only the String part after the
             // WHERE)
+          
         }
     }
 
@@ -129,7 +130,7 @@ public class DeleteRecordsCommand {
         // parse the condition
 
          // parse the condition
-        String[] parts = conditionStr.split("=|<|>|<=|>=|<>"); // split the condition based on the operator
+        String[] parts = conditionStr.split("<=|>=|<>|<|>|="); // split the condition based on the operator
 
         String [] parseColumnName = parts[0].split("\\.");
         
@@ -167,6 +168,7 @@ public class DeleteRecordsCommand {
             
             for (Record record : records) {
                 if(record.isDeleted()==false){
+                    System.out.println("yes");
                     if (satisfiesConditions(record)) {
                         selectedRecords.add(record);
                     }
@@ -226,6 +228,7 @@ public class DeleteRecordsCommand {
      * @return boolean : true if the record satisfies the conditions, false otherwise
      */
      private boolean satisfiesConditions(Record record) {
+        
         for (SelectCondition condition : conditions) {
             if(condition.getFirstRelationName().equals(record.getTableInfo().getNameRelation()) && !condition.getTypeCondition()){ //if the condition is applied to the record
                 if (!condition.isSatisfiedBy(record)) {

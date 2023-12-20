@@ -24,6 +24,7 @@ public class SelectCommand {
      */
     public SelectCommand(String userCommand) {
         this.userCommand = userCommand;
+      
 
         // Extraction of the relation name
         String[] commandSplit = userCommand.split(" ");
@@ -266,12 +267,16 @@ public class SelectCommand {
             
         }
 
-        for (Record record : recordsSecondRelation) {
+        if(recordsSecondRelation!=null){
+            for (Record record : recordsSecondRelation) {
             
             if(record.isDeleted()==false){
                 selectedRecordsSecondRelation.add(record);
+                }
             }
         }
+
+        
     }
 
     /*
@@ -283,6 +288,7 @@ public class SelectCommand {
         for (SelectCondition condition : conditions) {
             if(condition.getFirstRelationName().equals(record.getTableInfo().getNameRelation()) && !condition.getTypeCondition()){ //if the condition is applied to the record
                 if (!condition.isSatisfiedBy(record)) {
+                    System.out.println("condition satisfied");
                     return false; // if one condition is not satisfied, the record is not selected
                 }
             }

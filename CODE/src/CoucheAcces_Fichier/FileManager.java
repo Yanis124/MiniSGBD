@@ -394,7 +394,6 @@ public class FileManager {
      * @return void : nothing
      */
     public void resetFileDB(){
-        System.out.println("yes");
         DiskManager diskManager=DiskManager.getDiskManager();
         diskManager.deleteAllDBFiles();
     }

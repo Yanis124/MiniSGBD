@@ -26,16 +26,7 @@ public class DiskManager {
      * @param : nothing
      */
     private DiskManager() {
-        for (int i = 0; i < 4; i++) { // get the available files in the db
-            String filePatheName = DBParams.DBPath + "/F" + i + ".data"; // assume that the db should always have
-                                                                         // DMFileCount
-
-            File file = new File(filePatheName);
-            if (!file.exists()) {
-                DBParams.createFile();
-            }
-            filePageId.put(i, new ArrayList<PageID>());
-        }
+        createFiles();
     }
 
     // ---------------- Methods ----------------
@@ -47,6 +38,22 @@ public class DiskManager {
      */
     public static DiskManager getDiskManager() {
         return diskManager;
+    }
+
+    public void createFiles(){
+        for (int i = 0; i < DBParams.DMFileCount; i++) { // get the available files in the db
+            String filePatheName = DBParams.DBPath + "/F" + i + ".data"; // assume that the db should always have
+                                                                         // DMFileCount
+
+            File file = new File(filePatheName);
+            if (!file.exists()) {
+                
+                DBParams.createFile();
+
+            }
+            filePageId.put(i, new ArrayList<PageID>());
+            
+        }
     }
 
     /*
@@ -413,7 +420,6 @@ public class DiskManager {
                 }
             }
         }
-        System.out.println("yes");
     }
 
     /*
@@ -425,6 +431,7 @@ public class DiskManager {
         filePageId = new HashMap<>(); // {file:[page]}
         desalocatedPage = new ArrayList<PageID>(); // for desallocated page
         currentAllocatedPageId = null;
+        
     }
 
 }

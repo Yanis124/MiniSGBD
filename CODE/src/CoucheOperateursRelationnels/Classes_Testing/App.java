@@ -16,6 +16,7 @@ public class App {
     public static void main(String[] args) { 
 
         // Configuration de DBParams
+        
         DBParams.DBPath = ".." + File.separator + ".." + File.separator + "DB";
         DBParams.DMFileCount = 4;
         DBParams.SGBDPageSize = 4096;
@@ -48,21 +49,31 @@ public class App {
         System.out.println("");
 
         while (true) {
+           
             System.out.print("Entrez une commande, veuillez a bien respecter l'ecrire des commandes, sinon il faut relancer le programme: ");
             String userInput = scanner.nextLine().trim();
+            
 
             if (userInput.equalsIgnoreCase("EXIT")) {
                 break;
             }
 
-            try {
+
+                DatabaseManager.Init();
                 DatabaseManager.ProcessCommand(userInput);
-            } catch (Exception e) {
-                System.err.println("Erreur : " + e.getMessage());
-            }
+                
+
+                if(!userInput.startsWith("RESETDB") && !userInput.startsWith("SELECT")){
+                    DatabaseManager.Finish();    
+                }
+
+            
+
+            
         }
 
-        DatabaseManager.Finish();
+        
         scanner.close();
     }
 }
+

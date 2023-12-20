@@ -1,7 +1,7 @@
 package GestionEspaceDisque_et_Buffer;
 
-import java.util.ArrayList;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 /*
  * Class BufferManager that represents the buffer manager

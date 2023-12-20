@@ -23,7 +23,8 @@ public class DatabaseManager {
      * @return void : nothing
      */
     public static  void Init(){
-        DiskManager.getDiskManager(); //create the files of the database 
+        DiskManager diskManager=DiskManager.getDiskManager(); //create the files of the database 
+        diskManager.createFiles();
         DatabaseInfo databaseInfo=DatabaseInfo.getInstance();
 
         databaseInfo.Init();
@@ -49,7 +50,7 @@ public class DatabaseManager {
      */
     public static void ProcessCommand(String command){
         if(command.equals("RESETDB")){
-           
+            
            ResetDBCommand  resetDBCommande=new ResetDBCommand(command);
            resetDBCommande.Execute();
            
@@ -64,7 +65,9 @@ public class DatabaseManager {
         //import a set of records from a file
         else if(command.startsWith("IMPORT INTO")){
             ImportCommande importCommand=new ImportCommande(command);
+        
             importCommand.Execute();
+            
         }
 
         else if(command.startsWith("INSERT INTO")){ 
@@ -75,14 +78,13 @@ public class DatabaseManager {
         
         else if (command.startsWith("SELECT")) {    // create a class for selecting a record
             SelectCommand selectCommand = new SelectCommand(command);
-           
+            
             selectCommand.Execute();
             
         }
 
         else if(command.startsWith("DELETE")){
             DeleteRecordsCommand deleteRecordsCommand=new DeleteRecordsCommand(command);
-             System.out.print("yes");
             deleteRecordsCommand.Execute();
         }
     }

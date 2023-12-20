@@ -1,6 +1,7 @@
 package CoucheOperateursRelationnels;
 
 import CoucheAcces_Fichier.ColInfo;
+import CoucheAcces_Fichier.ColumnType;
 import CoucheAcces_Fichier.DatabaseInfo;
 import CoucheAcces_Fichier.Record;
 import CoucheAcces_Fichier.TableInfo;
@@ -144,6 +145,8 @@ public class SelectCondition {
         TableInfo tableInfo =record.getTableInfo();
 
         int columnIndex = getColumnIndex(firstColumnName, tableInfo);
+        ColumnType columnType=getColumnType(firstColumnName,tableInfo);
+        System.out.println("ecolumnType : "+columnType);
 
         String columnValue = record.getRecValues().get(columnIndex);
         if (columnValue == null) {
@@ -153,20 +156,58 @@ public class SelectCondition {
             return false;
         }
 
+        String newValue=value;
+
+        if(columnType==ColumnType.FLOAT){
+            newValue=value.replace(",", ".");
+        }
+
         // Compare the value with the condition
         switch (operator) {
+            
             case "=":
-                return columnValue.equals(value);
+            System.out.println("columnType "+columnType);
+            if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                
+                
+
+                return Float.parseFloat(columnValue)==(Float.parseFloat(newValue));
+            }
+                
+            else{
+                return columnValue.equals(value); //string
+            }
+                
             case "<":
-                return columnValue.compareTo(value) < 0;
+             if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                 return Float.parseFloat(columnValue)<(Float.parseFloat(newValue));
+            }
+               
             case ">":
-                return columnValue.compareTo(value) > 0;
+                if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                 return Float.parseFloat(columnValue)>(Float.parseFloat(newValue));
+                }
+                
             case "<=":
-                return columnValue.compareTo(value) <= 0;
+                if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                     return Float.parseFloat(columnValue)<=(Float.parseFloat(newValue));
+                }
+               
             case ">=":
-                return columnValue.compareTo(value) >= 0;
+                if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+                    return Float.parseFloat(columnValue)>=(Float.parseFloat(newValue));
+                }
+                
             case "<>":
-                return !columnValue.equals(value);
+                 if(columnType==ColumnType.INT || columnType==ColumnType.FLOAT){
+
+                return Float.parseFloat(columnValue)!=(Float.parseFloat(newValue));
+                }
+                
+            else{
+                return !columnValue.equals(value); //string
+
+            }
             default:
                 return false;
         }
@@ -243,8 +284,6 @@ public class SelectCondition {
                         break;
                     case "<":
                         if(columnValueFirstRelation.compareTo(columnValueSecondRelation)<0){
-                            System.out.println("first value :"+columnValueFirstRelation);
-                            System.out.println("second value :"+columnValueSecondRelation);
                             
 
                             newRecord.add(recordSecondRelation);
@@ -296,7 +335,6 @@ public class SelectCondition {
                 
             }
         }
-        System.out.println(" terminate : "+operator);
 
         return joinedRecords;
     }
@@ -319,6 +357,23 @@ public class SelectCondition {
             }
         }
         return columnIndex;
+    }
+
+    private ColumnType getColumnType(String columnName, TableInfo tableInfo) {
+
+        int columnIndex = -1;
+        List<ColInfo> tableCols = tableInfo.getTableCols();
+
+        for (int i = 0; i < tableCols.size(); i++) {
+            if (tableCols.get(i).getNameCol().equals(columnName)) {
+                columnIndex = i;
+                break;
+            }
+            
+        }
+
+        System.out.println(columnIndex);
+        return tableCols.get(columnIndex).getTypeCol();
     }
 
     /*

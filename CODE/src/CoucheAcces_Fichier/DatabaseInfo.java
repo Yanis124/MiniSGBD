@@ -184,6 +184,6 @@ public class DatabaseInfo implements Serializable {
     public void resetDataBaseInfo(){
         informationTable = new ArrayList<>();
         counterRelations = 0;
-        System.out.println("yes");
+        
     }
 }

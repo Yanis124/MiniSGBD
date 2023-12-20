@@ -1,16 +1,18 @@
 package CoucheOperateursRelationnels;
 
+import CoucheAcces_Fichier.ColInfo;
+import CoucheAcces_Fichier.ColumnType;
+import CoucheAcces_Fichier.DatabaseInfo;
+import CoucheAcces_Fichier.FileManager;
+import CoucheAcces_Fichier.Record;
+import CoucheAcces_Fichier.TableInfo;
+import GestionEspaceDisque_et_Buffer.DBParams;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import CoucheAcces_Fichier.ColInfo;
-import CoucheAcces_Fichier.ColumnType;
-import CoucheAcces_Fichier.DatabaseInfo;
-import CoucheAcces_Fichier.FileManager;
-import CoucheAcces_Fichier.TableInfo;
-import CoucheAcces_Fichier.Record;
+
 
 /*
  * Class ImportCommande that represents the command to import a file
@@ -40,7 +42,7 @@ public class ImportCommande {
             this.colsInfo.add(colInfo);
         }
 
-        this.filePath = tokens[3]; //get the path of the file
+        this.filePath =DBParams.DBPath+"/"+ tokens[3]; //get the path of the file
     }
 
     // ----------------   Methods   ----------------
